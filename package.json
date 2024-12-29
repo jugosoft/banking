@@ -2,7 +2,9 @@
   "name": "@banking/source",
   "version": "1.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~17.1.0",
