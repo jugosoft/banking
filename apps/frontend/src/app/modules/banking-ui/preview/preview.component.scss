@@ -1,0 +1,20 @@
+@import "apps/frontend/src/styles";
+
+:host {
+  background-color: $color-background-gray;
+}
+
+.preview {
+  &__info {
+    padding: $gutter-large;
+  }
+
+  &__title {
+    margin-bottom: $gutter-medium;
+    font-size: $font-size-large;
+    font-weight: $font-weight-bold;
+  }
+
+  &__image {
+  }
+}

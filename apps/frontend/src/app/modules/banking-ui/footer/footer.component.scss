@@ -1,0 +1,25 @@
+@import "apps/frontend/src/styles";
+
+:host {
+  display: grid;
+  padding: $gutter-medium;
+  grid-template-columns: repeat(5, auto);
+}
+
+.footer {
+  &__column-title {
+    margin-bottom: $gutter-small;
+    font-size: $font-size-medium;
+    color: $white;
+  }
+
+  &__column {
+    display: flex;
+    color: $color-secondary;
+    flex-direction: column;
+  }
+
+  &__link {
+    text-decoration: none;
+  }
+}

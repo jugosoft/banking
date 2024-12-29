@@ -1,0 +1,15 @@
+<div class="header__logo logo">
+  <span>BANKING</span>
+</div>
+
+<nav class="header__navigation navigation">
+  <ul class="navigation__list">
+    <li *ngFor="let nav of navigation; let first = first;" class="navigation__item">
+      <a class="navigation__link" [class._active]="first" href="#">{{ nav }}</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="header__actions actions">
+  <button mat-button>Профиль</button>
+</div>
