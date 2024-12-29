@@ -7,7 +7,22 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@common/*": ["src/app/common/*"],
+      "@guards/*": ["src/app/guards/*"],
+      "@providers/*": ["src/app/providers/*"],
+      "@interceptors/*": ["src/app/interceptors/*"],
+      "@services/*": ["src/app/services/*"],
+      "@root/*": ["src/app/modules/root/*"],
+      "@pages/*": ["src/app/modules/pages/*"],
+      "@modals/*": ["src/app/modules/modals/*"],
+      "@shared/*": ["src/app/modules/shared/*"],
+      "@widgets/*": ["src/app/modules/widgets/*"],
+      "@mock/*": ["src/app/mock/*"],
+      "@store/*": ["src/app/store/*"],
+      "@temp/*": ["src/app/temp/*"]
+  }
   },
   "files": [],
   "include": [],
