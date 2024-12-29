@@ -9,7 +9,7 @@ import { IBank } from '@banking/shared-types';
 @Component({
   standalone: true,
   imports: [RouterModule, SharedModule, HttpClientModule, BankingUiModule],
-  selector: 'app-root',
+  selector: 'banking-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
