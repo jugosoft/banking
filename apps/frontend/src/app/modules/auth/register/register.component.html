@@ -1,1 +1,15 @@
-<p>register works!</p>
+<form class="register__form" [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Enter Email" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput placeholder="Enter Password" />
+    <mat-hint>It should be strong as me</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Repeat Password</mat-label>
+    <input matInput placeholder="Repeat Password" />
+  </mat-form-field>
+</form>
