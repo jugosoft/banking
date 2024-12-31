@@ -4,8 +4,6 @@ export const appRoutes: Routes = [
   {
     path: 'auth',
     loadChildren: () =>
-      import('./modules/auth/auth-routing.module').then(
-        (module) => module.AuthRoutingModule
-      ),
+      import('./modules/auth/auth.module').then((module) => module.AuthModule),
   },
 ];
