@@ -9,6 +9,7 @@ import { select, Store } from '@ngrx/store';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { register } from '../store/auth.actions';
 import { selectIsSubmiting } from '../store/auth.selectors';
+import { IRegisterForm } from './model/register-form.interface';
 
 /**
  * Компонент регистрации нового пользователя
@@ -21,7 +22,7 @@ import { selectIsSubmiting } from '../store/auth.selectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent implements OnInit {
-  public formGroup!: FormGroup;
+  public formGroup!: FormGroup<IRegisterForm>;
   private readonly formBuilder = inject(FormBuilder);
   private readonly store = inject(Store);
   public readonly isSubmiting$ = this.store.pipe(select(selectIsSubmiting));
@@ -37,18 +38,21 @@ export class RegisterComponent implements OnInit {
    * подсвечиваем контролы
    */
   public onSubmit(): void {
+    const { email, username, password } = this.formGroup.value;
     if (this.formGroup.invalid) {
       this.formGroup.markAllAsTouched();
     }
 
-    this.store.dispatch(register());
+    if (email && username && password) {
+      this.store.dispatch(register({ email, username, password }));
+    }
   }
 
   /**
    * Инициализация контролов формы и начальных значений
    */
   private initFormGroup(): void {
-    this.formGroup = this.formBuilder.group({
+    this.formGroup = this.formBuilder.nonNullable.group<IRegisterForm>({
       email: this.formBuilder.control(null, Validators.required),
       username: this.formBuilder.control(null, Validators.required),
       password: this.formBuilder.control(null, Validators.required),
