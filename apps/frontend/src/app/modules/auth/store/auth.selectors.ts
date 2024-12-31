@@ -2,11 +2,11 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { StoreKey } from '../../../store/store.enums';
 import { IAuthState } from './auth.state';
 
-export const selectEduProgFeature = createFeatureSelector<IAuthState>(
+export const selectAuthFeature = createFeatureSelector<IAuthState>(
   StoreKey.AUTH
 );
 
 export const selectIsSubmiting = createSelector(
-  selectEduProgFeature,
-  (state) => state.isSubmiting
+  selectAuthFeature,
+  (state): boolean | null => state.isSubmiting
 );

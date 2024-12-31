@@ -1,16 +1,16 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthAction } from '../../../store/store.enums';
-import { IRegisterRequest } from '../types/register-request.interface';
+import { IRegisterRequest, IRegisterResponse } from '@banking/shared-types';
 
 export const register = createAction(
   AuthAction.REGISTER,
-  props<IRegisterRequest>()
+  props<{ request: IRegisterRequest }>()
 );
 export const registerSuccess = createAction(
   AuthAction.REGISTER_SUCCESS,
   props<{
-    result: boolean;
+    result: IRegisterResponse;
   }>()
 );
 export const registerError = createAction(

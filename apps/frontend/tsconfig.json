@@ -10,6 +10,7 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@common/*": ["src/app/common/*"],
+      "@banking/shared-types": ["libs/shared-types/index"],
       "@guards/*": ["src/app/guards/*"],
       "@providers/*": ["src/app/providers/*"],
       "@interceptors/*": ["src/app/interceptors/*"],

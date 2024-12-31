@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "../../libs/shared-types/src/lib/auth/register-request.interface.ts", "../../libs/shared-types/src/lib/auth/register-response.interface.ts"],
   "compilerOptions": {},
   "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
 }

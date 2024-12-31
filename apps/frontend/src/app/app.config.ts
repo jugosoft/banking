@@ -10,12 +10,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { HttpClientModule } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideClientHydration(),
     provideRouter(appRoutes),
     provideAnimations(),
+    importProvidersFrom(HttpClientModule),
     importProvidersFrom(RouterModule.forRoot(appRoutes)),
     importProvidersFrom(StoreModule.forRoot([])),
     importProvidersFrom(EffectsModule.forRoot([])),

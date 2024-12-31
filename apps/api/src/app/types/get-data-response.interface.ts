@@ -1,4 +1,4 @@
-import { IBank } from "@banking/shared-types";
+import { IBank } from '@banking/shared-types';
 
 export interface IGetDataResponse {
   bank: IBank;

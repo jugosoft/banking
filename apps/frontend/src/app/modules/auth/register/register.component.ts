@@ -10,6 +10,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { register } from '../store/auth.actions';
 import { selectIsSubmiting } from '../store/auth.selectors';
 import { IRegisterForm } from './model/register-form.interface';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * Компонент регистрации нового пользователя
@@ -44,7 +45,7 @@ export class RegisterComponent implements OnInit {
     }
 
     if (email && username && password) {
-      this.store.dispatch(register({ email, username, password }));
+      this.store.dispatch(register({ request: { email, username, password } }));
     }
   }
 
