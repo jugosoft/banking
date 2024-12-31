@@ -3,7 +3,7 @@ export interface IRegisterResponse {
     id: number;
     email: string;
     username: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
   };
 }
