@@ -5,21 +5,20 @@ import {
 } from '@angular/core';
 import { provideRouter, RouterModule } from '@angular/router';
 import { appRoutes } from './app.routes';
-// import { provideClientHydration } from '@angular/platform-browser';
+import { provideClientHydration } from '@angular/platform-browser';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { EFFECTS, REDUCERS } from './store/store.const';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    // provideClientHydration(),
+    provideClientHydration(),
     provideRouter(appRoutes),
     provideAnimations(),
     importProvidersFrom(RouterModule.forRoot(appRoutes)),
-    importProvidersFrom(StoreModule.forRoot(REDUCERS)),
-    importProvidersFrom(EffectsModule.forRoot(EFFECTS)),
+    importProvidersFrom(StoreModule.forRoot([])),
+    importProvidersFrom(EffectsModule.forRoot([])),
     importProvidersFrom(
       StoreDevtoolsModule.instrument({
         maxAge: 25,

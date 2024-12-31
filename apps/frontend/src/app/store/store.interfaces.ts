@@ -1,5 +1,5 @@
-import { IAuthState } from './auth/auth.state';
+import { IAuthState } from '../modules/auth/store/auth.state';
 
 export interface IState {
-    auth: IAuthState;
+  auth: IAuthState;
 }

@@ -1,15 +1,31 @@
 <form class="register__form" [formGroup]="formGroup">
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input matInput placeholder="Enter Email" />
+    <input matInput formControlName="email" placeholder="Enter Email" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput formControlName="username" placeholder="Enter Username" />
   </mat-form-field>
   <mat-form-field>
     <mat-label>Password</mat-label>
-    <input matInput placeholder="Enter Password" />
+    <input matInput formControlName="password" placeholder="Enter Password" />
     <mat-hint>It should be strong as me</mat-hint>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Repeat Password</mat-label>
-    <input matInput placeholder="Repeat Password" />
+    <input
+      matInput
+      formControlName="passwordRepeat"
+      placeholder="Repeat Password"
+    />
   </mat-form-field>
+
+  <button
+    mat-button="submit"
+    [disabled]="isSubmiting$ | async"
+    (click)="onSubmit()"
+  >
+    Зарегистрироваться
+  </button>
 </form>
