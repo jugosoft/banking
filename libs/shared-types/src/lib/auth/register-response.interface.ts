@@ -6,4 +6,5 @@ export interface IRegisterResponse {
     createdAt: string;
     updatedAt: string;
   };
+  token: string;
 }
