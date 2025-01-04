@@ -5,6 +5,8 @@ import { register, registerError, registerSuccess } from './auth.actions';
 export const initialState: IAuthState = {
   isSubmiting: null,
   currentUser: null,
+  token: null,
+  validationErrors: null,
 };
 
 const authReducer = createReducer(
@@ -15,6 +17,7 @@ const authReducer = createReducer(
     (state): IAuthState => ({
       ...state,
       isSubmiting: true,
+      validationErrors: null,
     })
   ),
 
@@ -37,6 +40,7 @@ const authReducer = createReducer(
       ...state,
       isSubmiting: false,
       currentUser: null,
+      validationErrors: error.error,
     })
   )
 );

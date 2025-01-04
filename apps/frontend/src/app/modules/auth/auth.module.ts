@@ -9,6 +9,8 @@ import { reducer } from './store/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './store/auth.effects';
 import { AuthService } from './services/auth.service';
+import { BankingUiModule } from '../banking-ui/banking-ui.module';
+import { ValidationErrorsComponent } from '../shared/validation-errors/validation-errors.component';
 
 @NgModule({
   declarations: [RegisterComponent],
@@ -19,6 +21,8 @@ import { AuthService } from './services/auth.service';
     ReactiveFormsModule,
     AuthRoutingModule,
     MaterialModule,
+    BankingUiModule,
+    ValidationErrorsComponent,
   ],
   providers: [AuthService],
 })

@@ -1,3 +1,11 @@
+<h1 class="mat-h1">Регстрация</h1>
+
+@if (validationErrors$ | async) {
+<banking-validation-errors
+  [validationErrors]="validationErrors$ | async"
+></banking-validation-errors>
+}
+
 <form class="register__form" [formGroup]="formGroup">
   <mat-form-field>
     <mat-label>Email</mat-label>

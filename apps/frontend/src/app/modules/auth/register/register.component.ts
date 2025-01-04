@@ -8,9 +8,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { register } from '../store/auth.actions';
-import { selectIsSubmiting } from '../store/auth.selectors';
+import {
+  selectIsSubmiting,
+  selectValidationErrors,
+} from '../store/auth.selectors';
 import { IRegisterForm } from './model/register-form.interface';
-import { HttpClient } from '@angular/common/http';
 
 /**
  * Компонент регистрации нового пользователя
@@ -27,6 +29,9 @@ export class RegisterComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly store = inject(Store);
   public readonly isSubmiting$ = this.store.pipe(select(selectIsSubmiting));
+  public readonly validationErrors$ = this.store.pipe(
+    select(selectValidationErrors)
+  );
 
   public ngOnInit(): void {
     this.initFormGroup();
