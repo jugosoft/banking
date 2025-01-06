@@ -11,9 +11,10 @@ import { AuthEffects } from './store/auth.effects';
 import { AuthService } from './services/auth.service';
 import { BankingUiModule } from '../banking-ui/banking-ui.module';
 import { ValidationErrorsComponent } from '../shared/validation-errors/validation-errors.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [RegisterComponent],
+  declarations: [RegisterComponent, LoginComponent],
   imports: [
     SharedModule,
     StoreModule.forFeature('auth', reducer),

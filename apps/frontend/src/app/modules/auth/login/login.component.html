@@ -1,0 +1,27 @@
+<h1 class="mat-h1">Логин</h1>
+
+@if (validationErrors$ | async) {
+<banking-validation-errors
+  [validationErrors]="validationErrors$ | async"
+></banking-validation-errors>
+}
+
+<form class="login__form" [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" placeholder="Enter Email" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password" placeholder="Enter Password" />
+    <mat-hint>It should be strong as me</mat-hint>
+  </mat-form-field>
+
+  <button
+    mat-button="submit"
+    [disabled]="isSubmiting$ | async"
+    (click)="onSubmit()"
+  >
+    Войти
+  </button>
+</form>
