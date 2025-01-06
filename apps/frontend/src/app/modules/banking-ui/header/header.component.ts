@@ -1,6 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
+/**
+ * Компонент десктопного заголовка страницы. Применяется внутри контейнера
+ */
 @Component({
   selector: 'banking-header',
   templateUrl: './header.component.html',
@@ -9,7 +12,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   private readonly router = inject(Router);
 
-  public readonly navigation: ReadonlyArray<string> = [
+  public readonly navigation: readonly string[] = [
     'Вклады',
     'Текущее состояние',
     'Калькулятор',

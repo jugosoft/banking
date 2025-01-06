@@ -5,7 +5,14 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { register, registerSuccess, registerError } from './auth.actions';
+import {
+  register,
+  registerSuccess,
+  registerError,
+  loginSuccess,
+  login,
+  loginError,
+} from './auth.actions';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../../../services/toast/toast.service';
 import { LocalStorageService } from '../../../services/local-storage-service/local-storage-service';
@@ -23,7 +30,7 @@ export class AuthEffects {
     return this.actions$.pipe(
       ofType(register),
       switchMap(({ request }) => {
-        return this.authService.register(request).pipe(
+        return this.authService.register$(request).pipe(
           map((result) => registerSuccess({ result })),
           tap(({ result }) => {
             this.toastService.error(
@@ -40,10 +47,10 @@ export class AuthEffects {
     );
   });
 
-  private readonly registerSuccess$ = createEffect(
+  private readonly authSuccess$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(registerSuccess),
+        ofType(registerSuccess, loginSuccess),
         tap(() => void this.router.navigate(['/home']))
       );
     },
@@ -51,4 +58,24 @@ export class AuthEffects {
       dispatch: false,
     }
   );
+
+  private readonly login$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(login),
+      switchMap(({ request }) => {
+        return this.authService.login$(request).pipe(
+          map((result) => loginSuccess({ result })),
+          tap(({ result }) => {
+            this.localStorageService.save('jwtToken', result.token);
+          }),
+          catchError((error: HttpErrorResponse) => {
+            this.toastService.error(error.message);
+            return of(loginError({ error }));
+          })
+        );
+      })
+    );
+  });
+
+  // TODO: login, register errors effects
 }

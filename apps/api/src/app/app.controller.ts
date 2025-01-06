@@ -9,6 +9,7 @@ import {
 
 import { AppService } from './app.service';
 import {
+  ILoginResponse,
   IRegisterRequest,
   IRegisterResponse,
   IResponseErrors,
@@ -17,16 +18,6 @@ import {
 @Controller('app')
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  // @Get('fetchText')
-  // public async getData(): Promise<IGetDataResponse> {
-  //   return new Promise<IGetDataResponse>((resolve) => {
-  //     setTimeout(() => {
-  //       const bank = this.appService.getData();
-  //       resolve(this.appService.buildGetDataResponse(bank));
-  //     }, 2500);
-  //   });
-  // }
 
   @Post('register')
   public async register(
@@ -48,6 +39,26 @@ export class AppController {
     // };
     // throw new HttpException(errors, HttpStatus.INTERNAL_SERVER_ERROR);
 
+    return new Promise<IRegisterResponse>((resolve) => {
+      setTimeout(() => {
+        resolve({
+          user: {
+            id: 12,
+            email: registerDto.email,
+            username: registerDto.username,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          },
+          token: 'have no fear, the JWT is here',
+        });
+      }, 2500);
+    });
+  }
+
+  @Post('login')
+  public async login(
+    @Body() registerDto: IRegisterRequest
+  ): Promise<ILoginResponse | IResponseErrors> {
     return new Promise<IRegisterResponse>((resolve) => {
       setTimeout(() => {
         resolve({
