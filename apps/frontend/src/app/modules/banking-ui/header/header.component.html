@@ -14,6 +14,10 @@
 </nav>
 
 <div class="header__actions actions">
+  @if (isLoggedIn$ | async) {
+  <button mat-button>Профиль</button>
+  } @else {
   <button mat-button (click)="onRegisterClick()">Регистрация</button>
   <button mat-raised-button (click)="onLoginClick()">Вход</button>
+  }
 </div>

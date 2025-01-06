@@ -1,6 +1,13 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { IAuthState } from './auth.state';
-import { register, registerError, registerSuccess } from './auth.actions';
+import {
+  login,
+  loginError,
+  loginSuccess,
+  register,
+  registerError,
+  registerSuccess,
+} from './auth.actions';
 
 export const initialState: IAuthState = {
   isSubmiting: null,
@@ -16,8 +23,10 @@ const authReducer = createReducer(
     register,
     (state): IAuthState => ({
       ...state,
-      isSubmiting: true,
+      token: null,
+      currentUser: null,
       validationErrors: null,
+      isSubmiting: true,
     })
   ),
 
@@ -26,6 +35,7 @@ const authReducer = createReducer(
     (state, { result }): IAuthState => ({
       ...state,
       isSubmiting: false,
+      token: result.token,
       currentUser: {
         ...result.user,
         createdAt: new Date(result.user.createdAt),
@@ -38,8 +48,45 @@ const authReducer = createReducer(
     registerError,
     (state, { error }): IAuthState => ({
       ...state,
-      isSubmiting: false,
       currentUser: null,
+      token: null,
+      isSubmiting: false,
+      validationErrors: error.error,
+    })
+  ),
+
+  on(
+    login,
+    (state): IAuthState => ({
+      ...state,
+      currentUser: null,
+      token: null,
+      isSubmiting: true,
+      validationErrors: null,
+    })
+  ),
+
+  on(
+    loginSuccess,
+    (state, { result }): IAuthState => ({
+      ...state,
+      isSubmiting: false,
+      token: result.token,
+      currentUser: {
+        ...result.user,
+        createdAt: new Date(result.user.createdAt),
+        updatedAt: new Date(result.user.updatedAt),
+      },
+    })
+  ),
+
+  on(
+    loginError,
+    (state, { error }): IAuthState => ({
+      ...state,
+      token: null,
+      currentUser: null,
+      isSubmiting: false,
       validationErrors: error.error,
     })
   )

@@ -1,5 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { selectIsLoggedIn } from '../../auth/store/auth.selectors';
+import { tap } from 'rxjs';
 
 /**
  * Компонент десктопного заголовка страницы. Применяется внутри контейнера
@@ -11,6 +14,11 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   private readonly router = inject(Router);
+  private readonly store = inject(Store);
+  public readonly isLoggedIn$ = this.store.pipe(
+    tap((val) => console.log(val)),
+    select(selectIsLoggedIn)
+  );
 
   public readonly navigation: readonly string[] = [
     'Вклады',
