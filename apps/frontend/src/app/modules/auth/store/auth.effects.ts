@@ -12,6 +12,9 @@ import {
   loginSuccess,
   login,
   loginError,
+  getCurrentUser,
+  getCurrentUserSuccess,
+  getCurrentUserError,
 } from './auth.actions';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../../../services/toast/toast.service';
@@ -71,6 +74,25 @@ export class AuthEffects {
           catchError((error: HttpErrorResponse) => {
             this.toastService.error(error.message);
             return of(loginError({ error }));
+          })
+        );
+      })
+    );
+  });
+
+  private readonly getCurrentUser$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getCurrentUser),
+      switchMap(() => {
+        const jwtToken = this.localStorageService.get('jwtToken');
+        if (!jwtToken) {
+          return of(getCurrentUserError());
+        }
+
+        return this.authService.getCurrentUser$().pipe(
+          map((result) => getCurrentUserSuccess({ result })),
+          catchError(() => {
+            return of(getCurrentUserError());
           })
         );
       })

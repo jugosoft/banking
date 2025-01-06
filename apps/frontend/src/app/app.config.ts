@@ -11,12 +11,18 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
+import { reducer } from './modules/auth/store/auth.reducer';
+import { AuthEffects } from './modules/auth/store/auth.effects';
+import { AuthService } from './modules/auth/services/auth.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideClientHydration(),
     provideRouter(appRoutes),
     provideAnimations(),
+    AuthService,
+    importProvidersFrom(StoreModule.forFeature('auth', reducer)),
+    importProvidersFrom(EffectsModule.forFeature(AuthEffects)),
     importProvidersFrom(HttpClientModule),
     importProvidersFrom(RouterModule.forRoot(appRoutes)),
     importProvidersFrom(StoreModule.forRoot([])),

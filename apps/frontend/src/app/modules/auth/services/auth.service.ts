@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
+  IGetCurrentUserResponse,
   ILoginRequest,
   ILoginResponse,
   IRegisterRequest,
@@ -19,7 +20,13 @@ export class AuthService {
     );
   }
 
-  public login$(request: ILoginRequest): Observable<IRegisterResponse> {
+  public login$(request: ILoginRequest): Observable<ILoginResponse> {
     return this.httpClient.post<ILoginResponse>('/api/app/login', request);
+  }
+
+  public getCurrentUser$(): Observable<IGetCurrentUserResponse> {
+    return this.httpClient.get<IGetCurrentUserResponse>(
+      '/api/app/getCurrentUser'
+    );
   }
 }

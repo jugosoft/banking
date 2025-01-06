@@ -1,12 +1,13 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthAction } from '../../../store/store.enums';
 import {
   IRegisterRequest,
   ILoginResponse,
   IRegisterResponse,
   ILoginRequest,
+  IGetCurrentUserResponse,
 } from '@banking/shared-types';
+import { AuthAction } from '../../../store/store.enums';
 
 export const register = createAction(
   AuthAction.REGISTER,
@@ -40,4 +41,16 @@ export const loginError = createAction(
   props<{
     error: HttpErrorResponse;
   }>()
+);
+
+export const getCurrentUser = createAction(AuthAction.GET_CURRENT_USER);
+export const getCurrentUserSuccess = createAction(
+  AuthAction.GET_CURRENT_USER_SUCCESS,
+  props<{
+    result: IGetCurrentUserResponse;
+  }>()
+);
+/* При ошибке перенаправляем на авторизацию */
+export const getCurrentUserError = createAction(
+  AuthAction.GET_CURRENT_USER_ERROR
 );
