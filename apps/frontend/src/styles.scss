@@ -1,8 +1,9 @@
 @use '@angular/material' as mat;
-@import "assets";
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import 'assets';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background: transparent;
@@ -14,7 +15,8 @@ html, body {
   line-height: $line-height;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
-

@@ -1,0 +1,15 @@
+.deposit-card {
+  &__avatar {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  &__progress-bar {
+    margin-bottom: 1rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+  }
+}

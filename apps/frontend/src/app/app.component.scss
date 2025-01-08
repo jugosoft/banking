@@ -1,4 +1,4 @@
-@import "apps/frontend/src/styles";
+@import 'apps/frontend/src/styles';
 
 :host {
   display: flex;
@@ -22,7 +22,7 @@ header {
 
 main {
   flex: 1;
-  padding: 1rem;
+  padding: 2rem;
   overflow-y: auto;
 }
 
