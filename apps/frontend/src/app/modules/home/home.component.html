@@ -1,5 +1,3 @@
-<banking-deposit-card></banking-deposit-card>
-<banking-deposit-card></banking-deposit-card>
-<banking-deposit-card></banking-deposit-card>
-<banking-deposit-card></banking-deposit-card>
-<banking-deposit-card></banking-deposit-card>
+@for (deposit of deposits; track $index) {
+<banking-deposit-card [deposit]="deposit"></banking-deposit-card>
+}

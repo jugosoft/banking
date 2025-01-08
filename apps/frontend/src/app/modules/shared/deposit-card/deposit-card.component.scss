@@ -1,4 +1,6 @@
 .deposit-card {
+  height: 100%;
+
   &__avatar {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
@@ -6,6 +8,10 @@
 
   &__progress-bar {
     margin-bottom: 1rem;
+  }
+
+  &__content {
+    flex-grow: 1;
   }
 
   &__actions {

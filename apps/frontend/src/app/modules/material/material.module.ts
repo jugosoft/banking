@@ -9,6 +9,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -22,6 +23,7 @@ import { MatCardModule } from '@angular/material/card';
     MatDividerModule,
     MatProgressBarModule,
     MatCardModule,
+    MatTooltipModule,
   ],
   exports: [
     MatButtonModule,
@@ -33,6 +35,7 @@ import { MatCardModule } from '@angular/material/card';
     MatDividerModule,
     MatProgressBarModule,
     MatCardModule,
+    MatTooltipModule,
   ],
 })
 export class MaterialModule {}
