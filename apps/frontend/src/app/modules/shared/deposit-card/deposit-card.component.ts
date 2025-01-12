@@ -16,14 +16,14 @@ export class DepositCardComponent implements OnInit {
   public daysBeforeClose: number | null = null;
   public daysTotal: number | null = null;
   public isClosingSoon = false;
-  public progressBarColor: 'primary' | 'warn' = 'primary';
+  public progressBarColor: 'primary' | 'accent' | 'warn' = 'primary';
   public progressBarPercentage = 0;
 
   public ngOnInit(): void {
-    this.daysBeforeClose = this.getDaysBeforeClose();
-    this.daysTotal = this.getDaysTotal();
-    this.isClosingSoon = this.getIsClosingSoon();
-    if (this.daysBeforeClose) {
+    if (this.deposit.period.end) {
+      this.daysBeforeClose = this.getDaysBeforeClose();
+      this.daysTotal = this.getDaysTotal();
+      this.isClosingSoon = this.getIsClosingSoon();
       this.progressBarPercentage =
         ((this.daysTotal - this.daysBeforeClose) / this.daysTotal) * 100;
     }
@@ -37,14 +37,17 @@ export class DepositCardComponent implements OnInit {
    * Поучить число дней до закрытия
    */
   private getDaysBeforeClose(): number {
-    return -dateDiffInDays(this.deposit.period.end!, new Date());
+    return -dateDiffInDays(new Date(this.deposit.period.end!), new Date());
   }
 
   /**
    * Поучить число прогресс-бара
    */
   private getDaysTotal(): number {
-    return dateDiffInDays(this.deposit.period.start, this.deposit.period.end!);
+    return dateDiffInDays(
+      new Date(this.deposit.period.start),
+      new Date(this.deposit.period.end!)
+    );
   }
 
   /**

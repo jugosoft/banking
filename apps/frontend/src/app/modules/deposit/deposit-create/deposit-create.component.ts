@@ -7,15 +7,15 @@ import {
 import { Store } from '@ngrx/store';
 
 /**
- * Компонент домашней страницы
+ * Компонент создания инвест-продукта
  */
 @Component({
-  selector: 'banking-home',
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  selector: 'banking-deposit',
+  templateUrl: './deposit-create.component.html',
+  styleUrl: './deposit-create.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit {
+export class DepositCreateComponent implements OnInit {
   private readonly store = inject(Store);
 
   public ngOnInit(): void {

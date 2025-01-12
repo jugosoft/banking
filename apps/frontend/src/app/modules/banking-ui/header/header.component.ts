@@ -30,4 +30,8 @@ export class HeaderComponent {
   public onRegisterClick(): void {
     void this.router.navigate(['/auth', 'register']);
   }
+
+  public goToDepositCreate(): void {
+    void this.router.navigate(['/deposit', 'create']);
+  }
 }

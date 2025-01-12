@@ -12,6 +12,13 @@ export const appRoutes: Routes = [
       import('./modules/auth/auth.module').then((module) => module.AuthModule),
   },
   {
+    path: 'deposit',
+    loadChildren: () =>
+      import('./modules/deposit/deposit.module').then(
+        (module) => module.DepositModule
+      ),
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'home',
