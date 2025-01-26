@@ -18,7 +18,7 @@
 
 <mat-sidenav-container>
   <mat-sidenav color="primary" #sidenav mode="over" opened="false">
-    <div class="wrapper__sidenav-container">
+    <div class="wrapper__sidenav-container" (click)="sidenav.close()">
       <ng-container *ngTemplateOutlet="navButtonsTemplate"></ng-container>
     </div>
   </mat-sidenav>
