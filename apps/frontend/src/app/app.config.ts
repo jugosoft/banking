@@ -15,6 +15,7 @@ import { reducer } from './modules/auth/store/auth.reducer';
 import { AuthEffects } from './modules/auth/store/auth.effects';
 import { AuthService } from './modules/auth/services/auth.service';
 import { AuthInterceptor } from './interceptors/auth/auth.interceptor';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,6 +31,8 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(StoreModule.forFeature('auth', reducer)),
     importProvidersFrom(EffectsModule.forFeature(AuthEffects)),
     importProvidersFrom(HttpClientModule),
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
+    provideNativeDateAdapter(),
     importProvidersFrom(RouterModule.forRoot(appRoutes)),
     importProvidersFrom(StoreModule.forRoot([])),
     importProvidersFrom(EffectsModule.forRoot([])),

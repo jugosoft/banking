@@ -12,6 +12,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [],
@@ -28,6 +29,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatProgressBarModule,
     MatCardModule,
     MatTooltipModule,
+    MatDatepickerModule
   ],
   exports: [
     MatButtonModule,
@@ -42,6 +44,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatProgressBarModule,
     MatCardModule,
     MatTooltipModule,
+    MatDatepickerModule
+
   ],
 })
 export class MaterialModule { }

@@ -1,9 +1,37 @@
+@import "apps/frontend/src/styles";
+
 :host {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  display: flex;
+
+  @include respond-to('medium') {
+    justify-content: center;
+  }
 }
 
-.deposit-card {
-  max-width: 450px;
+.deposit-create {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    @include respond-to('medium') {
+      justify-content: center;
+      width: 640px;
+    }
+
+    @include respond-to('large') {
+      justify-content: center;
+      width: 840px;
+    }
+  }
+
+  &__title {
+    margin-bottom: 2rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 }

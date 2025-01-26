@@ -17,4 +17,4 @@ import { DepositCreateComponent } from './deposit-create/deposit-create.componen
     BankingUiModule,
   ],
 })
-export class DepositModule {}
+export class DepositModule { }

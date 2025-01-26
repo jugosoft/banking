@@ -4,7 +4,7 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
 /**
  * Компонент домашней страницы
@@ -17,8 +17,9 @@ import { Store } from '@ngrx/store';
 })
 export class HomeComponent implements OnInit {
   private readonly store = inject(Store);
+  // public deposits$ = this.store.pipe(select());
 
   public ngOnInit(): void {
-    throw new Error('Method not implemented.');
+
   }
 }
