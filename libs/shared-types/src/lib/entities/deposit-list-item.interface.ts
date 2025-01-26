@@ -4,16 +4,13 @@ import { IDepositType } from './deposit-type.interface';
 import { IPeriod } from './period.interface';
 import { IEntityBase } from './entity-base.interface';
 
-export interface IDeposit extends IEntityBase {
+export interface IDepositListItem extends IEntityBase {
   type: IDepositType;
   bank: IBank;
   period: IPeriod;
-  startAmount: number;
   currentAmount: number;
   displayPercent: number;
-  percentPeriods: IPercentPeriod[];
   capitalization: boolean;
   replenishable: boolean;
   withdrawal: boolean;
-  comment: string | null;
 }
