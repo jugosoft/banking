@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+  <div class="wrapper__burger">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div class="wrapper__logo">
+    <span>BANKING</span>
+  </div>
+
+  <div class="wrapper__spacer"></div>
+
+  <div class="wrapper__navigation">
+    <ng-container *ngTemplateOutlet="navButtonsTemplate"></ng-container>
+  </div>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav color="primary" #sidenav mode="over" opened="false">
+    <div class="wrapper__sidenav-container">
+      <ng-container *ngTemplateOutlet="navButtonsTemplate"></ng-container>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #navButtonsTemplate>
+  @if (isLoggedIn$ | async) {
+  <button mat-button>Профиль</button>
+  } @else {
+  <button mat-button (click)="onDepositCreate()">Добавить продукт</button>
+  <button mat-button (click)="onRegisterClick()">Регистрация</button>
+  <button mat-raised-button (click)="onLoginClick()">Вход</button>
+  }
+</ng-template>

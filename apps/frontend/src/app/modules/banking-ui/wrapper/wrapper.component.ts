@@ -5,23 +5,17 @@ import { select, Store } from '@ngrx/store';
 import { selectIsLoggedIn } from '../../auth/store/auth.selectors';
 
 /**
- * Компонент десктопного заголовка страницы. Применяется внутри контейнера
+ * Компонент обёртки страницы
  */
 @Component({
-  selector: 'banking-header',
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  selector: 'banking-wrapper',
+  templateUrl: './wrapper.component.html',
+  styleUrl: './wrapper.component.scss',
 })
-export class HeaderComponent {
+export class WrapperComponent {
   private readonly router = inject(Router);
   private readonly store = inject(Store);
   public readonly isLoggedIn$ = this.store.pipe(select(selectIsLoggedIn));
-
-  public readonly navigation: readonly string[] = [
-    'Вклады',
-    'Текущее состояние',
-    'Калькулятор',
-  ];
 
   public onLoginClick(): void {
     void this.router.navigate(['/auth', 'login']);
@@ -31,7 +25,7 @@ export class HeaderComponent {
     void this.router.navigate(['/auth', 'register']);
   }
 
-  public goToDepositCreate(): void {
+  public onDepositCreate(): void {
     void this.router.navigate(['/deposit', 'create']);
   }
 }

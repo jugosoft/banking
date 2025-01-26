@@ -19,6 +19,5 @@ export class DepositCreateComponent implements OnInit {
   private readonly store = inject(Store);
 
   public ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 }

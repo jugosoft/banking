@@ -1,0 +1,45 @@
+@import "apps/frontend/src/styles";
+
+:host {
+  @include respond-to('large') {
+    height: 100%;
+  }
+}
+
+.wrapper {
+  &__burger {
+    @include respond-to('large') {
+      display: none;
+    }
+  }
+
+  &__logo {
+    pointer-events: none;
+    user-select: none;
+    font-size: $font-size-large;
+    line-height: $line-height-large;
+    font-weight: $font-weight-bold;
+    letter-spacing: $letter-spacing-logo;
+  }
+
+  &__navigation {
+    display: none;
+
+    @include respond-to('large') {
+      display: block;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+
+  &__sidenav-container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  &__spacer {
+    flex: 1 1 auto;
+  }
+}

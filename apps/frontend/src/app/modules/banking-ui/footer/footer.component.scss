@@ -2,13 +2,18 @@
 
 :host {
   display: grid;
-  padding: $gutter-medium;
-  grid-template-columns: repeat(5, auto);
+  padding: 2rem;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+
+  @include respond-to('large') {
+    grid-template-columns: repeat(5, auto);
+  }
 }
 
 .footer {
   &__column-title {
-    margin-bottom: $gutter-small;
+    margin-bottom: 2rem;
     font-size: $font-size-medium;
     color: $white;
   }
