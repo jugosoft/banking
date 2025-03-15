@@ -4,14 +4,13 @@ import {
   IGetDepositListResponse,
   IRegisterRequest,
 } from '@banking/shared-types';
-import { AuthAction, HomeAction } from '../../../store/store.enums';
+import { HomeAction } from '../../../store/store.enums';
 
 export const getDepositList = createAction(
-  AuthAction.REGISTER,
-  props<{ request: IRegisterRequest }>()
+  HomeAction.GET_DEPOSIT_LIST
 );
 export const getDepositListSuccess = createAction(
-  HomeAction.GET_DEPOSIT_LIST,
+  HomeAction.GET_DEPOSIT_LIST_SUCCESS,
   props<{
     result: IGetDepositListResponse;
   }>()

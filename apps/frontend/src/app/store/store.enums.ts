@@ -1,5 +1,6 @@
 export enum StoreKey {
   AUTH = 'auth',
+  HOME = 'home',
 }
 
 export enum AuthAction {
@@ -17,7 +18,7 @@ export enum AuthAction {
 }
 
 export enum HomeAction {
-  GET_DEPOSIT_LIST = '[Auth] Get Deposit List',
-  GET_DEPOSIT_LIST_SUCCESS = '[Auth] Get Deposit List Success',
-  GET_DEPOSIT_LIST_ERROR = '[Auth] Get Deposit List Error',
+  GET_DEPOSIT_LIST = '[Home] Get Deposit List',
+  GET_DEPOSIT_LIST_SUCCESS = '[Home] Get Deposit List Success',
+  GET_DEPOSIT_LIST_ERROR = '[Home] Get Deposit List Error',
 }

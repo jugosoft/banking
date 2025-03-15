@@ -1,4 +1,9 @@
-<!-- @for (deposit of deposits; track $index) {
-<banking-deposit-card [deposit]="deposit"></banking-deposit-card>
-} -->
-<p>home</p>
+@if (isSubmitting$ | async) {
+<mat-spinner></mat-spinner>
+} @else {
+<section class="home__deposit-list">
+    @for (deposit of deposits$ | async; track $index) {
+    <banking-deposit-card class="home__deposit-item" [deposit]="deposit"></banking-deposit-card>
+    }
+</section>
+}

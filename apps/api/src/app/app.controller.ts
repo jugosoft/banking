@@ -14,7 +14,7 @@ import {
 
 @Controller('app')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Post('register')
   public async register(
@@ -101,6 +101,8 @@ export class AppController {
         resolve({
           deposits: [
             {
+              id: 0,
+              archived: false,
               period: {
                 start: new Date(2024, 11, 20).toISOString(),
                 end: new Date(2025, 0, 16).toISOString(),
@@ -130,6 +132,8 @@ export class AppController {
               currentAmount: 280_000,
             },
             {
+              id: 1,
+              archived: false,
               period: {
                 start: new Date(2024, 11, 20).toISOString(),
                 end: new Date(2025, 11, 20).toISOString(),
@@ -158,6 +162,8 @@ export class AppController {
               currentAmount: 530_000,
             },
             {
+              id: 2,
+              archived: false,
               period: {
                 start: new Date(2024, 11, 20).toISOString(),
                 end: null,
@@ -187,6 +193,8 @@ export class AppController {
               currentAmount: 530_000,
             },
             {
+              id: 3,
+              archived: false,
               period: {
                 start: new Date(2024, 11, 20).toISOString(),
                 end: null,

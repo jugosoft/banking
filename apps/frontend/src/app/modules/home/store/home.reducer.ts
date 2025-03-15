@@ -1,135 +1,42 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { IAuthState } from './home.state';
-import {
-  getCurrentUser,
-  getCurrentUserError,
-  getCurrentUserSuccess,
-  login,
-  loginError,
-  loginSuccess,
-  register,
-  registerError,
-  registerSuccess,
-} from './home.actions';
+import { IHomeState } from './home.state';
+import { getDepositList, getDepositListError, getDepositListSuccess } from './home.actions';
 
-export const initialState: IAuthState = {
+export const initialState: IHomeState = {
   isSubmiting: null,
-  currentUser: null,
-  token: null,
-  validationErrors: null,
+  deposits: null,
 };
 
-const authReducer = createReducer(
+export const homeReducer = createReducer(
   initialState,
 
   on(
-    register,
-    (state): IAuthState => ({
+    getDepositList,
+    (state): IHomeState => ({
       ...state,
-      token: null,
-      currentUser: null,
-      validationErrors: null,
-      isSubmiting: true,
+      isSubmiting: true
     })
   ),
 
   on(
-    registerSuccess,
-    (state, { result }): IAuthState => ({
+    getDepositListSuccess,
+    (state, { result }): IHomeState => ({
       ...state,
       isSubmiting: false,
-      token: result.token,
-      currentUser: {
-        ...result.user,
-        createdAt: new Date(result.user.createdAt),
-        updatedAt: new Date(result.user.updatedAt),
-      },
+      deposits: result.deposits
     })
   ),
 
   on(
-    registerError,
-    (state, { error }): IAuthState => ({
-      ...state,
-      currentUser: null,
-      token: null,
-      isSubmiting: false,
-      validationErrors: error.error,
-    })
-  ),
-
-  on(
-    login,
-    (state): IAuthState => ({
-      ...state,
-      currentUser: null,
-      token: null,
-      isSubmiting: true,
-      validationErrors: null,
-    })
-  ),
-
-  on(
-    loginSuccess,
-    (state, { result }): IAuthState => ({
+    getDepositListError,
+    (state, { error }): IHomeState => ({
       ...state,
       isSubmiting: false,
-      token: result.token,
-      currentUser: {
-        ...result.user,
-        createdAt: new Date(result.user.createdAt),
-        updatedAt: new Date(result.user.updatedAt),
-      },
-    })
-  ),
-
-  on(
-    loginError,
-    (state, { error }): IAuthState => ({
-      ...state,
-      token: null,
-      currentUser: null,
-      isSubmiting: false,
-      validationErrors: error.error,
-    })
-  ),
-
-  on(
-    getCurrentUser,
-    (state): IAuthState => ({
-      ...state,
-      currentUser: null,
-      token: null,
-      isSubmiting: true,
-      validationErrors: null,
-    })
-  ),
-
-  on(
-    getCurrentUserSuccess,
-    (state, { result }): IAuthState => ({
-      ...state,
-      isSubmiting: false,
-      token: result.token,
-      currentUser: {
-        ...result.user,
-        createdAt: new Date(result.user.createdAt),
-        updatedAt: new Date(result.user.updatedAt),
-      },
-    })
-  ),
-
-  on(
-    getCurrentUserError,
-    (state): IAuthState => ({
-      ...state,
-      token: null,
-      currentUser: null,
-      isSubmiting: false,
+      deposits: null
     })
   )
 );
 
-export function reducer(state: IAuthState, action: Action) {
-  return authReducer(state, action);
+export function reducer(state: IHomeState, action: Action) {
+  return homeReducer(state, action);
 }

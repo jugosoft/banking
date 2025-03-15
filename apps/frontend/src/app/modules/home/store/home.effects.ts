@@ -5,47 +5,28 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { getDepositList, getDepositListError } from './home.actions';
+import { getDepositList, getDepositListError, getDepositListSuccess } from './home.actions';
+import { HomeService } from '../services/home.service';
+import { ToastService } from '../../../services/toast/toast.service';
 
 @Injectable()
-export class AuthEffects {
+export class HomeEffects {
   private readonly actions$ = inject(Actions);
   private readonly store = inject(Store);
   private readonly router = inject(Router);
+  private readonly toastService = inject(ToastService);
+  private readonly homeService = inject(HomeService);
 
-  // private readonly register$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(getDepositList),
-  //     switchMap(({ request }) => {
-  //       return this.authService.register$(request).pipe(
-  //         map((result) => registerSuccess({ result })),
-  //         tap(({ result }) => {
-  //           this.localStorageService.save('jwtToken', result.token);
-  //         }),
-  //         catchError((error: HttpErrorResponse) => {
-  //           this.toastService.error(error.message);
-  //           return of(registerError({ error }));
-  //         })
-  //       );
-  //     })
-  //   );
-  // });
-
-  // private readonly login$ = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(getDepositListError),
-  //     switchMap(({ request }) => {
-  //       return this.authService.login$(request).pipe(
-  //         map((result) => loginSuccess({ result })),
-  //         tap(({ result }) => {
-  //           this.localStorageService.save('jwtToken', result.token);
-  //         }),
-  //         catchError((error: HttpErrorResponse) => {
-  //           this.toastService.error(error.message);
-  //           return of(loginError({ error }));
-  //         })
-  //       );
-  //     })
-  //   );
-  // });
+  private readonly getDepositList$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getDepositList),
+      switchMap(() => {
+        return this.homeService.getDepositList$().pipe(
+          map((result) => getDepositListSuccess({ result })),
+          catchError((error: HttpErrorResponse) => {
+            this.toastService.error(error.message);
+            return of(getDepositListError({ error }));
+          }))
+      }))
+  })
 }

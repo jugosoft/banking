@@ -14,6 +14,6 @@ import { BankingUiModule } from '../banking-ui/banking-ui.module';
     MaterialModule,
     DepositCardComponent,
     BankingUiModule,
-  ],
+  ]
 })
-export class HomeModule {}
+export class HomeModule { }
