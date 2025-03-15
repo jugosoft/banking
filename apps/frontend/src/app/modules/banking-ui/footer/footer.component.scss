@@ -6,6 +6,10 @@
   gap: 2rem;
   grid-template-columns: 1fr;
 
+  @include respond-to('medium') {
+    grid-template-columns: repeat(3, auto);
+  }
+
   @include respond-to('large') {
     grid-template-columns: repeat(5, auto);
   }
