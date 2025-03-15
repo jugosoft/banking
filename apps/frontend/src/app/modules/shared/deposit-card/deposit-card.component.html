@@ -12,11 +12,8 @@
   </mat-card-header>
   <mat-card-content class="deposit-card__content">
     @if (deposit.period.end) {
-    <mat-progress-bar
-      class="deposit-card__progress-bar"
-      [color]="progressBarColor"
-      [value]="progressBarPercentage"
-    ></mat-progress-bar>
+    <mat-progress-bar class="deposit-card__progress-bar" [color]="progressBarColor"
+      [value]="progressBarPercentage"></mat-progress-bar>
     @if (isClosingSoon) {
     <p>До закрытия {{ daysBeforeClose }} дней</p>
     } }
@@ -24,7 +21,7 @@
     <p>{{ deposit.comment }}</p>
   </mat-card-content>
   <mat-card-actions class="deposit-card__actions">
-    <button mat-button color="primary">Редактировать</button>
+    <button mat-button color="primary" (click)="editDeposit()">Редактировать</button>
     <button mat-raised-button color="warn">Удалить</button>
   </mat-card-actions>
 </mat-card>

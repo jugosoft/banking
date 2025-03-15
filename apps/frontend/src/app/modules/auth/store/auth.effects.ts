@@ -90,6 +90,7 @@ export class AuthEffects {
         }
 
         return this.authService.getCurrentUser$().pipe(
+          tap(() => void this.router.navigate(['/home'])),
           map((result) => getCurrentUserSuccess({ result })),
           catchError(() => {
             return of(getCurrentUserError());
