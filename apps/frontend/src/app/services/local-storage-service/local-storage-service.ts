@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  public get<T>(key: string): T | null {
+  public get<T extends string>(key: string): T | null {
     const value: string | null = localStorage.getItem(key);
-    return value ? (JSON.parse(value) as T) : null;
+    return value ? value as T : null;
   }
 
   public save(key: string, obj: unknown = {}): void {

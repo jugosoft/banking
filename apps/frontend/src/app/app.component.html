@@ -1,3 +1,8 @@
+@if (isSubmitting$ | async) {
+<div class="preloader">
+  <mat-spinner></mat-spinner>
+</div>
+} @else {
 <banking-wrapper>
   <main>
     <router-outlet></router-outlet>
@@ -9,3 +14,4 @@
     <banking-footer></banking-footer>
   </div>
 </footer>
+}
