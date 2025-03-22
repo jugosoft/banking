@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="wrapper__toolbar" color="primary">
   <div class="wrapper__burger">
     <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
@@ -17,21 +17,23 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav color="primary" #sidenav mode="over" opened="false">
+  <mat-sidenav class="wrapper__sidenav" color="primary" #sidenav mode="over" opened="false">
     <div class="wrapper__sidenav-container" (click)="sidenav.close()">
       <ng-container *ngTemplateOutlet="navButtonsTemplate"></ng-container>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
-    <ng-content></ng-content>
+    <div class="wrapper__content">
+      <ng-content></ng-content>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
 <ng-template #navButtonsTemplate>
   @if (isLoggedIn$ | async) {
+  <button mat-button (click)="onDepositCreate()">Добавить продукт</button>
   <button mat-button>Профиль</button>
   } @else {
-  <button mat-button (click)="onDepositCreate()">Добавить продукт</button>
   <button mat-button (click)="onRegisterClick()">Регистрация</button>
   <button mat-raised-button (click)="onLoginClick()">Вход</button>
   }
