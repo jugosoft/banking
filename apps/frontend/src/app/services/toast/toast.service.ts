@@ -17,4 +17,12 @@ export class ToastService {
   ): MatSnackBarRef<TextOnlySnackBar> {
     return this.snackBar.open(message, action);
   }
+
+
+  public success(
+    message: string,
+    action?: string
+  ): MatSnackBarRef<TextOnlySnackBar> {
+    return this.snackBar.open(message, action);
+  }
 }

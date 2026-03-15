@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -32,7 +32,7 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(ProfileActions.updateNameSuccess),
       tap(() => {
-        this.toastService.success('Имя успешно обновлено');
+        this.toastService.success('Имя усяпяпешно обновлено');
       })
     ),
     { dispatch: false }
@@ -133,6 +133,4 @@ export class ProfileEffects {
     ),
     { dispatch: false }
   );
-
-  readonly updatePasswordFailure$ = createEffect(() =>
-    this.actions$.pipe
+}

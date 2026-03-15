@@ -18,7 +18,7 @@ class AuthGuardService {
   private readonly authService = inject(AuthService);
   private readonly localStorageService = inject(LocalStorageService);
 
-  private checkAuthentication(): Observable<boolean | UrlTree> {
+  public checkAuthentication(): Observable<boolean | UrlTree> {
     const token = this.localStorageService.get('jwtToken');
 
     if (!token) {

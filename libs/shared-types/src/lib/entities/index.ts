@@ -1,7 +1,7 @@
-export { IPercentPeriod } from './percent-period.interface';
-export { IDeposit } from './deposit.interface';
-export { IPeriod } from './period.interface';
-export { IBank } from './bank.interface';
-export { IDepositType } from './deposit-type.interface';
+export { IPercentPeriod } from './interfaces/percent-period.interface';
+export { IDeposit } from './interfaces/deposit.interface';
+export { IPeriod } from './interfaces/period.interface';
+export { IBank } from './interfaces/bank.interface';
+export { IDepositType } from './interfaces/deposit-type.interface';
 export { DepositType } from './deposit-type.type';
-export { IDepositListItem } from './deposit-list-item.interface';
+export { IDepositListItem } from './interfaces/deposit-list-item.interface';

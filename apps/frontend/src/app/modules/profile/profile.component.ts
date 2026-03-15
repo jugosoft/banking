@@ -1,29 +1,31 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { select, Store as NgrxStore } from '@ngrx/store';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ICurrentUser } from '../auth/types';
-import { selectCurrentUser } from '../auth/store/auth.selectors';
 import { ProfileState } from './store/profile.state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ProfileService } from './services/profile.service';
 import { updateName, updateEmail, updateUsername, updatePassword } from './store/profile.actions';
 import { selectIsSubmitting, selectValidationErrors } from './store/profile.selectors';
+import { MatFormField, MatFormFieldModule } from "@angular/material/form-field";
+import { MaterialModule } from "../material/material.module";
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
 
 @UntilDestroy()
 @Component({
   selector: 'banking-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
+  imports: [MatFormField, MatFormFieldModule, MatProgressSpinner]
 })
 export class ProfileComponent implements OnInit {
   public currentUser$: Observable<ICurrentUser | null>;
   public isSubmitting$: Observable<boolean>;
   public validationErrors$: Observable<string | null>;
-  public personalForm: FormGroup;
-  public contactForm: FormGroup;
-  public passwordForm: FormGroup;
+  public personalForm!: FormGroup;
+  public contactForm!: FormGroup;
+  public passwordForm!: FormGroup;
   public editMode = {
     personal: false,
     contact: false,
@@ -35,7 +37,7 @@ export class ProfileComponent implements OnInit {
     password: false
   };
 
-  private readonly store = inject(NgrxStore);
+  private readonly store = inject(Store);
   private readonly profileService = inject(ProfileService);
   private readonly formBuilder = inject(FormBuilder);
 
@@ -71,7 +73,7 @@ export class ProfileComponent implements OnInit {
 
   private subscribeToLoading(): void {
     this.isSubmitting$.pipe(untilDestroyed(this)).subscribe(isSubmitting => {
-      Object.keys(this.loading).forEach(key => {
+      Object.keys(this.loading).forEach((keyЖ) => {
         this.loading[key] = isSubmitting;
       });
     });
@@ -91,7 +93,7 @@ export class ProfileComponent implements OnInit {
       // Заполняем форму текущими данными при открытии редактирования
       this.currentUser$.pipe(untilDestroyed(this)).subscribe(user => {
         if (user) {
-          switch(section) {
+          switch (section) {
             case 'personal':
               this.personalForm.patchValue({
                 firstName: user.firstName,
@@ -117,7 +119,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private clearFormErrors(section: string): void {
-    switch(section) {
+    switch (section) {
       case 'personal':
         this.personalForm.setErrors(null);
         break;
@@ -165,8 +167,8 @@ export class ProfileComponent implements OnInit {
 
   public getErrorsFor(controlName: string): ValidationErrors | null {
     const control = this.personalForm.get(controlName) ||
-                   this.contactForm.get(controlName) ||
-                   this.passwordForm.get(controlName);
+      this.contactForm.get(controlName) ||
+      this.passwordForm.get(controlName);
 
     if (control && control.touched) {
       return control.errors;

@@ -49,8 +49,10 @@
           </mat-form-field>
 
           <div class="profile__actions">
-            <button class="profile__cancel-button" mat-button type="button" (click)="cancelEdit('personal')">Отмена</button>
-            <button class="profile__submit-button" mat-raised-button color="primary" type="submit" [disabled]="personalForm.invalid || loading.personal">
+            <button class="profile__cancel-button" mat-button type="button"
+              (click)="cancelEdit('personal')">Отмена</button>
+            <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
+              [disabled]="personalForm.invalid || loading.personal">
               <mat-spinner *ngIf="loading.personal" diameter="20"></mat-spinner>
               <span *ngIf="!loading.personal">Сохранить</span>
             </button>
@@ -100,8 +102,10 @@
           </mat-form-field>
 
           <div class="profile__actions">
-            <button class="profile__cancel-button" mat-button type="button" (click)="cancelEdit('contact')">Отмена</button>
-            <button class="profile__submit-button" mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid || loading.contact">
+            <button class="profile__cancel-button" mat-button type="button"
+              (click)="cancelEdit('contact')">Отмена</button>
+            <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
+              [disabled]="contactForm.invalid || loading.contact">
               <mat-spinner *ngIf="loading.contact" diameter="20"></mat-spinner>
               <span *ngIf="!loading.contact">Сохранить</span>
             </button>
@@ -152,8 +156,10 @@
           </mat-form-field>
 
           <div class="profile__actions">
-            <button class="profile__cancel-button" mat-button type="button" (click)="cancelEdit('password')">Отмена</button>
-            <button class="profile__submit-button" mat-raised-button color="primary" type="submit" [disabled]="passwordForm.invalid || loading.password">
+            <button class="profile__cancel-button" mat-button type="button"
+              (click)="cancelEdit('password')">Отмена</button>
+            <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
+              [disabled]="passwordForm.invalid || loading.password">
               <mat-spinner *ngIf="loading.password" diameter="20"></mat-spinner>
               <span *ngIf="!loading.password">Сменить пароль</span>
             </button>

@@ -10,7 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducer } from './store/profile.reducer';
 import { ProfileEffects } from './store/profile.effects';
-import { NotSpecifiedPipe } from '../../../pipes/not-specified.pipe';
+import { NotSpecifiedPipe } from '../../pipes/not-specified.pipe';
 
 @NgModule({
   declarations: [

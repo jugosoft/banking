@@ -40,3 +40,4 @@ Thumbs.db
 
 .nx/cache
 .angular
+apps/frontend/src/app/modules/profile/store/profile.effects.ts
