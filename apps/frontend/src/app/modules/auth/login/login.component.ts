@@ -13,8 +13,8 @@ import {
   selectValidationErrors,
 } from '../store/auth.selectors';
 import { ILoginForm } from './model/login-form.interface';
-import { LocalStorageService } from '../../../../services/local-storage-service/local-storage-service';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../../../services/local-storage-service/local-storage-service';
 
 /**
  * Компонент логина пользователя
@@ -68,7 +68,8 @@ export class LoginComponent implements OnInit {
    * Инициализация контролов формы и начальных значений
    */
   private initFormGroup(): void {
-    this.formGroup = this.formBuilder.nonNullable.group<ILoginForm>({\n      email: this.formBuilder.control(null, Validators.required),
+    this.formGroup = this.formBuilder.nonNullable.group<ILoginForm>({
+      email: this.formBuilder.control(null, Validators.required),
       password: this.formBuilder.control(null, Validators.required),
     });
   }

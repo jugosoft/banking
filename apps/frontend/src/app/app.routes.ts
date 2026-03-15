@@ -24,6 +24,11 @@ export const appRoutes: Routes = [
             (module) => module.DepositModule
           ),
       },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./modules/profile/profile.module').then((module) => module.ProfileModule)
+      },
     ]
   },
   {
