@@ -6,8 +6,9 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ToastService } from '../../../services/toast/toast.service';
-import { getDeposit, getDepositError, getDepositSuccess } from './deposit.actions';
+import { getDeposit, getDepositError, getDepositSuccess, saveDeposit, saveDepositError, saveDepositSuccess } from './deposit.actions';
 import { DepositService } from '../../../services/api/deposit.service';
+import { getDepositListError, getDepositListSuccess } from '../../home/store/home.actions';
 
 @Injectable()
 export class DepositEffects {
@@ -21,11 +22,26 @@ export class DepositEffects {
     return this.actions$.pipe(
       ofType(getDeposit),
       switchMap(() => {
-        return this.homeService.getDeposit$().pipe(
-          map((result) => getDepositSuccess({ result })),
+        return this.homeService.getDepositList$().pipe(
+          map((result) => getDepositListSuccess({ result })),
           catchError((error: HttpErrorResponse) => {
             this.toastService.error(error.message);
-            return of(getDepositError({ error }));
+            return of(getDepositListError({ error }));
+          }))
+      }))
+  });
+
+
+  private readonly saveDeposit$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(saveDeposit),
+      switchMap(({ deposit }) => {
+        return this.homeService.saveDeposit$(deposit).pipe(
+          map((result) => saveDepositSuccess({ result })),
+          tap(() => this.router.navigate(['/home'])),
+          catchError((error: HttpErrorResponse) => {
+            this.toastService.error(error.message);
+            return of(saveDepositError({ error }));
           }))
       }))
   })

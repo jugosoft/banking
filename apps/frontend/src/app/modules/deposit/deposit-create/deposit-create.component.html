@@ -4,7 +4,7 @@
   <form class="deposit-create__form" [formGroup]="formGroup">
     <mat-form-field>
       <mat-label>Банк</mat-label>
-      <mat-select formControlName="bank">
+      <mat-select [compareWith]="compareFn" formControlName="bank">
         <mat-option [value]="1">Тиньков</mat-option>
         <mat-option [value]="0">Альфа</mat-option>
       </mat-select>
@@ -12,7 +12,7 @@
 
     <mat-form-field>
       <mat-label>Тип продукта</mat-label>
-      <mat-select formControlName="type">
+      <mat-select [compareWith]="compareFn" formControlName="type">
         <mat-option [value]="0">Вклад</mat-option>
         <mat-option [value]="1">Накопительный счёт</mat-option>
         <mat-option [value]="2">Инвестиции</mat-option>

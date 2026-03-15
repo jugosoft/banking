@@ -6,6 +6,10 @@ import { BankingUiModule } from '../banking-ui/banking-ui.module';
 import { DepositComponent } from './deposit.component';
 import { DepositRoutingModule } from './deposit-routing.module';
 import { DepositCreateComponent } from './deposit-create/deposit-create.component';
+import { StoreModule } from '@ngrx/store';
+import { depositReducer } from './store/deposit.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { DepositEffects } from './store/deposit.effects';
 
 @NgModule({
   declarations: [DepositComponent, DepositCreateComponent],
@@ -15,6 +19,8 @@ import { DepositCreateComponent } from './deposit-create/deposit-create.componen
     MaterialModule,
     DepositCardComponent,
     BankingUiModule,
+    StoreModule.forFeature('deposit', depositReducer),
+    EffectsModule.forFeature(DepositEffects)
   ],
 })
 export class DepositModule { }

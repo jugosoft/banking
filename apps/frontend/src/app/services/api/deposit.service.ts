@@ -5,6 +5,7 @@ import {
   IGetDepositListResponse,
   IGetDepositResponse,
 } from '@banking/shared-types';
+import { ISaveDepositProps } from '../../modules/deposit/store/model/save-deposit.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,18 @@ export class DepositService {
     );
   }
 
-  public getDeposit$(): Observable<IGetDepositResponse> {
+  public getDeposit$(depositId: number): Observable<IGetDepositResponse> {
     return this.httpClient.get<IGetDepositResponse>(
-      '/api/app/getDepositList',
+      '/api/app/getDeposit',
       {}
+    );
+  }
+
+
+  public saveDeposit$(deposit: ISaveDepositProps['deposit']): Observable<boolean> {
+    return this.httpClient.post<boolean>(
+      '/api/app/saveDeposit',
+      { deposit }
     );
   }
 }

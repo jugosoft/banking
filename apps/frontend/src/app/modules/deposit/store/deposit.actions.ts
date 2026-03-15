@@ -23,17 +23,17 @@ export const getDepositError = createAction(
 );
 
 export const saveDeposit = createAction(
-  DepositAction.GET_DEPOSIT,
+  DepositAction.SAVE_DEPOSIT,
   props<ISaveDepositProps>()
 );
 export const saveDepositSuccess = createAction(
-  DepositAction.GET_DEPOSIT_SUCCESS,
+  DepositAction.SAVE_DEPOSIT_SUCCESS,
   props<{
-    result: IGetDepositResponse;
+    result: boolean;
   }>()
 );
 export const saveDepositError = createAction(
-  DepositAction.GET_DEPOSIT_ERROR,
+  DepositAction.SAVE_DEPOSIT_ERROR,
   props<{
     error: HttpErrorResponse;
   }>()

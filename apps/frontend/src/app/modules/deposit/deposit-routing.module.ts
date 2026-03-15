@@ -9,8 +9,8 @@ const routes: Routes = [
     component: DepositCreateComponent,
   },
   {
-    path: ':id',
-    component: DepositComponent,
+    path: 'edit/:depositId',
+    component: DepositCreateComponent,
   },
   {
     path: '',
@@ -23,4 +23,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DepositRoutingModule {}
+export class DepositRoutingModule { }

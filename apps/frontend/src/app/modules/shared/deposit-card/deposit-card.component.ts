@@ -36,7 +36,7 @@ export class DepositCardComponent implements OnInit {
   }
 
   public editDeposit(): void {
-    void this.router.navigate(['/deposit', this.deposit.id]);
+    void this.router.navigate(['/deposit', 'edit', this.deposit.id]);
   }
 
   /**
