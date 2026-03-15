@@ -5,15 +5,17 @@ import { IPeriod } from './period.interface';
 import { IEntityBase } from './entity-base.interface';
 
 export interface IDeposit extends IEntityBase {
+  id: number;
+  archived: boolean;
+  period: IPeriod;
   type: IDepositType;
   bank: IBank;
-  period: IPeriod;
-  startAmount: number;
-  currentAmount: number;
+  capitalization: boolean;
+  comment: string | null;
   displayPercent: number;
   percentPeriods: IPercentPeriod[];
-  capitalization: boolean;
   replenishable: boolean;
   withdrawal: boolean;
-  comment: string | null;
+  startAmount: number;
+  currentAmount: number;
 }
