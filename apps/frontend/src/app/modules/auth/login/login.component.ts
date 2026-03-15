@@ -13,6 +13,8 @@ import {
   selectValidationErrors,
 } from '../store/auth.selectors';
 import { ILoginForm } from './model/login-form.interface';
+import { LocalStorageService } from '../../../../services/local-storage-service/local-storage-service';
+import { Router } from '@angular/router';
 
 /**
  * Компонент логина пользователя
@@ -28,6 +30,8 @@ export class LoginComponent implements OnInit {
   public formGroup!: FormGroup<ILoginForm>;
   private readonly formBuilder = inject(FormBuilder);
   private readonly store = inject(Store);
+  private readonly localStorageService = inject(LocalStorageService);
+  private readonly router = inject(Router);
   public readonly isSubmiting$ = this.store.pipe(select(selectIsSubmiting));
   public readonly validationErrors$ = this.store.pipe(
     select(selectValidationErrors)
@@ -36,6 +40,13 @@ export class LoginComponent implements OnInit {
   public ngOnInit(): void {
     this.initFormGroup();
     this.bindFormState();
+
+    // Проверяем, есть ли URL для редиректа после входа
+    const redirectUrl = this.localStorageService.get('redirectUrl');
+    if (redirectUrl) {
+      // Удаляем URL из localStorage, чтобы не перенаправлять при следующих входах
+      this.localStorageService.remove('redirectUrl');
+    }
   }
 
   /**
@@ -57,8 +68,7 @@ export class LoginComponent implements OnInit {
    * Инициализация контролов формы и начальных значений
    */
   private initFormGroup(): void {
-    this.formGroup = this.formBuilder.nonNullable.group<ILoginForm>({
-      email: this.formBuilder.control(null, Validators.required),
+    this.formGroup = this.formBuilder.nonNullable.group<ILoginForm>({\n      email: this.formBuilder.control(null, Validators.required),
       password: this.formBuilder.control(null, Validators.required),
     });
   }
