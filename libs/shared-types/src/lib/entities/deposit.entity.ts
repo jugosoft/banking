@@ -1,12 +1,13 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { User } from './user.entity';
-import { Bank } from './bank.interface';
-import { DepositType } from './deposit-type.interface';
+import { DepositType } from './deposit-type.entity';
+import { Bank } from './bank.entity';
 import { Period } from './period.interface';
 import { PercentPeriod } from './percent-period.interface';
+import { IDeposit } from './interfaces/deposit.interface';
 
-@Entity('deposits')
-export class Deposit {
+@Entity('deposit')
+export class Deposit implements IDeposit {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -16,10 +17,12 @@ export class Deposit {
   @Column('json')
   period: Period;
 
-  @Column('json')
+  @ManyToOne(() => DepositType)
+  @JoinColumn({ name: 'typeId' })
   type: DepositType;
 
-  @Column('json')
+  @ManyToOne(() => Bank)
+  @JoinColumn({ name: 'bankId' })
   bank: Bank;
 
   @Column({ default: false })
@@ -58,4 +61,10 @@ export class Deposit {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column()
+  typeId: number;
+
+  @Column()
+  bankId: number;
 }

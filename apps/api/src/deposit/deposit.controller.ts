@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Param, Inject } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { AppService } from '../app.service';
 import {
   IDeposit,
@@ -11,18 +11,20 @@ import { Deposit } from '@banking/shared-types';
 
 @Controller('deposit')
 export class DepositController {
+  private readonly depositRepository: Repository<Deposit>;
+
   constructor(
     private readonly appService: AppService,
     @Inject('DATA_SOURCE') private dataSource: DataSource
-  ) { }
+  ) {
+    this.depositRepository = dataSource.getRepository(Deposit);
+  }
 
   @Get('list')
   public async getDepositList(): Promise<
     IGetDepositListResponse | IResponseErrors
   > {
-    const depositRepository = this.dataSource.getRepository(Deposit);
-
-    const deposits = await depositRepository.find({
+    const deposits = await this.depositRepository.find({
       where: { archived: false }
     });
 
@@ -33,9 +35,7 @@ export class DepositController {
   public async getDeposit(@Param('id') id: string): Promise<
     IGetDepositResponse | IResponseErrors
   > {
-    const depositRepository = this.dataSource.getRepository(Deposit);
-
-    const deposit = await depositRepository.findOne({
+    const deposit = await this.depositRepository.findOne({
       where: { id: parseInt(id) }
     });
 
@@ -50,15 +50,13 @@ export class DepositController {
   public async saveDeposit(@Body() deposit: IDeposit): Promise<
     boolean | IResponseErrors
   > {
-    const depositRepository = this.dataSource.getRepository(Deposit);
-
     if (deposit.id) {
       // Обновление существующего депозита
-      await depositRepository.update(deposit.id, deposit);
+      await this.depositRepository.update(deposit.id, deposit);
     } else {
       // Создание нового депозита
-      const newDeposit = depositRepository.create(deposit);
-      await depositRepository.save(newDeposit);
+      const newDeposit = this.depositRepository.create(deposit);
+      await this.depositRepository.save(newDeposit);
     }
 
     return true;

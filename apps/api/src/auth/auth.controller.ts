@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Inject } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { AppService } from '../app.service';
 import {
   IGetCurrentUserResponse,
@@ -13,30 +13,38 @@ import { User } from '@banking/shared-types';
 
 @Controller('auth')
 export class AuthController {
+  private readonly userRepository: Repository<User>;
+
   constructor(
     private readonly appService: AppService,
     @Inject('DATA_SOURCE') private dataSource: DataSource
-  ) { }
+  ) {
+    this.userRepository = dataSource.getRepository(User);
+  }
 
   @Post('register')
   public async register(
     @Body() registerDto: IRegisterRequest
   ): Promise<IRegisterResponse | IResponseErrors> {
-    const userRepository = this.dataSource.getRepository(User);
-
-    const user = userRepository.create({
+    const user = this.userRepository.create({
       email: registerDto.email,
       username: registerDto.username,
-      password: 'hashed_password' // В реальности нужно хешировать пароль
+      password: 'hashed_password', // В реальности нужно хешировать пароль
+      firstName: '',
+      lastName: '',
+      patronymic: ''
     });
 
-    const savedUser = await userRepository.save(user);
+    const savedUser = await this.userRepository.save(user);
 
     return {
       user: {
         id: savedUser.id,
         email: savedUser.email,
         username: savedUser.username,
+        firstName: savedUser.firstName,
+        lastName: savedUser.lastName,
+        patronymic: savedUser.patronymic,
         createdAt: savedUser.createdAt.toISOString(),
         updatedAt: savedUser.updatedAt.toISOString(),
       },
@@ -48,9 +56,7 @@ export class AuthController {
   public async login(
     @Body() loginDto: ILoginRequest
   ): Promise<ILoginResponse | IResponseErrors> {
-    const userRepository = this.dataSource.getRepository(User);
-
-    const user = await userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: { email: loginDto.email }
     });
 
@@ -65,6 +71,9 @@ export class AuthController {
         id: user.id,
         email: user.email,
         username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        patronymic: user.patronymic,
         createdAt: user.createdAt.toISOString(),
         updatedAt: user.updatedAt.toISOString(),
       },
@@ -76,9 +85,7 @@ export class AuthController {
   public async getCurrentUser(): Promise<
     IGetCurrentUserResponse | IResponseErrors
   > {
-    const userRepository = this.dataSource.getRepository(User);
-
-    const user = await userRepository.findOne({
+    const user = await this.userRepository.findOne({
       where: { id: 12 } // В реальности нужно получать ID из токена
     });
 
@@ -91,6 +98,9 @@ export class AuthController {
         id: user.id,
         email: user.email,
         username: user.username,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        patronymic: user.patronymic,
         createdAt: user.createdAt.toISOString(),
         updatedAt: user.updatedAt.toISOString(),
       },

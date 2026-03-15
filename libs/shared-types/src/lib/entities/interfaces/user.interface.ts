@@ -4,4 +4,7 @@ export interface IUser extends IEntityBase {
   id: number;
   email: string;
   username: string;
+  firstName: string;
+  lastName: string;
+  patronymic?: string;
 }
