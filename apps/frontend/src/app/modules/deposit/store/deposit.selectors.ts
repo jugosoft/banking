@@ -5,15 +5,15 @@ import { IDepositState } from './deposit.state';
 import { IDeposit } from '@banking/shared-types';
 
 export const selectDepositFeature = createFeatureSelector<IDepositState>(
-  StoreKey.HOME
+    StoreKey.HOME
 );
 
 export const deposit = createSelector(
-  selectDepositFeature,
-  (state): IDeposit | null => state?.deposit ?? null
+    selectDepositFeature,
+    (state): IDeposit | null => state?.deposit ?? null
 );
 
 export const isSubmiting = createSelector(
-  selectDepositFeature,
-  (state): boolean | null => state?.isSubmiting ?? null
+    selectDepositFeature,
+    (state): boolean | null => state?.isSubmiting ?? null
 );

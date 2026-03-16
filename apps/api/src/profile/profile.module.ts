@@ -3,7 +3,7 @@ import { ProfileController } from './profile.controller';
 import { DatabaseModule } from '../database/database.module';
 
 @Module({
-  imports: [DatabaseModule],
-  controllers: [ProfileController],
+    imports: [DatabaseModule],
+    controllers: [ProfileController],
 })
 export class ProfileModule {}

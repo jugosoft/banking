@@ -2,36 +2,36 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
-  IGetDepositListResponse,
-  IGetDepositResponse,
+    IGetDepositListResponse,
+    IGetDepositResponse,
 } from '@banking/shared-types';
 import { ISaveDepositProps } from '../../modules/deposit/store/model/save-deposit.interfaces';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class DepositService {
-  private readonly httpClient = inject(HttpClient);
+    private readonly httpClient = inject(HttpClient);
 
-  public getDepositList$(): Observable<IGetDepositListResponse> {
-    return this.httpClient.get<IGetDepositListResponse>(
-      '/api/app/getDepositList',
-      {}
-    );
-  }
+    public getDepositList$(): Observable<IGetDepositListResponse> {
+        return this.httpClient.get<IGetDepositListResponse>(
+            '/api/app/getDepositList',
+            {}
+        );
+    }
 
-  public getDeposit$(depositId: number): Observable<IGetDepositResponse> {
-    return this.httpClient.get<IGetDepositResponse>(
-      '/api/app/getDeposit',
-      {}
-    );
-  }
+    public getDeposit$(depositId: number): Observable<IGetDepositResponse> {
+        return this.httpClient.get<IGetDepositResponse>(
+            '/api/app/getDeposit',
+            {}
+        );
+    }
 
-
-  public saveDeposit$(deposit: ISaveDepositProps['deposit']): Observable<boolean> {
-    return this.httpClient.post<boolean>(
-      '/api/app/saveDeposit',
-      { deposit }
-    );
-  }
+    public saveDeposit$(
+        deposit: ISaveDepositProps['deposit']
+    ): Observable<boolean> {
+        return this.httpClient.post<boolean>('/api/app/saveDeposit', {
+            deposit,
+        });
+    }
 }

@@ -15,21 +15,20 @@ import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [
-    ProfileComponent,
-    NotSpecifiedPipe
-  ],
-  imports: [
-    CommonModule,
-    ProfileRoutingModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    SharedModule,
-    BankingUiModule,
-    StoreModule.forFeature('profile', reducer),
-    EffectsModule.forFeature([ProfileEffects]),
-    MatFormField, MatFormFieldModule, MatProgressSpinner
-  ],
-  providers: []
+    declarations: [ProfileComponent, NotSpecifiedPipe],
+    imports: [
+        CommonModule,
+        ProfileRoutingModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        SharedModule,
+        BankingUiModule,
+        StoreModule.forFeature('profile', reducer),
+        EffectsModule.forFeature([ProfileEffects]),
+        MatFormField,
+        MatFormFieldModule,
+        MatProgressSpinner,
+    ],
+    providers: [],
 })
-export class ProfileModule { }
+export class ProfileModule {}

@@ -5,8 +5,8 @@ import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from '../material/material.module';
 
 @NgModule({
-  declarations: [WrapperComponent, FooterComponent],
-  imports: [SharedModule, MaterialModule],
-  exports: [WrapperComponent, FooterComponent],
+    declarations: [WrapperComponent, FooterComponent],
+    imports: [SharedModule, MaterialModule],
+    exports: [WrapperComponent, FooterComponent],
 })
-export class BankingUiModule { }
+export class BankingUiModule {}

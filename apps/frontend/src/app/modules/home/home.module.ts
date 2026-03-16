@@ -7,13 +7,13 @@ import { DepositCardComponent } from '../shared/deposit-card/deposit-card.compon
 import { BankingUiModule } from '../banking-ui/banking-ui.module';
 
 @NgModule({
-  declarations: [HomeComponent],
-  imports: [
-    SharedModule,
-    HomeRoutingModule,
-    MaterialModule,
-    DepositCardComponent,
-    BankingUiModule,
-  ]
+    declarations: [HomeComponent],
+    imports: [
+        SharedModule,
+        HomeRoutingModule,
+        MaterialModule,
+        DepositCardComponent,
+        BankingUiModule,
+    ],
 })
-export class HomeModule { }
+export class HomeModule {}

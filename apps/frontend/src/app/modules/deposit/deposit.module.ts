@@ -12,15 +12,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { DepositEffects } from './store/deposit.effects';
 
 @NgModule({
-  declarations: [DepositComponent, DepositCreateComponent],
-  imports: [
-    SharedModule,
-    DepositRoutingModule,
-    MaterialModule,
-    DepositCardComponent,
-    BankingUiModule,
-    StoreModule.forFeature('deposit', depositReducer),
-    EffectsModule.forFeature(DepositEffects)
-  ],
+    declarations: [DepositComponent, DepositCreateComponent],
+    imports: [
+        SharedModule,
+        DepositRoutingModule,
+        MaterialModule,
+        DepositCardComponent,
+        BankingUiModule,
+        StoreModule.forFeature('deposit', depositReducer),
+        EffectsModule.forFeature(DepositEffects),
+    ],
 })
-export class DepositModule { }
+export class DepositModule {}

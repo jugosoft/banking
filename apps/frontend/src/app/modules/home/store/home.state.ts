@@ -1,6 +1,6 @@
-import { IDepositCard } from "../../../common/interfaces";
+import { IDepositCard } from '../../../common/interfaces';
 
 export interface IHomeState {
-  isSubmiting: boolean | null;
-  deposits: IDepositCard[] | null;
+    isSubmiting: boolean | null;
+    deposits: IDepositCard[] | null;
 }

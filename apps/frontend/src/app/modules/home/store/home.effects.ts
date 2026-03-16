@@ -5,28 +5,34 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { getDepositList, getDepositListError, getDepositListSuccess } from './home.actions';
+import {
+    getDepositList,
+    getDepositListError,
+    getDepositListSuccess,
+} from './home.actions';
 import { DepositService } from '../../../services/api/deposit.service';
 import { ToastService } from '../../../services/toast/toast.service';
 
 @Injectable()
 export class HomeEffects {
-  private readonly actions$ = inject(Actions);
-  private readonly store = inject(Store);
-  private readonly router = inject(Router);
-  private readonly toastService = inject(ToastService);
-  private readonly homeService = inject(DepositService);
+    private readonly actions$ = inject(Actions);
+    private readonly store = inject(Store);
+    private readonly router = inject(Router);
+    private readonly toastService = inject(ToastService);
+    private readonly homeService = inject(DepositService);
 
-  private readonly getDepositList$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(getDepositList),
-      switchMap(() => {
-        return this.homeService.getDepositList$().pipe(
-          map((result) => getDepositListSuccess({ result })),
-          catchError((error: HttpErrorResponse) => {
-            this.toastService.error(error.message);
-            return of(getDepositListError({ error }));
-          }))
-      }))
-  })
+    private readonly getDepositList$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(getDepositList),
+            switchMap(() => {
+                return this.homeService.getDepositList$().pipe(
+                    map((result) => getDepositListSuccess({ result })),
+                    catchError((error: HttpErrorResponse) => {
+                        this.toastService.error(error.message);
+                        return of(getDepositListError({ error }));
+                    })
+                );
+            })
+        );
+    });
 }

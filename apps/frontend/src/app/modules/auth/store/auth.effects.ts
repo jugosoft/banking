@@ -6,15 +6,15 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
-  register,
-  registerSuccess,
-  registerError,
-  loginSuccess,
-  login,
-  loginError,
-  getCurrentUser,
-  getCurrentUserSuccess,
-  getCurrentUserError,
+    register,
+    registerSuccess,
+    registerError,
+    loginSuccess,
+    login,
+    loginError,
+    getCurrentUser,
+    getCurrentUserSuccess,
+    getCurrentUserError,
 } from './auth.actions';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../../../services/toast/toast.service';
@@ -22,83 +22,83 @@ import { LocalStorageService } from '../../../services/local-storage-service/loc
 
 @Injectable()
 export class AuthEffects {
-  private readonly actions$ = inject(Actions);
-  private readonly store = inject(Store);
-  private readonly router = inject(Router);
-  private readonly authService = inject(AuthService);
-  private readonly toastService = inject(ToastService);
-  private readonly localStorageService = inject(LocalStorageService);
+    private readonly actions$ = inject(Actions);
+    private readonly store = inject(Store);
+    private readonly router = inject(Router);
+    private readonly authService = inject(AuthService);
+    private readonly toastService = inject(ToastService);
+    private readonly localStorageService = inject(LocalStorageService);
 
-  private readonly register$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(register),
-      switchMap(({ request }) => {
-        return this.authService.register$(request).pipe(
-          map((result) => registerSuccess({ result })),
-          tap(({ result }) => {
-            this.toastService.error(
-              'Успешная регистрация. Счастилвого пользвоания!'
+    private readonly register$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(register),
+            switchMap(({ request }) => {
+                return this.authService.register$(request).pipe(
+                    map((result) => registerSuccess({ result })),
+                    tap(({ result }) => {
+                        this.toastService.error(
+                            'Успешная регистрация. Счастилвого пользвоания!'
+                        );
+                        this.localStorageService.save('jwtToken', result.token);
+                    }),
+                    catchError((error: HttpErrorResponse) => {
+                        this.toastService.error(error.message);
+                        return of(registerError({ error }));
+                    })
+                );
+            })
+        );
+    });
+
+    private readonly authSuccess$ = createEffect(
+        () => {
+            return this.actions$.pipe(
+                ofType(registerSuccess, loginSuccess),
+                tap(() => void this.router.navigate(['/home']))
             );
-            this.localStorageService.save('jwtToken', result.token);
-          }),
-          catchError((error: HttpErrorResponse) => {
-            this.toastService.error(error.message);
-            return of(registerError({ error }));
-          })
-        );
-      })
-    );
-  });
-
-  private readonly authSuccess$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(registerSuccess, loginSuccess),
-        tap(() => void this.router.navigate(['/home']))
-      );
-    },
-    {
-      dispatch: false,
-    }
-  );
-
-  private readonly login$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(login),
-      switchMap(({ request }) => {
-        return this.authService.login$(request).pipe(
-          map((result) => loginSuccess({ result })),
-          tap(({ result }) => {
-            this.localStorageService.save('jwtToken', result.token);
-          }),
-          catchError((error: HttpErrorResponse) => {
-            this.toastService.error(error.message);
-            return of(loginError({ error }));
-          })
-        );
-      })
-    );
-  });
-
-  private readonly getCurrentUser$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(getCurrentUser),
-      switchMap(() => {
-        const jwtToken = this.localStorageService.get('jwtToken');
-        if (!jwtToken) {
-          return of(getCurrentUserError());
+        },
+        {
+            dispatch: false,
         }
-
-        return this.authService.getCurrentUser$().pipe(
-          tap(() => void this.router.navigate(['/home'])),
-          map((result) => getCurrentUserSuccess({ result })),
-          catchError(() => {
-            return of(getCurrentUserError());
-          })
-        );
-      })
     );
-  });
 
-  // TODO: login, register errors effects
+    private readonly login$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(login),
+            switchMap(({ request }) => {
+                return this.authService.login$(request).pipe(
+                    map((result) => loginSuccess({ result })),
+                    tap(({ result }) => {
+                        this.localStorageService.save('jwtToken', result.token);
+                    }),
+                    catchError((error: HttpErrorResponse) => {
+                        this.toastService.error(error.message);
+                        return of(loginError({ error }));
+                    })
+                );
+            })
+        );
+    });
+
+    private readonly getCurrentUser$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(getCurrentUser),
+            switchMap(() => {
+                const jwtToken = this.localStorageService.get('jwtToken');
+                if (!jwtToken) {
+                    return of(getCurrentUserError());
+                }
+
+                return this.authService.getCurrentUser$().pipe(
+                    tap(() => void this.router.navigate(['/home'])),
+                    map((result) => getCurrentUserSuccess({ result })),
+                    catchError(() => {
+                        return of(getCurrentUserError());
+                    })
+                );
+            })
+        );
+    });
+
+    // TODO: login, register errors effects
 }

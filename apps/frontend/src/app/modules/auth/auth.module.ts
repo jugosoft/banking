@@ -14,17 +14,17 @@ import { ValidationErrorsComponent } from '../shared/validation-errors/validatio
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent],
-  imports: [
-    SharedModule,
-    StoreModule.forFeature('auth', reducer),
-    EffectsModule.forFeature(AuthEffects),
-    ReactiveFormsModule,
-    AuthRoutingModule,
-    MaterialModule,
-    BankingUiModule,
-    ValidationErrorsComponent,
-  ],
-  providers: [AuthService],
+    declarations: [RegisterComponent, LoginComponent],
+    imports: [
+        SharedModule,
+        StoreModule.forFeature('auth', reducer),
+        EffectsModule.forFeature(AuthEffects),
+        ReactiveFormsModule,
+        AuthRoutingModule,
+        MaterialModule,
+        BankingUiModule,
+        ValidationErrorsComponent,
+    ],
+    providers: [AuthService],
 })
 export class AuthModule {}

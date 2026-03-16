@@ -5,25 +5,25 @@ import { IAuthState } from './auth.state';
 import { ICurrentUser } from '../types';
 
 export const selectAuthFeature = createFeatureSelector<IAuthState>(
-  StoreKey.AUTH
+    StoreKey.AUTH
 );
 
 export const selectCurrentUser = createSelector(
-  selectAuthFeature,
-  (state): ICurrentUser | null => state?.currentUser ?? null
+    selectAuthFeature,
+    (state): ICurrentUser | null => state?.currentUser ?? null
 );
 
 export const selectIsSubmiting = createSelector(
-  selectAuthFeature,
-  (state): boolean | null => state?.isSubmiting ?? null
+    selectAuthFeature,
+    (state): boolean | null => state?.isSubmiting ?? null
 );
 
 export const selectIsLoggedIn = createSelector(
-  selectAuthFeature,
-  (state): boolean => !!state?.currentUser
+    selectAuthFeature,
+    (state): boolean => !!state?.currentUser
 );
 
 export const selectValidationErrors = createSelector(
-  selectAuthFeature,
-  (state): IResponseErrors | null => state?.validationErrors ?? null
+    selectAuthFeature,
+    (state): IResponseErrors | null => state?.validationErrors ?? null
 );

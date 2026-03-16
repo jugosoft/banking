@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { DepositController } from './deposit.controller';
 
 @Module({
-  controllers: [DepositController],
+    controllers: [DepositController],
 })
-export class DepositModule { }
+export class DepositModule {}

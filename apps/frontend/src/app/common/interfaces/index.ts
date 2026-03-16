@@ -1,1 +1,1 @@
-export { IDepositCard } from './deposit-card.interface'; 
+export { IDepositCard } from './deposit-card.interface';

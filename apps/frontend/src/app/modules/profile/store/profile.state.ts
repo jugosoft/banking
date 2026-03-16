@@ -1,4 +1,4 @@
 export interface ProfileState {
-  isSubmitting: boolean;
-  validationErrors: string | null;
+    isSubmitting: boolean;
+    validationErrors: string | null;
 }

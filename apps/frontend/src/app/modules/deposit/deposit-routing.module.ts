@@ -4,23 +4,23 @@ import { DepositComponent } from './deposit.component';
 import { DepositCreateComponent } from './deposit-create/deposit-create.component';
 
 const routes: Routes = [
-  {
-    path: 'create',
-    component: DepositCreateComponent,
-  },
-  {
-    path: 'edit/:depositId',
-    component: DepositCreateComponent,
-  },
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: '/home',
-  },
+    {
+        path: 'create',
+        component: DepositCreateComponent,
+    },
+    {
+        path: 'edit/:depositId',
+        component: DepositCreateComponent,
+    },
+    {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: '/home',
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
-export class DepositRoutingModule { }
+export class DepositRoutingModule {}

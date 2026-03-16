@@ -1,42 +1,46 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { IHomeState } from './home.state';
-import { getDepositList, getDepositListError, getDepositListSuccess } from './home.actions';
+import {
+    getDepositList,
+    getDepositListError,
+    getDepositListSuccess,
+} from './home.actions';
 
 export const initialState: IHomeState = {
-  isSubmiting: null,
-  deposits: null,
+    isSubmiting: null,
+    deposits: null,
 };
 
 export const homeReducer = createReducer(
-  initialState,
+    initialState,
 
-  on(
-    getDepositList,
-    (state): IHomeState => ({
-      ...state,
-      isSubmiting: true
-    })
-  ),
+    on(
+        getDepositList,
+        (state): IHomeState => ({
+            ...state,
+            isSubmiting: true,
+        })
+    ),
 
-  on(
-    getDepositListSuccess,
-    (state, { result }): IHomeState => ({
-      ...state,
-      isSubmiting: false,
-      deposits: result.deposits
-    })
-  ),
+    on(
+        getDepositListSuccess,
+        (state, { result }): IHomeState => ({
+            ...state,
+            isSubmiting: false,
+            deposits: result.deposits,
+        })
+    ),
 
-  on(
-    getDepositListError,
-    (state, { error }): IHomeState => ({
-      ...state,
-      isSubmiting: false,
-      deposits: null
-    })
-  )
+    on(
+        getDepositListError,
+        (state, { error }): IHomeState => ({
+            ...state,
+            isSubmiting: false,
+            deposits: null,
+        })
+    )
 );
 
 export function reducer(state: IHomeState, action: Action) {
-  return homeReducer(state, action);
+    return homeReducer(state, action);
 }

@@ -4,16 +4,16 @@ import { MatListModule, MatListItem } from '@angular/material/list';
 import { IError, IResponseErrors } from '@banking/shared-types';
 
 @Component({
-  selector: 'banking-validation-errors',
-  standalone: true,
-  imports: [CommonModule, MatListItem, MatListModule],
-  templateUrl: './validation-errors.component.html',
-  styleUrl: './validation-errors.component.css',
+    selector: 'banking-validation-errors',
+    standalone: true,
+    imports: [CommonModule, MatListItem, MatListModule],
+    templateUrl: './validation-errors.component.html',
+    styleUrl: './validation-errors.component.css',
 })
 export class ValidationErrorsComponent {
-  @Input() public validationErrors!: IResponseErrors | null;
+    @Input() public validationErrors!: IResponseErrors | null;
 
-  public get errors(): Array<IError> {
-    return Object.values(this.validationErrors ?? {});
-  }
+    public get errors(): Array<IError> {
+        return Object.values(this.validationErrors ?? {});
+    }
 }

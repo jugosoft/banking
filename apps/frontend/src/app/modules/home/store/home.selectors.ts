@@ -4,15 +4,15 @@ import { IHomeState } from './home.state';
 import { IDepositCard } from '../../../common/interfaces';
 
 export const selectAuthFeature = createFeatureSelector<IHomeState>(
-  StoreKey.HOME
+    StoreKey.HOME
 );
 
 export const deposits = createSelector(
-  selectAuthFeature,
-  (state): IDepositCard[] | null => state?.deposits ?? null
+    selectAuthFeature,
+    (state): IDepositCard[] | null => state?.deposits ?? null
 );
 
 export const isSubmiting = createSelector(
-  selectAuthFeature,
-  (state): boolean | null => state?.isSubmiting ?? null
+    selectAuthFeature,
+    (state): boolean | null => state?.isSubmiting ?? null
 );

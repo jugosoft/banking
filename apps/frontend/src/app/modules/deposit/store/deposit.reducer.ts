@@ -1,40 +1,44 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { saveDeposit, saveDepositError, saveDepositSuccess } from './deposit.actions';
+import {
+    saveDeposit,
+    saveDepositError,
+    saveDepositSuccess,
+} from './deposit.actions';
 import { IDepositState } from './deposit.state';
 
 export const initialState: IDepositState = {
-  isSubmiting: null,
-  deposit: null,
+    isSubmiting: null,
+    deposit: null,
 };
 
 export const depositReducer = createReducer(
-  initialState,
+    initialState,
 
-  on(
-    saveDeposit,
-    (state): IDepositState => ({
-      ...state,
-      isSubmiting: true
-    })
-  ),
+    on(
+        saveDeposit,
+        (state): IDepositState => ({
+            ...state,
+            isSubmiting: true,
+        })
+    ),
 
-  on(
-    saveDepositSuccess,
-    (state, { result }): IDepositState => ({
-      ...state,
-      isSubmiting: false
-    })
-  ),
+    on(
+        saveDepositSuccess,
+        (state, { result }): IDepositState => ({
+            ...state,
+            isSubmiting: false,
+        })
+    ),
 
-  on(
-    saveDepositError,
-    (state, { error }): IDepositState => ({
-      ...state,
-      isSubmiting: false
-    })
-  )
+    on(
+        saveDepositError,
+        (state, { error }): IDepositState => ({
+            ...state,
+            isSubmiting: false,
+        })
+    )
 );
 
 export function reducer(state: IDepositState, action: Action) {
-  return depositReducer(state, action);
+    return depositReducer(state, action);
 }
