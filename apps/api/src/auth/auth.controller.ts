@@ -1,6 +1,5 @@
 import { Body, Controller, Post, Inject } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { AppService } from '../app.service';
 import {
   IGetCurrentUserResponse,
   ILoginRequest,
@@ -9,14 +8,12 @@ import {
   IRegisterResponse,
   IResponseErrors,
 } from '@banking/shared-types';
-import { User } from '@banking/shared-types';
 
 @Controller('auth')
 export class AuthController {
   private readonly userRepository: Repository<User>;
 
   constructor(
-    private readonly appService: AppService,
     @Inject('DATA_SOURCE') private dataSource: DataSource
   ) {
     this.userRepository = dataSource.getRepository(User);

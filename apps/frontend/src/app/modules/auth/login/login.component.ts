@@ -68,9 +68,9 @@ export class LoginComponent implements OnInit {
    * Инициализация контролов формы и начальных значений
    */
   private initFormGroup(): void {
-    this.formGroup = this.formBuilder.nonNullable.group<ILoginForm>({
-      email: this.formBuilder.control(null, Validators.required),
-      password: this.formBuilder.control(null, Validators.required),
+    this.formGroup = this.formBuilder.group<ILoginForm>({
+      email: this.formBuilder.control('', Validators.required),
+      password: this.formBuilder.control('', Validators.required),
     });
   }
 

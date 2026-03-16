@@ -43,6 +43,9 @@ const authReducer = createReducer(
         ...result.user,
         createdAt: new Date(result.user.createdAt),
         updatedAt: new Date(result.user.updatedAt),
+        patronymic: '',
+        lastName: '',
+        firstName: ''
       },
     })
   ),
@@ -79,6 +82,9 @@ const authReducer = createReducer(
         ...result.user,
         createdAt: new Date(result.user.createdAt),
         updatedAt: new Date(result.user.updatedAt),
+        patronymic: result.user?.patronymic,
+        lastName: result.user.lastName,
+        firstName: result.user.firstName,
       },
     })
   ),
@@ -115,6 +121,9 @@ const authReducer = createReducer(
         ...result.user,
         createdAt: new Date(result.user.createdAt),
         updatedAt: new Date(result.user.updatedAt),
+        patronymic: '',
+        lastName: '',
+        firstName: ''
       },
     })
   ),

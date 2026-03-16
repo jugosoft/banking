@@ -4,20 +4,20 @@
     <mat-card-title>
       {{ deposit.type.name }},
       {{ deposit.startAmount | currency : 'RUB' : 'symbol-narrow' }} -
-      {{ deposit.displayPercent | percent }}
+      {{ deposit.percent | percent }}
     </mat-card-title>
     <mat-card-subtitle [matTooltip]="deposit.bank.name">
       {{ deposit.bank.shortName }}
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="deposit-card__content">
-    @if (deposit.period.end) {
+    @if (deposit.endDate) {
     <mat-progress-bar class="deposit-card__progress-bar" [color]="progressBarColor"
       [value]="progressBarPercentage"></mat-progress-bar>
     @if (isClosingSoon) {
     <p>До закрытия {{ daysBeforeClose }} дней</p>
     } }
-    <p>Текущий доход: {{ deposit.currentAmount }}</p>
+    <p>Текущий доход: {{ 'deposit.currentAmount' }}</p>
     <p>{{ deposit.comment }}</p>
   </mat-card-content>
   <mat-card-actions class="deposit-card__actions">

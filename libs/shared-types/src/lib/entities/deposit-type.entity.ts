@@ -1,20 +1,20 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
-import { IDepositType } from './interfaces/deposit-type.interface';
+import { IDepositType } from '../interfaces/deposit-type.interface';
 
 @Entity('deposit_type')
 export class DepositType implements IDepositType {
   @PrimaryGeneratedColumn('increment')
-  id: number;
+  id!: number;
 
   @Column({ unique: true })
-  type: string;
+  type!: string;
 
   @Column()
-  name: string;
+  name!: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 }

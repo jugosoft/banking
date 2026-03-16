@@ -1,6 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
 
-import { AppService } from '../app.service';
 import {
   IGetCurrentUserResponse,
   ILoginRequest,
@@ -12,7 +11,7 @@ import {
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly appService: AppService) { }
+  constructor() { }
 
   @Post('register')
   public async register(

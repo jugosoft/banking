@@ -11,6 +11,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducer } from './store/profile.reducer';
 import { ProfileEffects } from './store/profile.effects';
 import { NotSpecifiedPipe } from '../../pipes/not-specified.pipe';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { NotSpecifiedPipe } from '../../pipes/not-specified.pipe';
     SharedModule,
     BankingUiModule,
     StoreModule.forFeature('profile', reducer),
-    EffectsModule.forFeature([ProfileEffects])
+    EffectsModule.forFeature([ProfileEffects]),
+    MatFormField, MatFormFieldModule, MatProgressSpinner
   ],
   providers: []
 })

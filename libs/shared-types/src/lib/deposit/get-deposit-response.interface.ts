@@ -1,4 +1,4 @@
-import { IDeposit } from '../entities';
+import { IDeposit } from '../interfaces';
 
 export interface IGetDepositResponse {
   deposit: IDeposit;

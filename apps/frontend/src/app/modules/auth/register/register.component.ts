@@ -58,11 +58,11 @@ export class RegisterComponent implements OnInit {
    * Инициализация контролов формы и начальных значений
    */
   private initFormGroup(): void {
-    this.formGroup = this.formBuilder.nonNullable.group<IRegisterForm>({
-      email: this.formBuilder.control(null, Validators.required),
-      username: this.formBuilder.control(null, Validators.required),
-      password: this.formBuilder.control(null, Validators.required),
-      passwordRepeat: this.formBuilder.control(null, Validators.required),
+    this.formGroup = this.formBuilder.group<IRegisterForm>({
+      email: this.formBuilder.control('', Validators.required),
+      username: this.formBuilder.control('', Validators.required),
+      password: this.formBuilder.control('', Validators.required),
+      passwordRepeat: this.formBuilder.control('', Validators.required),
     });
   }
 

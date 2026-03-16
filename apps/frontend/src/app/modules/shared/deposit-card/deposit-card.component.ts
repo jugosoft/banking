@@ -23,7 +23,7 @@ export class DepositCardComponent implements OnInit {
   private readonly router = inject(Router);
 
   public ngOnInit(): void {
-    if (this.deposit.period.end) {
+    if (this.deposit.endDate) {
       this.daysBeforeClose = this.getDaysBeforeClose();
       this.daysTotal = this.getDaysTotal();
       this.isClosingSoon = this.getIsClosingSoon();
@@ -43,7 +43,7 @@ export class DepositCardComponent implements OnInit {
    * Поучить число дней до закрытия
    */
   private getDaysBeforeClose(): number {
-    return -dateDiffInDays(new Date(this.deposit.period.end!), new Date());
+    return -dateDiffInDays(new Date(this.deposit.endDate!), new Date());
   }
 
   /**
@@ -51,8 +51,8 @@ export class DepositCardComponent implements OnInit {
    */
   private getDaysTotal(): number {
     return dateDiffInDays(
-      new Date(this.deposit.period.start),
-      new Date(this.deposit.period.end!)
+      new Date(this.deposit.beginDate),
+      new Date(this.deposit.endDate!)
     );
   }
 

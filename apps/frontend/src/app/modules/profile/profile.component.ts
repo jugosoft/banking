@@ -8,16 +8,13 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ProfileService } from './services/profile.service';
 import { updateName, updateEmail, updateUsername, updatePassword } from './store/profile.actions';
 import { selectIsSubmitting, selectValidationErrors } from './store/profile.selectors';
-import { MatFormField, MatFormFieldModule } from "@angular/material/form-field";
-import { MaterialModule } from "../material/material.module";
-import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { selectCurrentUser } from '../auth/store/auth.selectors';
 
 @UntilDestroy()
 @Component({
   selector: 'banking-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
-  imports: [MatFormField, MatFormFieldModule, MatProgressSpinner]
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
   public currentUser$: Observable<ICurrentUser | null>;
@@ -54,26 +51,27 @@ export class ProfileComponent implements OnInit {
 
   private initForms(): void {
     this.personalForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      patronymic: ['']
+      firstName: this.formBuilder.control('', Validators.required),
+      lastName: this.formBuilder.control('', Validators.required),
+      patronymic: this.formBuilder.control('')
     });
 
     this.contactForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required]
+      email: this.formBuilder.control('', [Validators.required, Validators.email]),
+      username: this.formBuilder.control('', Validators.required)
     });
 
     this.passwordForm = this.formBuilder.group({
-      oldPassword: ['', Validators.required],
-      newPassword: ['', Validators.required],
-      confirmPassword: ['', Validators.required]
+      oldPassword: this.formBuilder.control('', Validators.required),
+      newPassword: this.formBuilder.control('', Validators.required),
+      confirmPassword: this.formBuilder.control('', Validators.required)
     }, { validators: this.passwordMatchValidator });
   }
 
   private subscribeToLoading(): void {
     this.isSubmitting$.pipe(untilDestroyed(this)).subscribe(isSubmitting => {
-      Object.keys(this.loading).forEach((keyЖ) => {
+      Object.keys(this.loading).forEach((key) => {
+        //@ts-ignore
         this.loading[key] = isSubmitting;
       });
     });
@@ -86,7 +84,7 @@ export class ProfileComponent implements OnInit {
     return newPassword === confirmPassword ? null : { passwordMismatch: true };
   }
 
-  public toggleEdit(section: string): void {
+  public toggleEdit(section: keyof typeof this.editMode): void {
     this.editMode[section] = !this.editMode[section];
 
     if (this.editMode[section]) {
@@ -113,7 +111,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  public cancelEdit(section: string): void {
+  public cancelEdit(section: keyof typeof this.editMode): void {
     this.editMode[section] = false;
     this.clearFormErrors(section);
   }

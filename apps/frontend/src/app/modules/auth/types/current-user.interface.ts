@@ -1,7 +1,7 @@
 export interface ICurrentUser {
   id: number;
   email: string;
-  patronymic: string;
+  patronymic?: string;
   lastName: string;
   firstName: string;
   username: string;

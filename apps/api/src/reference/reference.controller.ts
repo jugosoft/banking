@@ -1,28 +1,28 @@
 import { Body, Controller, Get, Post, Put, Delete, Param, Inject } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { DepositType } from '@banking/shared-types';
+import { IDepositType } from '@banking/shared-types';
 import { Bank } from '@banking/shared-types';
 
 @Controller('reference')
 export class ReferenceController {
-  private readonly depositTypeRepository: Repository<DepositType>;
+  private readonly depositTypeRepository: Repository<IDepositType>;
   private readonly bankRepository: Repository<Bank>;
 
   constructor(
     @Inject('DATA_SOURCE') private dataSource: DataSource
   ) {
-    this.depositTypeRepository = dataSource.getRepository(DepositType);
+    this.depositTypeRepository = dataSource.getRepository(IDepositType);
     this.bankRepository = dataSource.getRepository(Bank);
   }
 
   // CRUD для deposit_type
   @Get('deposit-type')
-  public async getDepositTypes(): Promise<DepositType[]> {
+  public async getDepositTypes(): Promise<IDepositType[]> {
     return await this.depositTypeRepository.find();
   }
 
   @Get('deposit-type/:id')
-  public async getDepositType(@Param('id') id: string): Promise<DepositType | null> {
+  public async getDepositType(@Param('id') id: string): Promise<IDepositType | null> {
     return await this.depositTypeRepository.findOne({
       where: { id: parseInt(id) }
     });
@@ -31,7 +31,7 @@ export class ReferenceController {
   @Post('deposit-type')
   public async createDepositType(
     @Body() body: { type: string; name: string }
-  ): Promise<DepositType> {
+  ): Promise<IDepositType> {
     const depositType = this.depositTypeRepository.create(body);
     return await this.depositTypeRepository.save(depositType);
   }
@@ -40,15 +40,15 @@ export class ReferenceController {
   public async updateDepositType(
     @Param('id') id: string,
     @Body() body: { type?: string; name?: string }
-  ): Promise<DepositType | null> {
+  ): Promise<IDepositType | null> {
     const depositType = await this.depositTypeRepository.findOne({
       where: { id: parseInt(id) }
     });
-    
+
     if (!depositType) {
       return null;
     }
-    
+
     Object.assign(depositType, body);
     return await this.depositTypeRepository.save(depositType);
   }
@@ -88,11 +88,11 @@ export class ReferenceController {
     const bank = await this.bankRepository.findOne({
       where: { id: parseInt(id) }
     });
-    
+
     if (!bank) {
       return null;
     }
-    
+
     Object.assign(bank, body);
     return await this.bankRepository.save(bank);
   }

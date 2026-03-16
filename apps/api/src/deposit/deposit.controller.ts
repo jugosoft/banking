@@ -1,20 +1,18 @@
 import { Body, Controller, Get, Post, Param, Inject } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { AppService } from '../app.service';
 import {
   IDeposit,
+  Deposit,
   IGetDepositListResponse,
   IGetDepositResponse,
   IResponseErrors,
 } from '@banking/shared-types';
-import { Deposit } from '@banking/shared-types';
 
 @Controller('deposit')
 export class DepositController {
   private readonly depositRepository: Repository<Deposit>;
 
   constructor(
-    private readonly appService: AppService,
     @Inject('DATA_SOURCE') private dataSource: DataSource
   ) {
     this.depositRepository = dataSource.getRepository(Deposit);
