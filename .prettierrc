@@ -1,5 +1,13 @@
 {
-  "singleQuote": true,
+  "plugins": [
+    "@prettier/plugin-angular"
+  ],
   "tabWidth": 4,
-  "useTabs": false
+  "useTabs": false,
+  "singleQuote": true,
+  "semi": true,
+  "printWidth": 100,
+  "bracketSameLine": false,
+  "htmlWhitespaceSensitivity": "ignore",
+  "embeddedLanguageFormatting": "auto"
 }
