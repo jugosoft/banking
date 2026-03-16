@@ -3,8 +3,8 @@ export interface IRegisterResponse {
     id: number;
     email: string;
     username: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
   };
   token: string;
 }

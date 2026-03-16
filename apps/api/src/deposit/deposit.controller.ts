@@ -6,6 +6,7 @@ import {
   IGetDepositListResponse,
   IGetDepositResponse,
   IResponseErrors,
+  ErrorCode
 } from '@banking/shared-types';
 
 @Controller('deposit')
@@ -38,7 +39,7 @@ export class DepositController {
     });
 
     if (!deposit) {
-      return { error: 'Deposit not found' };
+      return { error: { code: 'NO_DEPOSIT', message: 'Deposit not found' } };
     }
 
     return { deposit };
@@ -48,15 +49,18 @@ export class DepositController {
   public async saveDeposit(@Body() deposit: IDeposit): Promise<
     boolean | IResponseErrors
   > {
-    if (deposit.id) {
-      // Обновление существующего депозита
-      await this.depositRepository.update(deposit.id, deposit);
-    } else {
-      // Создание нового депозита
-      const newDeposit = this.depositRepository.create(deposit);
-      await this.depositRepository.save(newDeposit);
+    try {
+      if (deposit.id) {
+        // Обновление существующего депозита
+        await this.depositRepository.update(deposit.id, deposit);
+      } else {
+        // Создание нового депозита
+        const newDeposit = this.depositRepository.create(deposit);
+        await this.depositRepository.save(newDeposit);
+      }
+      return true;
+    } catch (error) {
+      return { error: { code: ErrorCode.DEPOSIT_SAVE_ERROR, message: 'Failed to save deposit' } };
     }
-
-    return true;
   }
 }

@@ -1,17 +1,17 @@
 import { Body, Controller, Get, Post, Put, Delete, Param, Inject } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { IDepositType } from '@banking/shared-types';
+import { DepositType, IDepositType } from '@banking/shared-types';
 import { Bank } from '@banking/shared-types';
 
 @Controller('reference')
 export class ReferenceController {
-  private readonly depositTypeRepository: Repository<IDepositType>;
+  private readonly depositTypeRepository: Repository<DepositType>;
   private readonly bankRepository: Repository<Bank>;
 
   constructor(
     @Inject('DATA_SOURCE') private dataSource: DataSource
   ) {
-    this.depositTypeRepository = dataSource.getRepository(IDepositType);
+    this.depositTypeRepository = dataSource.getRepository(DepositType);
     this.bankRepository = dataSource.getRepository(Bank);
   }
 

@@ -17,11 +17,11 @@ export class User implements IUser {
   @Column()
   password!: string;
 
-  @Column()
-  firstName!: string;
+  @Column({ nullable: true })
+  firstName?: string;
 
-  @Column()
-  lastName!: string;
+  @Column({ nullable: true })
+  lastName?: string;
 
   @Column({ nullable: true })
   patronymic?: string;
@@ -33,5 +33,5 @@ export class User implements IUser {
   updatedAt!: Date;
 
   @OneToMany(() => Deposit, deposit => deposit.user)
-  deposits!: Deposit[];
+  deposits?: Deposit[];
 }

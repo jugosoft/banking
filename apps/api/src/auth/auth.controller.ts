@@ -1,12 +1,14 @@
 import { Body, Controller, Post, Inject } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import {
+  ErrorCode,
   IGetCurrentUserResponse,
   ILoginRequest,
   ILoginResponse,
   IRegisterRequest,
   IRegisterResponse,
   IResponseErrors,
+  User,
 } from '@banking/shared-types';
 
 @Controller('auth')
@@ -42,8 +44,8 @@ export class AuthController {
         firstName: savedUser.firstName,
         lastName: savedUser.lastName,
         patronymic: savedUser.patronymic,
-        createdAt: savedUser.createdAt.toISOString(),
-        updatedAt: savedUser.updatedAt.toISOString(),
+        createdAt: savedUser.createdAt,
+        updatedAt: savedUser.updatedAt,
       },
       token: 'have no fear, the JWT is here',
     };
@@ -58,7 +60,7 @@ export class AuthController {
     });
 
     if (!user) {
-      return { error: 'User not found' };
+      return { error: { code: ErrorCode.NO_USER, message: 'User not found' } };
     }
 
     // В реальности нужно проверять хеш пароля
@@ -87,7 +89,7 @@ export class AuthController {
     });
 
     if (!user) {
-      return { error: 'User not found' };
+      return { error: { code: ErrorCode.NO_USER, message: 'User not found' } };
     }
 
     return {

@@ -163,13 +163,11 @@ export class ProfileComponent implements OnInit {
     this.passwordForm.reset();
   }
 
-  public getErrorsFor(controlName: string): ValidationErrors | null {
-    const control = this.personalForm.get(controlName) ||
-      this.contactForm.get(controlName) ||
-      this.passwordForm.get(controlName);
+  public getErrorsFor(formGroup: FormGroup, controlName: string): ValidationErrors | null {
+    const { touched, errors } = formGroup.get(controlName)!;
 
-    if (control && control.touched) {
-      return control.errors;
+    if (touched && errors) {
+      return errors;
     }
 
     return null;

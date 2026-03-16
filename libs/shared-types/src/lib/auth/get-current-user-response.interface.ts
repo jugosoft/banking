@@ -3,8 +3,11 @@ export interface IGetCurrentUserResponse {
     id: number;
     email: string;
     username: string;
-    createdAt: string;
-    updatedAt: string;
+    firstName?: string;
+    lastName?: string;
+    patronymic?: string;
+    createdAt: Date;
+    updatedAt: Date;
   };
   token: string;
 }

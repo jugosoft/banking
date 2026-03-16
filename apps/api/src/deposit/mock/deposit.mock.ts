@@ -10,11 +10,10 @@ export const mockDepositListResponse = (): IGetDepositListResponse => ({
     {
       id: 0,
       archived: false,
-      period: {
-        start: new Date(2024, 11, 20).toISOString(),
-        end: new Date(2025, 0, 16).toISOString(),
-      },
+      beginDate: new Date(2024, 11, 20),
+      endDate: new Date(2025, 0, 16),
       type: {
+        id: 0,
         type: 'deposit',
         name: 'Вклад',
       },
@@ -24,110 +23,87 @@ export const mockDepositListResponse = (): IGetDepositListResponse => ({
         shortName: 'Альфа',
       },
       capitalization: false,
-      comment:
-        'Здесь комментарий для себя, оставленный при создании карточки',
-      displayPercent: 0.24,
-      percentPeriods: [
-        {
-          duration: 365,
-          percent: 0.24,
-        },
-      ],
+      comment: 'Здесь комментарий для себя, оставленный при создании карточки',
+      percent: 0.24,
       replenishable: false,
       withdrawal: false,
-      startAmount: 250_000,
-      currentAmount: 280_000,
+      startAmount: 250000,
+      createdAt: undefined,
+      updatedAt: undefined
     },
     {
       id: 1,
       archived: false,
-      period: {
-        start: new Date(2024, 11, 20).toISOString(),
-        end: new Date(2025, 11, 20).toISOString(),
-      },
+      beginDate: new Date(2024, 11, 20),
+      endDate: new Date(2025, 11, 20),
+
       type: {
+        id: 1,
         type: 'deposit',
         name: 'Вклад',
       },
       bank: {
-        id: 0,
+        id: 1,
         name: 'Т-Банк',
         shortName: 'Тинькофф',
       },
       capitalization: false,
       comment: 'Здесь смешной комментарий про переименование',
-      displayPercent: 0.2,
-      percentPeriods: [
-        {
-          duration: 365,
-          percent: 0.24,
-        },
-      ],
+      percent: 0.24,
       replenishable: false,
       withdrawal: false,
-      startAmount: 500_000,
-      currentAmount: 530_000,
+      startAmount: 500000,
+      createdAt: undefined,
+      updatedAt: undefined
     },
     {
       id: 2,
       archived: false,
-      period: {
-        start: new Date(2024, 11, 20).toISOString(),
-        end: null,
-      },
+      beginDate: new Date(2024, 11, 20),
+      endDate: null,
+
       type: {
+        id: 2,
         type: 'savings_account',
         name: 'Нак. счёт',
       },
       bank: {
-        id: 0,
+        id: 2,
         name: 'Т-Банк',
         shortName: 'Тинькофф',
       },
       capitalization: true,
-      comment:
-        'Здесь комментарий про Сбер или банк, в общем, длинный коммент на две строки',
-      displayPercent: 0.24,
-      percentPeriods: [
-        {
-          duration: 365,
-          percent: 0.24,
-        },
-      ],
+      comment: 'Здесь комментарий про Сбер или банк, в общем, длинный коммент на две строки',
+      percent: 0.24,
       replenishable: false,
       withdrawal: false,
-      startAmount: 500_000,
-      currentAmount: 530_000,
+      startAmount: 500000,
+      createdAt: undefined,
+      updatedAt: undefined
     },
     {
       id: 3,
       archived: false,
-      period: {
-        start: new Date(2024, 11, 20).toISOString(),
-        end: null,
-      },
+      beginDate: new Date(2024, 11, 20),
+      endDate: null,
       type: {
+        id: 3,
         type: 'savings_account',
         name: 'Нак. счёт',
       },
       bank: {
-        id: 0,
+        id: 3,
         name: 'Сбер',
         shortName: 'Сбербанк',
       },
       capitalization: true,
       comment: 'Здесь комментарий про ...',
-      displayPercent: 0.24,
-      percentPeriods: [
-        {
-          duration: 365,
-          percent: 0.24,
-        },
-      ],
+      percent: 0.24,
       replenishable: false,
       withdrawal: false,
-      startAmount: 500_000,
-      currentAmount: 530_000,
+      startAmount: 500000,
+      createdAt: undefined,
+      updatedAt: undefined
     },
   ],
 });
@@ -136,11 +112,10 @@ export const mockDepositResponse = (id: number): IGetDepositResponse => ({
   deposit: {
     id,
     archived: false,
-    period: {
-      start: new Date(2024, 11, 20).toISOString(),
-      end: new Date(2025, 0, 16).toISOString(),
-    },
+    beginDate: new Date(2024, 11, 20),
+    endDate: new Date(2025, 0, 16),
     type: {
+      id: 0,
       type: 'deposit',
       name: 'Вклад',
     },
@@ -150,18 +125,12 @@ export const mockDepositResponse = (id: number): IGetDepositResponse => ({
       shortName: 'Альфа',
     },
     capitalization: false,
-    comment:
-      'Здесь комментарий для себя, оставленный при создании карточки',
-    displayPercent: 0.24,
-    percentPeriods: [
-      {
-        duration: 365,
-        percent: 0.24,
-      },
-    ],
+    comment: 'Здесь комментарий для себя, оставленный при создании карточки',
+    percent: 0.24,
     replenishable: false,
     withdrawal: false,
-    startAmount: 250_000,
-    currentAmount: 280_000,
+    startAmount: 250000,
+    createdAt: undefined,
+    updatedAt: undefined
   },
 });
