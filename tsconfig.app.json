@@ -6,7 +6,12 @@
     "outDir": "./out-tsc/app",
     "types": [
       "node"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@api": ["src/app/api"],
+      "@api/*": ["src/app/api/*"]
+    }
   },
   "include": [
     "src/**/*.ts"

@@ -1,0 +1,1 @@
+export * from '../models/deposit-type.interface';

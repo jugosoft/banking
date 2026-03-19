@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { StoreKey } from '../../../store/store.enums';
 import { IDepositCard } from '../../../common/interfaces';
 import { IDepositState } from './deposit.state';
-import { IDeposit } from '@banking/shared-types';
+import { IDeposit } from '../../../api/deposit/deposit.interface';
 
 export const selectDepositFeature = createFeatureSelector<IDepositState>(
     StoreKey.HOME

@@ -18,6 +18,7 @@ import { DepositService } from '../../../services/api/deposit.service';
 @UntilDestroy()
 @Component({
     selector: 'banking-deposit',
+    standalone: false,
     templateUrl: './deposit-create.component.html',
     styleUrl: './deposit-create.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

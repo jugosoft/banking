@@ -1,15 +1,12 @@
-import { Action, createReducer, on } from '@ngrx/store';
+-import { Action, createReducer, on } from '@ngrx/store';
 import {
     saveDeposit,
     saveDepositError,
     saveDepositSuccess,
 } from './deposit.actions';
-import { IDepositState } from './deposit.state';
+import { IDepositState, initialState } from './deposit.state';
 
-export const initialState: IDepositState = {
-    isSubmiting: null,
-    deposit: null,
-};
+
 
 export const depositReducer = createReducer(
     initialState,

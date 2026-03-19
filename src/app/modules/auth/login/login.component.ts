@@ -22,6 +22,7 @@ import { LocalStorageService } from '../../../services/local-storage-service/loc
 @UntilDestroy()
 @Component({
     selector: 'banking-login',
+    standalone: false,
     templateUrl: './login.component.html',
     styleUrl: './login.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

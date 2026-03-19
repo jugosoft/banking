@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { StoreKey } from '../../../store/store.enums';
 import { IHomeState } from './home.state';
-import { IDepositCard } from '../../../common/interfaces';
+import { IDepositCard } from '../../../api/deposit/deposit.interface';
 
 export const selectAuthFeature = createFeatureSelector<IHomeState>(
     StoreKey.HOME

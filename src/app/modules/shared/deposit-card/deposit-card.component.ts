@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { IDeposit } from '@banking/shared-types';
+import { IDeposit } from '../../../api/deposit/deposit.interface';
 import { MaterialModule } from '../../material/material.module';
 import { SharedModule } from '../shared.module';
 import { dateDiffInDays } from '../../../common/utils/date-utils';

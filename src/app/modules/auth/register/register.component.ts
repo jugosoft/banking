@@ -20,6 +20,7 @@ import { IRegisterForm } from './model/register-form.interface';
 @UntilDestroy()
 @Component({
     selector: 'banking-register',
+    standalone: false,
     templateUrl: './register.component.html',
     styleUrl: './register.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

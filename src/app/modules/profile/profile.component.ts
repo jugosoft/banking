@@ -26,6 +26,7 @@ import { selectCurrentUser } from '../auth/store/auth.selectors';
 @UntilDestroy()
 @Component({
     selector: 'banking-profile',
+    standalone: false,
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
 })

@@ -1,4 +1,4 @@
-import { Deposit } from "../../../entities";
+import { IDeposit } from '../../../api/deposit/deposit.interface';
 
 export interface IDepositState {
     isSubmiting: boolean | null;

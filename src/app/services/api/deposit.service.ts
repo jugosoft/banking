@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ISaveDepositProps } from '../../modules/deposit/store/model/save-deposit.interfaces';
+import { IGetDepositResponse, IGetDepositListResponse, IDeposit } from '@api/deposit';
 
 @Injectable({
     providedIn: 'root',
