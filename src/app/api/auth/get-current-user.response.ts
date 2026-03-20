@@ -1,5 +1,5 @@
-import { IUser } from '../user/user.interface';
 import { IApiResponse } from '../api.interfaces';
+import { IAuthInfo } from './auth-info.interface';
 
-export interface IGetCurrentUserResponse extends IApiResponse<IUser> {
+export interface IGetCurrentUserResponse extends IApiResponse<IAuthInfo> {
 }

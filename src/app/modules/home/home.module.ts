@@ -16,4 +16,4 @@ import { BankingUiModule } from '../banking-ui/banking-ui.module';
         BankingUiModule,
     ],
 })
-export class HomeModule {}
+export class HomeModule { }

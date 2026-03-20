@@ -1,4 +1,4 @@
-import { IDepositCard } from '../../../api/deposit/deposit.interface';
+import { IDepositCard } from "src/app/common/interfaces";
 
 export interface IHomeState {
     isSubmiting: boolean | null;

@@ -15,6 +15,7 @@ import { Store } from '@ngrx/store';
 @UntilDestroy()
 @Component({
     selector: 'banking-deposit',
+    standalone: false,
     templateUrl: './deposit.component.html',
     styleUrl: './deposit.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,

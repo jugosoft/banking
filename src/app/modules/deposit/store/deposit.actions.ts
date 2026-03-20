@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IGetDepositResponse } from '@banking/shared-types';
+import { IGetDepositResponse } from '@api/deposit';
 import { DepositAction } from '../../../store/store.enums';
 import { ISaveDepositProps } from './model/save-deposit.interfaces';
 

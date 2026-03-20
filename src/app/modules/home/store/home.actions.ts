@@ -1,10 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-    IGetDepositListResponse,
-    IRegisterRequest,
-} from '@banking/shared-types';
+
 import { HomeAction } from '../../../store/store.enums';
+import { IGetDepositListResponse } from '@api/deposit';
 
 export const getDepositList = createAction(HomeAction.GET_DEPOSIT_LIST);
 export const getDepositListSuccess = createAction(

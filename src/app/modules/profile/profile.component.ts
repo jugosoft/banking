@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { ICurrentUser } from '../auth/types';
 import { ProfileState } from './store/profile.state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ProfileService } from './services/profile.service';
@@ -22,6 +21,7 @@ import {
     selectValidationErrors,
 } from './store/profile.selectors';
 import { selectCurrentUser } from '../auth/store/auth.selectors';
+import { IUser } from '@api/user/user.interface';
 
 @UntilDestroy()
 @Component({
@@ -31,7 +31,8 @@ import { selectCurrentUser } from '../auth/store/auth.selectors';
     styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-    public currentUser$: Observable<ICurrentUser | null>;
+    private readonly store = inject(Store);
+    public currentUser$ = this.store.pipe(select(selectCurrentUser));
     public isSubmitting$: Observable<boolean>;
     public validationErrors$: Observable<string | null>;
     public personalForm!: FormGroup;
@@ -48,12 +49,11 @@ export class ProfileComponent implements OnInit {
         password: false,
     };
 
-    private readonly store = inject(Store);
     private readonly profileService = inject(ProfileService);
     private readonly formBuilder = inject(FormBuilder);
 
     constructor() {
-        this.currentUser$ = this.store.pipe(select(selectCurrentUser));
+        this.currentUser$;
         this.isSubmitting$ = this.store.pipe(select(selectIsSubmitting));
         this.validationErrors$ = this.store.pipe(
             select(selectValidationErrors)
@@ -118,25 +118,25 @@ export class ProfileComponent implements OnInit {
 
         if (this.editMode[section]) {
             // Заполняем форму текущими данными при открытии редактирования
-            this.currentUser$.pipe(untilDestroyed(this)).subscribe((user) => {
-                if (user) {
-                    switch (section) {
-                        case 'personal':
-                            this.personalForm.patchValue({
-                                firstName: user.firstName,
-                                lastName: user.lastName,
-                                patronymic: user.patronymic,
-                            });
-                            break;
-                        case 'contact':
-                            this.contactForm.patchValue({
-                                email: user.email,
-                                username: user.username,
-                            });
-                            break;
-                    }
-                }
-            });
+            // this.currentUser$.pipe(untilDestroyed(this)).subscribe((user) => {
+            //     if (user) {
+            //         switch (section) {
+            //             case 'personal':
+            //                 this.personalForm.patchValue({
+            //                     firstName: user.firstName,
+            //                     lastName: user.lastName,
+            //                     patronymic: user.patronymic,
+            //                 });
+            //                 break;
+            //             case 'contact':
+            //                 this.contactForm.patchValue({
+            //                     email: user.email,
+            //                     username: user.username,
+            //                 });
+            //                 break;
+            //         }
+            //     }
+            // });
         }
     }
 

@@ -27,7 +27,7 @@ export const homeReducer = createReducer(
         (state, { result }): IHomeState => ({
             ...state,
             isSubmiting: false,
-            deposits: result.deposits,
+            deposits: result.data?.items ?? [],
         })
     ),
 

@@ -9,6 +9,7 @@ import { selectIsLoggedIn } from '../../auth/store/auth.selectors';
  */
 @Component({
     selector: 'banking-wrapper',
+    standalone: false,
     templateUrl: './wrapper.component.html',
     styleUrl: './wrapper.component.scss',
 })

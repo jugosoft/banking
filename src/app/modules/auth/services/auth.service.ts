@@ -1,13 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { IGetCurrentUserResponse, ILoginRequest, IRegisterRequest, ILoginResponse, IRegisterResponse } from '@api/auth';
 import { Observable } from 'rxjs';
-import {
-    IGetCurrentUserResponse,
-    ILoginRequest,
-    ILoginResponse,
-    IRegisterRequest,
-    IRegisterResponse,
-} from '@banking/shared-types';
 
 @Injectable()
 export class AuthService {

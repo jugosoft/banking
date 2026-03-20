@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ICurrentUser } from '../../auth/types';
+import { IUser } from '@api/user/user.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -13,18 +13,18 @@ export class ProfileService {
         firstName: string;
         lastName: string;
         patronymic?: string;
-    }): Observable<ICurrentUser> {
-        return this.httpClient.put<ICurrentUser>('/api/profile/name', request);
+    }): Observable<IUser> {
+        return this.httpClient.put<IUser>('/api/profile/name', request);
     }
 
-    public updateEmail(request: { email: string }): Observable<ICurrentUser> {
-        return this.httpClient.put<ICurrentUser>('/api/profile/email', request);
+    public updateEmail(request: { email: string }): Observable<IUser> {
+        return this.httpClient.put<IUser>('/api/profile/email', request);
     }
 
     public updateUsername(request: {
         username: string;
-    }): Observable<ICurrentUser> {
-        return this.httpClient.put<ICurrentUser>(
+    }): Observable<IUser> {
+        return this.httpClient.put<IUser>(
             '/api/profile/username',
             request
         );

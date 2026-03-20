@@ -1,0 +1,43 @@
+// Spacing
+$gutter: 8px;
+$gutter-small: $gutter;
+$gutter-medium: $gutter * 3;
+$gutter-large: $gutter * 9;
+
+// Colors
+$white: #ffffff;
+$color-primary: #222831;
+$color-secondary: #f2f2f2;
+$color-info: #393e46;
+$color-attention: #f96d00;
+
+$color-border-header: $color-secondary;
+
+$color-background-gray: #6b6b6b;
+
+// Sizing
+$container-width: 1190px;
+
+// Fonts settings
+$font-family: Roboto, sans-serif;
+
+$font-size: 14px;
+$font-size-medium: 18px;
+$font-size-large: 24px;
+
+$line-height: 22px;
+$line-height-large: 32px;
+
+$font-weight: 400;
+$font-weight-bold: 800;
+
+$font-color: $color-primary;
+$font-color-attention: $color-attention;
+
+$letter-spacing-logo: 4px;
+
+// Borders
+$border-header: 1px solid $color-border-header;
+
+// Shadows
+$box-shadow: rgba(0, 0, 0, 0.1) 0px 17px 14px -7px;

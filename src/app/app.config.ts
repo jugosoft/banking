@@ -37,12 +37,12 @@ export const appConfig: ApplicationConfig = {
         importProvidersFrom(RouterModule.forRoot(appRoutes)),
         importProvidersFrom(StoreModule.forRoot([])),
         importProvidersFrom(EffectsModule.forRoot([])),
-        importProvidersFrom(
-            StoreDevtoolsModule.instrument({
-                maxAge: 25,
-                logOnly: !isDevMode(),
-            })
-        ),
+        // importProvidersFrom(
+        //     StoreDevtoolsModule.instrument({
+        //         maxAge: 25,
+        //         logOnly: !isDevMode(),
+        //     })
+        // ),
     ]
 };
 

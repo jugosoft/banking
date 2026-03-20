@@ -1,1 +1,1 @@
-export * from '../models/deposit-type.interface';
+export * from './deposit-type.interface';

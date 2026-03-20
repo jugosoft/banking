@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatListModule, MatListItem } from '@angular/material/list';
+import { IError, IResponseErrors } from '@api/api.interfaces';
 
 @Component({
     selector: 'banking-validation-errors',
@@ -13,6 +14,6 @@ export class ValidationErrorsComponent {
     @Input() public validationErrors!: IResponseErrors | null;
 
     public get errors(): Array<IError> {
-        return Object.values(this.validationErrors ?? {});
+        return [];
     }
 }

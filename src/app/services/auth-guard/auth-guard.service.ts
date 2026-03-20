@@ -43,10 +43,13 @@ class AuthGuardService {
                     return this.authService.getCurrentUser$().pipe(
                         map((response) => {
                             // Сохраняем токен и данные пользователя
-                            this.localStorageService.save(
-                                'jwtToken',
-                                response.token
-                            );
+                            if (response.data?.token) {
+                                this.localStorageService.save(
+                                    'jwtToken',
+                                    response.data?.token
+                                );
+                            }
+
                             // Диспатчим успешное получение пользователя
                             // (редьюсер должен обновить состояние)
                             return true;

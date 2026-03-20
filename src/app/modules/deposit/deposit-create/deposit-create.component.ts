@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, map, switchMap } from 'rxjs';
 import { DepositService } from '../../../services/api/deposit.service';
+import { IDepositType } from '@api/deposit-type';
 
 /**
  * Компонент создания инвест-продукта
@@ -84,7 +85,7 @@ export class DepositCreateComponent implements OnInit {
         );
     }
 
-    // public readonly compareFn = (a?: IOption, b?: IOption) => {
-    //     return a?.id === b?.id;
-    // };
+    public readonly compareFn = <T extends { id: number }>(a?: T, b?: T) => {
+        return a?.id === b?.id;
+    };
 }

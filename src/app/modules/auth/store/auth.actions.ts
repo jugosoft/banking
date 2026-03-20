@@ -1,13 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-    IRegisterRequest,
-    ILoginResponse,
-    IRegisterResponse,
-    ILoginRequest,
-    IGetCurrentUserResponse,
-} from '@banking/shared-types';
+
 import { AuthAction } from '../../../store/store.enums';
+import { IGetCurrentUserResponse, ILoginRequest, ILoginResponse, IRegisterRequest, IRegisterResponse } from '@api/auth';
 
 export const register = createAction(
     AuthAction.REGISTER,
