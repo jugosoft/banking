@@ -19,7 +19,7 @@ export const initialState: IAuthState = {
     validationErrors: null,
 };
 
-const authReducer = createReducer(
+export const authReducer = createReducer(
     initialState,
 
     on(

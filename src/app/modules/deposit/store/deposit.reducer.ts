@@ -1,9 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import {
-    saveDeposit,
-    saveDepositError,
-    saveDepositSuccess,
-} from './deposit.actions';
+import { saveDeposit, saveDepositError, saveDepositSuccess } from './deposit.actions';
 import { IDepositState, initialState } from './deposit.state';
 
 

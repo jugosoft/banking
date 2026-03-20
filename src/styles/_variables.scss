@@ -1,3 +1,8 @@
+$breakpoints: (
+    'small': (min-width: 767px),
+    'medium': (min-width: 992px),
+    'large': (min-width: 1200px)) !default;
+
 // Spacing
 $gutter: 8px;
 $gutter-small: $gutter;
@@ -19,7 +24,8 @@ $color-background-gray: #6b6b6b;
 $container-width: 1190px;
 
 // Fonts settings
-$font-family: Roboto, sans-serif;
+$font-family: Roboto,
+    sans-serif;
 
 $font-size: 14px;
 $font-size-medium: 18px;

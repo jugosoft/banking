@@ -8,7 +8,7 @@ import { MaterialModule } from './modules/material/material.module';
 import { selectIsSubmiting } from './modules/auth/store/auth.selectors';
 
 @Component({
-    selector: 'banking-root',
+    selector: 'app-root',
     standalone: true,
     imports: [BankingUiModule, RouterModule, CommonModule, MaterialModule],
     templateUrl: './app.component.html',

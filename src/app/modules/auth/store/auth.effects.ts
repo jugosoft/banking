@@ -39,7 +39,7 @@ export class AuthEffects {
                         this.toastService.error(
                             'Успешная регистрация. Счастилвого пользвоания!'
                         );
-                        this.localStorageService.save('jwtToken', result.data!.token);
+                        this.localStorageService.set('jwtToken', result.data!.token);
                     }),
                     catchError((error: HttpErrorResponse) => {
                         this.toastService.error(error.message);
@@ -69,7 +69,7 @@ export class AuthEffects {
                 return this.authService.login$(request).pipe(
                     map((result) => loginSuccess({ result })),
                     tap(({ result }) => {
-                        this.localStorageService.save('jwtToken', result.data!.token);
+                        this.localStorageService.set('jwtToken', result.data!.token);
                     }),
                     catchError((error: HttpErrorResponse) => {
                         this.toastService.error(error.message);

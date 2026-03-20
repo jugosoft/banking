@@ -7,7 +7,7 @@ export const initialState: ProfileState = {
     validationErrors: null,
 };
 
-const profileReducer = createReducer(
+export const profileReducer = createReducer(
     initialState,
 
     on(

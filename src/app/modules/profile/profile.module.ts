@@ -6,10 +6,6 @@ import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { BankingUiModule } from '../banking-ui/banking-ui.module';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { reducer } from './store/profile.reducer';
-import { ProfileEffects } from './store/profile.effects';
 import { NotSpecifiedPipe } from '../../pipes/not-specified.pipe';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
@@ -23,8 +19,6 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
         ReactiveFormsModule,
         SharedModule,
         BankingUiModule,
-        StoreModule.forFeature('profile', reducer),
-        EffectsModule.forFeature([ProfileEffects]),
         MatFormField,
         MatFormFieldModule,
         MatProgressSpinner,

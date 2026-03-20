@@ -1,19 +1,52 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
     providedIn: 'root',
 })
 export class LocalStorageService {
-    public get<T extends string>(key: string): T | null {
-        const value: string | null = localStorage.getItem(key);
-        return value ? (value as T) : null;
+    private isBrowser: boolean;
+
+    constructor(
+        @Inject(PLATFORM_ID) private platformId: Object
+    ) {
+        this.isBrowser = isPlatformBrowser(platformId);
     }
 
-    public save(key: string, obj: unknown = {}): void {
-        localStorage.setItem(key, JSON.stringify(obj));
+    public get(key: string): string | null {
+        if (!this.isBrowser) {
+            return null;
+        }
+
+        try {
+            return localStorage.getItem(key);
+        } catch (e) {
+            console.warn('localStorage is not accessible', e);
+            return null;
+        }
+    }
+
+    public set(key: string, value: string): void {
+        if (!this.isBrowser) {
+            return;
+        }
+
+        try {
+            localStorage.setItem(key, value);
+        } catch (e) {
+            console.warn('localStorage is not accessible', e);
+        }
     }
 
     public remove(key: string): void {
-        localStorage.removeItem(key);
+        if (!this.isBrowser) {
+            return;
+        }
+
+        try {
+            localStorage.removeItem(key);
+        } catch (e) {
+            console.warn('localStorage is not accessible', e);
+        }
     }
 }

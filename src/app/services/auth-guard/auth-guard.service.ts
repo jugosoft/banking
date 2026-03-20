@@ -1,12 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { switchMap, take, map, catchError } from 'rxjs/operators';
 import { AuthService } from '../../modules/auth/services/auth.service';
 import { LocalStorageService } from '../local-storage-service/local-storage-service';
-import { IAuthState } from '../../modules/auth/store/auth.state';
-import { getCurrentUser } from '../../modules/auth/store/auth.actions';
 import { selectIsLoggedIn } from '../../modules/auth/store/auth.selectors';
 
 @Injectable({
@@ -17,56 +16,40 @@ class AuthGuardService {
     private readonly router = inject(Router);
     private readonly authService = inject(AuthService);
     private readonly localStorageService = inject(LocalStorageService);
+    private readonly document = inject(DOCUMENT);
 
     public checkAuthentication(): Observable<boolean | UrlTree> {
         const token = this.localStorageService.get('jwtToken');
 
         if (!token) {
-            // Сохраняем URL для редиректа после входа
-            const currentUrl =
-                window.location.pathname + window.location.search;
+            const currentUrl = this.getCurrentUrl();
             if (currentUrl && currentUrl !== '/auth') {
-                this.localStorageService.save('redirectUrl', currentUrl);
+                this.localStorageService.set('redirectUrl', currentUrl);
             }
 
             return of(this.router.createUrlTree(['/auth']));
         }
 
-        // Проверяем, авторизован ли пользователь
         return this.store.select(selectIsLoggedIn).pipe(
             take(1),
             switchMap((isLoggedIn) => {
                 if (isLoggedIn) {
                     return of(true);
                 } else {
-                    // Получаем текущего пользователя
                     return this.authService.getCurrentUser$().pipe(
                         map((response) => {
-                            // Сохраняем токен и данные пользователя
                             if (response.data?.token) {
-                                this.localStorageService.save(
-                                    'jwtToken',
-                                    response.data?.token
-                                );
+                                this.localStorageService.set('jwtToken', response.data.token);
                             }
-
-                            // Диспатчим успешное получение пользователя
-                            // (редьюсер должен обновить состояние)
                             return true;
                         }),
                         catchError(() => {
-                            // Ошибка при получении пользователя - очищаем токен
                             this.localStorageService.remove('jwtToken');
 
-                            // Сохраняем URL для редиректа после входа
-                            const currentUrl =
-                                window.location.pathname +
-                                window.location.search;
+                            // ✅ Безопасный доступ к URL
+                            const currentUrl = this.getCurrentUrl();
                             if (currentUrl && currentUrl !== '/auth') {
-                                this.localStorageService.save(
-                                    'redirectUrl',
-                                    currentUrl
-                                );
+                                this.localStorageService.set('redirectUrl', currentUrl);
                             }
 
                             return of(this.router.createUrlTree(['/auth']));
@@ -75,6 +58,15 @@ class AuthGuardService {
                 }
             })
         );
+    }
+
+    private getCurrentUrl(): string {
+        // Проверяем, что мы в браузере
+        if (this.document.defaultView) {
+            return this.document.defaultView.location.pathname + this.document.defaultView.location.search;
+        }
+        // На сервере можно вернуть пустую строку или использовать `state.url` из Router
+        return '';
     }
 }
 
