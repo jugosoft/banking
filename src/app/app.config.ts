@@ -2,9 +2,10 @@ import { ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners, provi
 import { provideRouter } from '@angular/router';
 
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideStore } from '@ngrx/store'; // ✅ из '@ngrx/store'
+import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
-import { appRoutes } from './app.routes copy';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { appRoutes } from './app.routes';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth/auth.interceptor';
@@ -23,13 +24,18 @@ export const appConfig: ApplicationConfig = {
         provideZonelessChangeDetection(),
         provideClientHydration(withEventReplay()),
 
+        provideEffects(AuthEffects, HomeEffects),
         provideStore({
             auth: authReducer,
             home: homeReducer,
             profile: profileReducer,
         }),
 
-        provideEffects(AuthEffects, HomeEffects),
+        isDevMode() ? [provideStoreDevtools({
+            maxAge: 25,
+            logOnly: true,
+            connectInZone: false
+        })] : [],
 
         provideHttpClient(withInterceptorsFromDi()),
         {
