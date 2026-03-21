@@ -70,7 +70,9 @@
                 },
                 "serve": {
                     "builder": "@angular/build:dev-server",
-                    "options": {},
+                    "options": {
+                        "proxyConfig": "proxy.conf.json"
+                    },
                     "configurations": {
                         "production": {
                             "buildTarget": "banking:build:production"
