@@ -22,7 +22,7 @@ export class AuthService {
 
     public getCurrentUser$(): Observable<IGetCurrentUserResponse> {
         return this.httpClient.get<IGetCurrentUserResponse>(
-            `${this.apiUrl}/getCurrentUser`
+            `${this.apiUrl}/auth/currentUser`
         );
     }
 }

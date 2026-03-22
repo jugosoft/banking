@@ -3,4 +3,4 @@ export * from './register.request';
 export * from './login.response';
 export * from './register.response';
 export * from './get-current-user.response';
-export * from './auth-info.interface';
+export * from './tokens.type';

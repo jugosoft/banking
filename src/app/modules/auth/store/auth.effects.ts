@@ -39,7 +39,7 @@ export class AuthEffects {
                         this.toastService.error(
                             'Успешная регистрация. Счастилвого пользвоания!'
                         );
-                        this.localStorageService.set('jwtToken', result.data!.token);
+                        // this.localStorageService.set('jwtToken', result.data!.accessToken);
                     }),
                     catchError((error: HttpErrorResponse) => {
                         this.toastService.error(error.message);
@@ -68,9 +68,9 @@ export class AuthEffects {
             switchMap(({ request }) => {
                 return this.authService.login$(request).pipe(
                     map((result) => loginSuccess({ result })),
-                    tap(({ result }) => {
-                        this.localStorageService.set('jwtToken', result.data!.token);
-                    }),
+                    // tap(({ result }) => {
+                    //     this.localStorageService.set('jwtToken', result.data!.token);
+                    // }),
                     catchError((error: HttpErrorResponse) => {
                         this.toastService.error(error.message);
                         return of(loginError({ error }));
@@ -84,13 +84,8 @@ export class AuthEffects {
         return this.actions$.pipe(
             ofType(getCurrentUser),
             switchMap(() => {
-                const jwtToken = this.localStorageService.get('jwtToken');
-                if (!jwtToken) {
-                    return of(getCurrentUserError());
-                }
-
+                // Убираем проверку jwtToken — работаем через куки
                 return this.authService.getCurrentUser$().pipe(
-                    tap(() => void this.router.navigate(['/home'])),
                     map((result) => getCurrentUserSuccess({ result })),
                     catchError(() => {
                         return of(getCurrentUserError());

@@ -1,6 +1,9 @@
+import { HttpStatusCode } from "@angular/common/http";
+
 // Базовый ответ от бэкенда
 export interface IApiResponse<T = null> {
     readonly success: boolean;
+    readonly statusCode: HttpStatusCode;
     readonly data?: T;
     readonly errors?: IResponseErrors;
 }

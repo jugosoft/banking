@@ -55,13 +55,13 @@ export class LoginComponent implements OnInit {
      * невалидна, то подсвечиваем контролы
      */
     public onSubmit(): void {
-        const { email, password } = this.formGroup.value;
+        const { username, password } = this.formGroup.value;
         if (this.formGroup.invalid) {
             this.formGroup.markAllAsTouched();
         }
 
-        if (email && password) {
-            this.store.dispatch(login({ request: { email, password } }));
+        if (username && password) {
+            this.store.dispatch(login({ request: { username, password } }));
         }
     }
 
@@ -70,8 +70,8 @@ export class LoginComponent implements OnInit {
      */
     private initFormGroup(): void {
         this.formGroup = this.formBuilder.group<ILoginForm>({
-            email: this.formBuilder.control('', Validators.required),
-            password: this.formBuilder.control('', Validators.required),
+            username: this.formBuilder.control('qwedwawwda123wqw', Validators.required),
+            password: this.formBuilder.control('quetdwaddwadwa123', Validators.required),
         });
     }
 

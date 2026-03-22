@@ -11,7 +11,7 @@ export const appRoutes: Routes = [
     },
     {
         path: '',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         canActivateChild: [authGuard],
         children: [
             {
@@ -39,6 +39,6 @@ export const appRoutes: Routes = [
     },
     {
         path: '**',
-        redirectTo: '',
+        redirectTo: 'auth',
     },
 ];

@@ -14,14 +14,14 @@ export class DepositService {
 
     public getDepositList$(): Observable<IGetDepositListResponse> {
         return this.httpClient.get<IGetDepositListResponse>(
-            `${this.apiUrl}/app/getDepositList`,
+            `${this.apiUrl}/deposit/list`,
             {}
         );
     }
 
     public getDeposit$(depositId: number): Observable<IGetDepositResponse> {
         return this.httpClient.get<IGetDepositResponse>(
-            `${this.apiUrl}/app/getDeposit`,
+            `${this.apiUrl}/deposit/${depositId}`,
             {}
         );
     }

@@ -1,9 +1,9 @@
 import { IResponseErrors } from '@api/api.interfaces';
-import { IUser } from '@api/user/user.interface';
+import { IUserInfo } from '@api/user/user.interface';
 
 export interface IAuthState {
     isSubmiting: boolean | null;
-    currentUser: Omit<IUser, 'password' | 'hashedRT' | 'deposits'> | null;
+    currentUser: IUserInfo | null;
     token: string | null;
     validationErrors: IResponseErrors | null;
 }

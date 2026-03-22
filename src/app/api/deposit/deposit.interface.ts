@@ -1,5 +1,4 @@
 import { IBank } from "@api/bank/bank.interface";
-import { IUser } from "../user/user.interface";
 import { IDepositType } from "@api/deposit-type";
 
 export interface IDeposit {
@@ -15,6 +14,5 @@ export interface IDeposit {
   readonly comment?: Date;
   readonly description?: string;
   readonly archived: boolean;
-  readonly user: IUser;
   readonly bank: IBank;
 }

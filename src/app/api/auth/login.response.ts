@@ -1,5 +1,6 @@
+import { IUserInfo } from '@api/user';
 import { IApiResponse } from '../api.interfaces';
-import { IAuthInfo } from './auth-info.interface';
+import { TokenPair } from './tokens.type';
 
-export interface ILoginResponse extends IApiResponse<IAuthInfo> {
+export interface ILoginResponse extends IApiResponse<IUserInfo & TokenPair> {
 }

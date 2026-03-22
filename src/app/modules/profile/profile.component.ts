@@ -21,7 +21,6 @@ import {
     selectValidationErrors,
 } from './store/profile.selectors';
 import { selectCurrentUser } from '../auth/store/auth.selectors';
-import { IUser } from '@api/user/user.interface';
 
 @UntilDestroy()
 @Component({

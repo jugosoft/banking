@@ -1,7 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { StoreKey } from '../../../store/store.enums';
 import { IAuthState } from './auth.state';
-import { IUser } from '@api/user/user.interface';
 import { IResponseErrors } from '@api/api.interfaces';
 
 export const selectAuthFeature = createFeatureSelector<IAuthState>(

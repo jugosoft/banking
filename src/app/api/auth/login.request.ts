@@ -1,4 +1,4 @@
 export interface ILoginRequest {
-  readonly email: string;
+  readonly username: string;
   readonly password: string;
 }
