@@ -104,8 +104,6 @@ export const authReducer = createReducer(
         getCurrentUser,
         (state): IAuthState => ({
             ...state,
-            currentUser: null,
-            token: null,
             isSubmiting: true,
             validationErrors: null,
         })

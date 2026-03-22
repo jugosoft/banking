@@ -2,7 +2,7 @@ import { inject, Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { CanActivateFn, Router, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map, catchError, tap, first, filter, timeout } from 'rxjs/operators';
+import { map, catchError, take, skip, filter, switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { getCurrentUser } from '../../modules/auth/store/auth.actions';
 import { LocalStorageService } from '../local-storage-service/local-storage-service';
@@ -20,33 +20,35 @@ class AuthGuardService {
 
     public checkAuthentication(): Observable<boolean | UrlTree> {
         return this.store.select(selectCurrentUser).pipe(
-            tap(currentUser => {
-                if (!currentUser) {
-                    this.store.dispatch(getCurrentUser());
+            take(1),
+            switchMap((currentUser) => {
+                if (currentUser) {
+                    return of(true);
                 }
-            }),
-            // Ждём первого НЕ null значения, но не более 5 сек
-            filter(user => user !== null),
-            first(),
-            timeout(5000),
-            map(() => true),
-            catchError((error) => {
-                console.error('AuthGuard failed:', error);
-                this.localStorageService.remove('jwtToken');
-                const currentUrl = this.getCurrentUrl();
-                if (currentUrl && currentUrl !== '/auth') {
-                    this.localStorageService.set('redirectUrl', currentUrl);
-                }
-                return of(this.router.createUrlTree(['/auth']));
+                // Пользователя нет — диспатчим получение
+                this.store.dispatch(getCurrentUser());
+                // Ждём загрузки пользователя
+                return this.store.select(selectCurrentUser).pipe(
+                    skip(1),
+                    filter(user => user !== null),
+                    take(1),
+                    map(() => true),
+                    catchError(() => of(this.router.createUrlTree(['/auth'])))
+                );
             })
         );
     }
 
     private getCurrentUrl(): string {
-        const defaultView = this.document.defaultView
+        const defaultView = this.document.defaultView;
         // Проверяем, что мы в браузере
         if (defaultView) {
-            return defaultView.location.pathname + defaultView.location.search;
+            // Сохраняем URL, если он не является страницей аутентификации
+            const currentUrl = defaultView.location.pathname + defaultView.location.search;
+            if (currentUrl && currentUrl !== '/auth') {
+                this.localStorageService.set('redirectUrl', currentUrl);
+            }
+            return currentUrl;
         }
         // На сервере можно вернуть пустую строку или использовать `state.url` из Router
         return '';

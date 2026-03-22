@@ -1,9 +1,9 @@
-@import 'mixins';
+@use 'mixins';
 
 :host {
   display: flex;
 
-  @include respond-to('medium') {
+  @include mixins.respond-to('medium') {
     justify-content: center;
   }
 }
@@ -14,12 +14,12 @@
     flex-direction: column;
     width: 100%;
 
-    @include respond-to('medium') {
+    @include mixins.respond-to('medium') {
       justify-content: center;
       width: 640px;
     }
 
-    @include respond-to('large') {
+    @include mixins.respond-to('large') {
       justify-content: center;
       width: 840px;
     }

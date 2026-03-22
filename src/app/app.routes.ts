@@ -11,8 +11,7 @@ export const appRoutes: Routes = [
     },
     {
         path: '',
-        // canActivate: [authGuard],
-        canActivateChild: [authGuard],
+        canActivate: [authGuard],
         children: [
             {
                 path: 'home',

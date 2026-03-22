@@ -54,7 +54,9 @@ export class AuthEffects {
         () => {
             return this.actions$.pipe(
                 ofType(registerSuccess, loginSuccess),
-                tap(() => void this.router.navigate(['/home']))
+                tap(() => {
+                    void this.router.navigate(['/home']);
+                })
             );
         },
         {
@@ -84,10 +86,17 @@ export class AuthEffects {
         return this.actions$.pipe(
             ofType(getCurrentUser),
             switchMap(() => {
-                // Убираем проверку jwtToken — работаем через куки
                 return this.authService.getCurrentUser$().pipe(
-                    map((result) => getCurrentUserSuccess({ result })),
-                    catchError(() => {
+                    map((result) => {
+                        if (result.data) {
+                            return getCurrentUserSuccess({ result });
+                        } else {
+                            // При отсутствии данных — ошибка
+                            return getCurrentUserError();
+                        }
+                    }),
+                    catchError((error) => {
+                        console.error('Failed to fetch current user:', error);
                         return of(getCurrentUserError());
                     })
                 );
