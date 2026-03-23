@@ -19,6 +19,6 @@ export class AppComponent implements OnInit {
     public readonly isSubmitting$ = this.store.pipe(select(selectIsSubmiting));
 
     public ngOnInit(): void {
-        this.store.dispatch(getCurrentUser());
+        // this.store.dispatch(getCurrentUser());
     }
 }

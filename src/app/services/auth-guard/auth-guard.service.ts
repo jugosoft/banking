@@ -19,6 +19,11 @@ class AuthGuardService {
     private readonly document = inject(DOCUMENT);
 
     public checkAuthentication(): Observable<boolean | UrlTree> {
+        // Проверяем, что мы в браузере
+        if (!this.isBrowser()) {
+            return of(true); // SSR — не пускаем, пусть рендерится как есть
+        }
+
         return this.store.select(selectCurrentUser).pipe(
             take(1),
             switchMap((currentUser) => {
@@ -54,7 +59,9 @@ class AuthGuardService {
         return '';
     }
 
-
+    private isBrowser(): boolean {
+        return !!this.document.defaultView && typeof window !== 'undefined';
+    }
 }
 
 export const authGuard: CanActivateFn = (route, state) => {
