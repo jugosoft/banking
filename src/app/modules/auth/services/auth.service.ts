@@ -25,4 +25,9 @@ export class AuthService {
             `${this.apiUrl}/auth/currentUser`
         );
     }
+
+    public logout$(): Observable<void> {
+        return this.httpClient.post<void>(`${this.apiUrl}/auth/logout`, {});
+    }
 }
+

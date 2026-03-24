@@ -14,6 +14,11 @@
     z-index: 1000;
   }
 
+  &__sidenav {
+    width: 70%;
+    height: 100%;
+  }
+
   &__burger {
     margin-right: 2rem;
 
@@ -51,6 +56,10 @@
     padding-top: 65px;
     height: 100%;
     flex-direction: column;
+  }
+
+  &__logout {
+    margin-left: auto;
   }
 
   &__spacer {

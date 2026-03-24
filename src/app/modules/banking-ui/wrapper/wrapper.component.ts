@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { selectIsLoggedIn } from '../../auth/store/auth.selectors';
+import { logout } from '../../auth/store/auth.actions';
 
 /**
  * Компонент обёртки страницы
@@ -32,5 +33,9 @@ export class WrapperComponent {
 
     public onProfileClick(): void {
         void this.router.navigate(['/profile']);
+    }
+
+    public onLogoutClick(): void {
+        this.store.dispatch(logout());
     }
 }

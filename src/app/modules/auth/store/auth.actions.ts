@@ -49,3 +49,10 @@ export const getCurrentUserSuccess = createAction(
 export const getCurrentUserError = createAction(
     AuthAction.GET_CURRENT_USER_ERROR
 );
+
+export const logout = createAction(AuthAction.LOGOUT);
+export const logoutSuccess = createAction(AuthAction.LOGOUT_SUCCESS);
+export const logoutError = createAction(
+    AuthAction.LOGOUT_ERROR,
+    props<{ error: HttpErrorResponse }>()
+);

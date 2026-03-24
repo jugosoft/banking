@@ -16,6 +16,10 @@ export enum AuthAction {
     GET_CURRENT_USER = '[Auth] Get Current User',
     GET_CURRENT_USER_SUCCESS = '[Auth] Get Current User Success',
     GET_CURRENT_USER_ERROR = '[Auth] Get Current User Error',
+
+    LOGOUT = '[Auth] Logout',
+    LOGOUT_SUCCESS = '[Auth] Logout Success',
+    LOGOUT_ERROR = '[Auth] Logout Error'
 }
 
 export enum HomeAction {

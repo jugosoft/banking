@@ -7,6 +7,9 @@ import {
     login,
     loginError,
     loginSuccess,
+    logout,
+    logoutSuccess,
+    logoutError,
     register,
     registerError,
     registerSuccess,
@@ -132,6 +135,29 @@ export const authReducer = createReducer(
             ...state,
             token: null,
             currentUser: null,
+            isSubmiting: false,
+        })
+    ),
+
+    on(
+        logout,
+        (state): IAuthState => ({
+            ...state,
+            isSubmiting: true,
+        })
+    ),
+
+    on(
+        logoutSuccess,
+        (): IAuthState => ({
+            ...initialState,
+        })
+    ),
+
+    on(
+        logoutError,
+        (state): IAuthState => ({
+            ...state,
             isSubmiting: false,
         })
     )

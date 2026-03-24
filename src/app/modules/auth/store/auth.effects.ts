@@ -15,6 +15,9 @@ import {
     getCurrentUser,
     getCurrentUserSuccess,
     getCurrentUserError,
+    logout,
+    logoutSuccess,
+    logoutError,
 } from './auth.actions';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../../../services/toast/toast.service';
@@ -98,6 +101,25 @@ export class AuthEffects {
                     catchError((error) => {
                         console.error('Failed to fetch current user:', error);
                         return of(getCurrentUserError());
+                    })
+                );
+            })
+        );
+    });
+
+    private readonly logout$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(logout),
+            switchMap(() => {
+                return this.authService.logout$().pipe(
+                    map(() => logoutSuccess()),
+                    tap(() => {
+                        this.localStorageService.remove('jwtToken');
+                        void this.router.navigate(['/home']);
+                    }),
+                    catchError((error: HttpErrorResponse) => {
+                        this.toastService.error(error.message);
+                        return of(logoutError({ error }));
                     })
                 );
             })
