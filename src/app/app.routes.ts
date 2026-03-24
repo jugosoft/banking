@@ -13,6 +13,7 @@ export const appRoutes: Routes = [
         path: '',
         canActivate: [authGuard],
         children: [
+            { path: '', pathMatch: 'full', redirectTo: 'home' },
             {
                 path: 'home',
                 loadChildren: () =>

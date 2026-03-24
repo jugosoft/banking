@@ -5,8 +5,9 @@ import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../services/toast/toast.service';
-import { ProfileService } from '../services/profile.service';
 import * as ProfileActions from './profile.actions';
+import { loadCurrentUserSuccess, loadCurrentUserFailure } from './profile.actions';
+import { ProfileService } from '../services/profile.service';
 
 @Injectable()
 export class ProfileEffects {
@@ -20,7 +21,7 @@ export class ProfileEffects {
         this.actions$.pipe(
             ofType(ProfileActions.updateName),
             switchMap((action) =>
-                this.profileService.updateName(action).pipe(
+                this.profileService.updateName$(action).pipe(
                     map(() => ProfileActions.updateNameSuccess()),
                     catchError((error) =>
                         of(ProfileActions.updateNameFailure({ error }))
@@ -58,7 +59,7 @@ export class ProfileEffects {
         this.actions$.pipe(
             ofType(ProfileActions.updateEmail),
             switchMap((action) =>
-                this.profileService.updateEmail(action).pipe(
+                this.profileService.updateEmail$(action).pipe(
                     map(() => ProfileActions.updateEmailSuccess()),
                     catchError((error) =>
                         of(ProfileActions.updateEmailFailure({ error }))
@@ -96,7 +97,7 @@ export class ProfileEffects {
         this.actions$.pipe(
             ofType(ProfileActions.updateUsername),
             switchMap((action) =>
-                this.profileService.updateUsername(action).pipe(
+                this.profileService.updateUsername$(action).pipe(
                     map(() => ProfileActions.updateUsernameSuccess()),
                     catchError((error) =>
                         of(ProfileActions.updateUsernameFailure({ error }))
@@ -134,7 +135,7 @@ export class ProfileEffects {
         this.actions$.pipe(
             ofType(ProfileActions.updatePassword),
             switchMap((action) =>
-                this.profileService.updatePassword(action).pipe(
+                this.profileService.updatePassword$(action).pipe(
                     map(() => ProfileActions.updatePasswordSuccess()),
                     catchError((error) =>
                         of(ProfileActions.updatePasswordFailure({ error }))
@@ -153,5 +154,17 @@ export class ProfileEffects {
                 })
             ),
         { dispatch: false }
+    );
+
+    private readonly loadCurrentUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ProfileActions.loadCurrentUser),
+            switchMap(() =>
+                this.profileService.getCurrentUser$().pipe(
+                    map(user => loadCurrentUserSuccess({ user })),
+                    catchError(error => of(loadCurrentUserFailure({ error })))
+                )
+            )
+        )
     );
 }

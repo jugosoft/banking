@@ -29,4 +29,8 @@ export class WrapperComponent {
     public onDepositCreate(): void {
         void this.router.navigate(['/deposit', 'create']);
     }
+
+    public onProfileClick(): void {
+        void this.router.navigate(['/profile']);
+    }
 }

@@ -1,173 +1,185 @@
-<banking-wrapper>
-  <div class="profile">
-    <h1 class="profile__title">Профиль пользователя</h1>
+<h1 class="profile__title">Профиль пользователя</h1>
 
-    @if (currentUser$ | async; as user) {
-    <div class="profile__section">
-      <header class="profile__header">
-        <h2 class="profile__subtitle">Персональная информация</h2>
+@if (currentUser$ | async; as user) {
+<div class="profile__section">
+    <div class="profile__section-header">
+        <h2 class="profile__section-title">Персональная информация</h2>
         <button class="profile__edit-button" mat-icon-button (click)="toggleEdit('personal')">
-          <mat-icon>edit</mat-icon>
+            <mat-icon>edit</mat-icon>
         </button>
-      </header>
+    </div>
 
-      @if (!editMode.personal) {
-      <!-- <div class="profile__content">
+    <!-- @if (!editMode.personal) {
+        <div class="profile__content">
+            <p class="profile__field">
+                <span class="profile__label">Имя:</span>
+                <span class="profile__value">{{ user.firstName }}</span>
+            </p>
+            <p class="profile__field">
+                <span class="profile__label">Фамилия:</span>
+                <span class="profile__value">{{ user.lastName }}</span>
+            </p>
+            <p class="profile__field">
+                <span class="profile__label">Отчество:</span>
+                <span class="profile__value">{{ user.patronymic | notSpecified }}</span>
+            </p>
+        </div>
+        } @else {
+        <form [formGroup]="personalForm" (ngSubmit)="savePersonal()" class="profile__form">
+            <mat-form-field class="profile__input" appearance="outline">
+                <mat-label>Имя</mat-label>
+                <input matInput formControlName="firstName" required>
+                <mat-error>
+                    @if (getErrorsFor(personalForm, 'firstName')?.['required']) {
+                    Имя обязательно для заполнения
+                    }
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="profile__input" appearance="outline">
+                <mat-label>Фамилия</mat-label>
+                <input matInput formControlName="lastName" required>
+                <mat-error>
+                    @if (getErrorsFor(personalForm, 'lastName')?.['required']) {
+                    Фамилия обязательна для заполнения
+                    }
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="profile__input" appearance="outline">
+                <mat-label>Отчество</mat-label>
+                <input matInput formControlName="patronymic">
+            </mat-form-field>
+
+            <div class="profile__actions">
+                <button class="profile__cancel-button" mat-button type="button"
+                    (click)="cancelEdit('personal')">Отмена</button>
+                <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
+                    [disabled]="personalForm.invalid || loading.personal">
+                    <mat-spinner *ngIf="loading.personal" diameter="20"></mat-spinner>
+                    <span *ngIf="!loading.personal">Сохранить</span>
+                </button>
+            </div>
+        </form>
+        } -->
+</div>
+
+<div class="profile__section">
+    <div class="profile__section-header">
+        <h2 class="profile__section-title">Контактная информация</h2>
+        <button class="profile__edit-button" mat-icon-button (click)="toggleEdit('contact')">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </div>
+
+    @if (!editMode.contact) {
+    <div class="profile__content">
         <p class="profile__field">
-          <span class="profile__label">Имя:</span>
-          <span class="profile__value">{{ user.firstName }}</span>
+            <span class="profile__label">Email:</span>
+            <span class="profile__value">{{ user.email }}</span>
         </p>
         <p class="profile__field">
-          <span class="profile__label">Фамилия:</span>
-          <span class="profile__value">{{ user.lastName }}</span>
+            <span class="profile__label">Логин:</span>
+            <span class="profile__value">{{ user.name }}</span>
         </p>
-        <p class="profile__field">
-          <span class="profile__label">Отчество:</span>
-          <span class="profile__value">{{ user.patronymic | notSpecified }}</span>
-        </p>
-      </div> -->
-      } @else {
-      <form [formGroup]="personalForm" (ngSubmit)="savePersonal()" class="profile__form">
+    </div>
+    } @else {
+    <form [formGroup]="contactForm" (ngSubmit)="saveContact()" class="profile__form">
         <mat-form-field class="profile__input" appearance="outline">
-          <mat-label>Имя</mat-label>
-          <input matInput formControlName="firstName" required>
-          <mat-error *ngIf="getErrorsFor(personalForm, 'firstName')?.['required']">
-            Имя обязательно для заполнения
-          </mat-error>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" required>
+            <mat-error>
+                @if (getErrorsFor(contactForm, 'email')?.['required']) {
+                Email обязателен для заполнения
+                }
+                @else if (getErrorsFor(contactForm, 'email')?.['email']) {
+                Некорректный формат email
+                }
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field class="profile__input" appearance="outline">
-          <mat-label>Фамилия</mat-label>
-          <input matInput formControlName="lastName" required>
-          <mat-error *ngIf="getErrorsFor(personalForm, 'lastName')?.['required']">
-            Фамилия обязательна для заполнения
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field class="profile__input" appearance="outline">
-          <mat-label>Отчество</mat-label>
-          <input matInput formControlName="patronymic">
+            <mat-label>Логин</mat-label>
+            <input matInput formControlName="username" required>
+            <mat-error>
+                @if (getErrorsFor(contactForm, 'username')?.['required']) {
+                Логин обязателен для заполнения
+                }
+            </mat-error>
         </mat-form-field>
 
         <div class="profile__actions">
-          <button class="profile__cancel-button" mat-button type="button"
-            (click)="cancelEdit('personal')">Отмена</button>
-          <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
-            [disabled]="personalForm.invalid || loading.personal">
-            <mat-spinner *ngIf="loading.personal" diameter="20"></mat-spinner>
-            <span *ngIf="!loading.personal">Сохранить</span>
-          </button>
-        </div>
-      </form>
-      }
-    </div>
-
-    <div class="profile__section">
-      <div class="profile__header">
-        <h2 class="profile__subtitle">Контактная информация</h2>
-        <button class="profile__edit-button" mat-icon-button (click)="toggleEdit('contact')">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </div>
-
-      <div class="profile__content" *ngIf="!editMode.contact; else contactFormTemplate">
-        <p class="profile__field">
-          <span class="profile__label">Email:</span>
-          <span class="profile__value">{{ user.email }}</span>
-        </p>
-        <p class="profile__field">
-          <span class="profile__label">Логин:</span>
-          <span class="profile__value">{{ user.name }}</span>
-        </p>
-      </div>
-
-      <ng-template #contactFormTemplate>
-        <form [formGroup]="contactForm" (ngSubmit)="saveContact()" class="profile__form">
-          <mat-form-field class="profile__input" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" type="email" required>
-            <mat-error *ngIf="getErrorsFor(contactForm, 'email')?.['required']">
-              Email обязателен для заполнения
-            </mat-error>
-            <mat-error *ngIf="getErrorsFor(contactForm, 'email')?.['email']">
-              Некорректный формат email
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="profile__input" appearance="outline">
-            <mat-label>Логин</mat-label>
-            <input matInput formControlName="username" required>
-            <mat-error *ngIf="getErrorsFor(contactForm, 'username')?.['required']">
-              Логин обязателен для заполнения
-            </mat-error>
-          </mat-form-field>
-
-          <div class="profile__actions">
             <button class="profile__cancel-button" mat-button type="button"
-              (click)="cancelEdit('contact')">Отмена</button>
+                (click)="cancelEdit('contact')">Отмена</button>
             <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
-              [disabled]="contactForm.invalid || loading.contact">
-              <mat-spinner *ngIf="loading.contact" diameter="20"></mat-spinner>
-              <span *ngIf="!loading.contact">Сохранить</span>
+                [disabled]="contactForm.invalid || loading.contact">
+                <mat-spinner *ngIf="loading.contact" diameter="20"></mat-spinner>
+                <span *ngIf="!loading.contact">Сохранить</span>
             </button>
-          </div>
-        </form>
-      </ng-template>
+        </div>
+    </form>
+    }
+</div>
+
+<div class="profile__section">
+    <div class="profile__section-header">
+        <h2 class="profile__section-title">Смена пароля</h2>
+        <button class="profile__edit-button" mat-icon-button (click)="toggleEdit('password')">
+            <mat-icon>edit</mat-icon>
+        </button>
     </div>
 
-    <div class="profile__section">
-      <div class="profile__header">
-        <h2 class="profile__subtitle">Смена пароля</h2>
-        <button class="profile__edit-button" mat-icon-button (click)="toggleEdit('password')">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </div>
-
-      <div class="profile__content" *ngIf="!editMode.password; else passwordFormTemplate">
+    @if (!editMode.password) {
+    <div class="profile__content">
         <p class="profile__field">Пароль скрыт для безопасности</p>
-      </div>
-
-      <ng-template #passwordFormTemplate>
-        <form [formGroup]="passwordForm" (ngSubmit)="savePassword()" class="profile__form">
-          <mat-form-field class="profile__input" appearance="outline">
+    </div>
+    } @else {
+    <form [formGroup]="passwordForm" (ngSubmit)="savePassword()" class="profile__form">
+        <mat-form-field class="profile__input" appearance="outline">
             <mat-label>Текущий пароль</mat-label>
             <input matInput formControlName="oldPassword" type="password" required>
-            <mat-error *ngIf="getErrorsFor(passwordForm, 'oldPassword')?.['required']">
-              Текущий пароль обязателен
+            <mat-error>
+                @if (getErrorsFor(passwordForm, 'oldPassword')?.['required']) {
+                Текущий пароль обязателен
+                }
             </mat-error>
-          </mat-form-field>
+        </mat-form-field>
 
-          <mat-form-field class="profile__input" appearance="outline">
+        <mat-form-field class="profile__input" appearance="outline">
             <mat-label>Новый пароль</mat-label>
             <input matInput formControlName="newPassword" type="password" required>
-            <mat-error *ngIf="getErrorsFor(passwordForm, 'newPassword')?.['required']">
-              Новый пароль обязателен
+            <mat-error>
+                @if (getErrorsFor(passwordForm, 'newPassword')?.['required']) {
+                Новый пароль обязателен
+                }
             </mat-error>
-          </mat-form-field>
+        </mat-form-field>
 
-          <mat-form-field class="profile__input" appearance="outline">
+        <mat-form-field class="profile__input" appearance="outline">
             <mat-label>Подтверждение пароля</mat-label>
             <input matInput formControlName="confirmPassword" type="password" required>
-            <mat-error *ngIf="getErrorsFor(passwordForm, 'confirmPassword')?.['required']">
-              Подтверждение пароля обязательно
+            <mat-error>
+                @if (getErrorsFor(passwordForm, 'confirmPassword')?.['required']) {
+                Подтверждение пароля обязательно
+                }
             </mat-error>
-            <mat-error *ngIf="passwordForm.errors?.['passwordMismatch']">
-              Пароли не совпадают
+            <mat-error>
+                @if (passwordForm.errors?.['passwordMismatch']) {
+                Пароли не совпадают
+                }
             </mat-error>
-          </mat-form-field>
+        </mat-form-field>
 
-          <div class="profile__actions">
+        <div class="profile__actions">
             <button class="profile__cancel-button" mat-button type="button"
-              (click)="cancelEdit('password')">Отмена</button>
+                (click)="cancelEdit('password')">Отмена</button>
             <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
-              [disabled]="passwordForm.invalid || loading.password">
-              <mat-spinner *ngIf="loading.password" diameter="20"></mat-spinner>
-              <span *ngIf="!loading.password">Сменить пароль</span>
+                [disabled]="passwordForm.invalid || loading.password">
+                <mat-spinner *ngIf="loading.password" diameter="20"></mat-spinner>
+                <span *ngIf="!loading.password">Сменить пароль</span>
             </button>
-          </div>
-        </form>
-      </ng-template>
-    </div>
+        </div>
+    </form>
     }
-  </div>
-</banking-wrapper>
+</div>
+}

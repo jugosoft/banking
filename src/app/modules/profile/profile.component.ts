@@ -21,6 +21,7 @@ import {
     selectValidationErrors,
 } from './store/profile.selectors';
 import { selectCurrentUser } from '../auth/store/auth.selectors';
+import { loadCurrentUser } from './store/profile.actions';
 
 @UntilDestroy()
 @Component({
@@ -31,9 +32,10 @@ import { selectCurrentUser } from '../auth/store/auth.selectors';
 })
 export class ProfileComponent implements OnInit {
     private readonly store = inject(Store);
-    public currentUser$ = this.store.pipe(select(selectCurrentUser));
-    public isSubmitting$: Observable<boolean>;
-    public validationErrors$: Observable<string | null>;
+    public readonly currentUser$ = this.store.pipe(select(selectCurrentUser));
+    public readonly isSubmitting$ = this.store.pipe(select(selectIsSubmitting));
+    public readonly validationErrors$ = this.store.pipe(select(selectValidationErrors));
+    private readonly formBuilder = inject(FormBuilder);
     public personalForm!: FormGroup;
     public contactForm!: FormGroup;
     public passwordForm!: FormGroup;
@@ -48,20 +50,11 @@ export class ProfileComponent implements OnInit {
         password: false,
     };
 
-    private readonly profileService = inject(ProfileService);
-    private readonly formBuilder = inject(FormBuilder);
-
-    constructor() {
-        this.currentUser$;
-        this.isSubmitting$ = this.store.pipe(select(selectIsSubmitting));
-        this.validationErrors$ = this.store.pipe(
-            select(selectValidationErrors)
-        );
-    }
 
     public ngOnInit(): void {
         this.initForms();
         this.subscribeToLoading();
+        this.store.dispatch(loadCurrentUser());
     }
 
     private initForms(): void {

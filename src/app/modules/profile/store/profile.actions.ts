@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
+import { IUserInfo } from '@api/user/user.interface';
 
 export const updateName = createAction(
     '[Profile] Update Name',
@@ -7,6 +8,10 @@ export const updateName = createAction(
 );
 
 export const updateNameSuccess = createAction('[Profile] Update Name Success');
+
+export const loadCurrentUser = createAction('[Profile] Load Current User');
+export const loadCurrentUserSuccess = createAction('[Profile] Load Current User Success', props<{ user: IUserInfo }>());
+export const loadCurrentUserFailure = createAction('[Profile] Load Current User Failure', props<{ error: HttpErrorResponse }>());
 
 export const updateNameFailure = createAction(
     '[Profile] Update Name Failure',
