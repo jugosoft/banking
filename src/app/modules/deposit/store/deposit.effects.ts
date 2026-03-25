@@ -43,6 +43,15 @@ export class DepositEffects {
         );
     });
 
+    private readonly getDepositListSuccess$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(getDepositListSuccess),
+            tap(({ result }) => {
+                console.log('Deposit list loaded:', result);
+            })
+        );
+    }, { dispatch: false });
+
     private readonly saveDeposit$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(saveDeposit),

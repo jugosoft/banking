@@ -8,6 +8,7 @@ import {
 
 export const initialState: IHomeState = {
     isSubmiting: null,
+    isLoading: null,
     deposits: null,
 };
 
