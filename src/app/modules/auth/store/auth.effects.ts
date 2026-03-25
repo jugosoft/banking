@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
@@ -31,7 +31,7 @@ export class AuthEffects {
     private readonly authService = inject(AuthService);
     private readonly toastService = inject(ToastService);
     private readonly localStorageService = inject(LocalStorageService);
-
+    private isGettingCurrentUser = false;
     private readonly register$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(register),
@@ -90,6 +90,7 @@ export class AuthEffects {
             ofType(getCurrentUser),
             switchMap(() => {
                 return this.authService.getCurrentUser$().pipe(
+                    tap(() => this.isGettingCurrentUser = true),
                     map((result) => {
                         if (result.data) {
                             return getCurrentUserSuccess({ result });
@@ -101,7 +102,8 @@ export class AuthEffects {
                     catchError((error) => {
                         console.error('Failed to fetch current user:', error);
                         return of(getCurrentUserError());
-                    })
+                    }),
+                    finalize(() => this.isGettingCurrentUser = false)
                 );
             })
         );
