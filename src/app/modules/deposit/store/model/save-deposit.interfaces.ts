@@ -1,7 +1,7 @@
 export interface ISaveDepositProps {
     deposit: {
         bankId: number;
-        typeId: number;
+        depositTypeId: number;
         amount: number;
         percent: number;
         startDate: Date;

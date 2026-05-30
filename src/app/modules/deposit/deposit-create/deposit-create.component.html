@@ -13,19 +13,21 @@
 
     <mat-form-field>
       <mat-label>Тип продукта</mat-label>
-      <mat-select [compareWith]="compareFn" formControlName="type">
+      <mat-select [compareWith]="compareFn" formControlName="depositType">
         @for (type of depositTypes$ | async; track type.id) {
         <mat-option [value]="type">{{ type.name }}</mat-option>
         }
       </mat-select>
-    </mat-form-field>
-
-    <mat-form-field floatLabel="always">
+    </mat-form-field>    <mat-form-field floatLabel="always">
       <mat-label>Начальная сумма</mat-label>
       <input matInput type="number" placeholder="0,00" formControlName="amount" />
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field floatLabel="always">
+      <mat-label>Процентная ставка</mat-label>
+      <input matInput type="number" placeholder="0,00" formControlName="percent" />
+      <mat-hint>Введите процентную ставку (0-100)</mat-hint>
+    </mat-form-field><mat-form-field>
       <mat-label>Дата открытия</mat-label>
       <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
       <mat-hint>ММ.ДД.ГГГГ</mat-hint>

@@ -3,9 +3,8 @@ import {
     inject,
     OnInit,
 } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { getDepositList } from './store/home.actions';
-import { selectDeposits, selectIsLoading, selectIsSubmiting } from './store/home.selectors';
+import { DepositService } from 'src/app/services/api/deposit.service';
+import { map, tap } from 'rxjs';
 
 /**
  * Компонент домашней страницы
@@ -17,13 +16,15 @@ import { selectDeposits, selectIsLoading, selectIsSubmiting } from './store/home
     styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-    private readonly store = inject(Store);
-    public deposits$ = this.store.pipe(select(selectDeposits));
-    public isLoading$ = this.store.pipe(select(selectIsLoading));
-    public isSubmitting$ = this.store.pipe(select(selectIsSubmiting));
+    public isLoading = false;
+    private readonly depositService = inject(DepositService);
+    public deposits$ = this.depositService.getDepositList$().pipe(
+        tap(() => this.isLoading = true),
+        map(response => response.data?.items ?? []),
+        tap(() => this.isLoading = false)
+    );
 
     public ngOnInit(): void {
-        this.store.dispatch(getDepositList());
     }
 }
 

@@ -12,8 +12,6 @@ import { AuthInterceptor } from './interceptors/auth/auth.interceptor';
 import { authReducer } from './modules/auth/store/auth.reducer';
 import { AuthService } from './modules/auth/services/auth.service';
 import { AuthEffects } from './modules/auth/store/auth.effects';
-import { HomeEffects } from './modules/home/store/home.effects';
-import { homeReducer } from './modules/home/store/home.reducer';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { profileReducer } from './modules/profile/store/profile.reducer';
 
@@ -24,10 +22,8 @@ export const appConfig: ApplicationConfig = {
         provideZonelessChangeDetection(),
         provideClientHydration(withEventReplay()),
 
-        provideEffects(AuthEffects, HomeEffects),
         provideStore({
             auth: authReducer,
-            home: homeReducer,
             profile: profileReducer,
         }),
 

@@ -3,12 +3,12 @@
   <mat-card-header>
     <div mat-card-avatar class="deposit-card__avatar"></div>
     <mat-card-title>
-      {{ deposit.type.name }},
+      {{ deposit.type?.name }},
       {{ deposit.startAmount | currency : 'RUB' : 'symbol-narrow' }} -
       {{ deposit.percent | percent }}
     </mat-card-title>
-    <mat-card-subtitle [matTooltip]="deposit.bank.name">
-      {{ deposit.bank.shortName }}
+    <mat-card-subtitle [matTooltip]="deposit.bank?.name">
+      {{ deposit.bank?.shortName }}
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content class="deposit-card__content">

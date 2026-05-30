@@ -7,15 +7,11 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { saveDeposit } from '../store/deposit.actions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, map, switchMap } from 'rxjs';
 import { DepositService } from '../../../services/api/deposit.service';
-import { IDepositType } from '@api/deposit-type';
 import { ReferenceService } from '../../../services/api/reference.service';
-import { IBank } from '@api/bank';
-import { Observable } from 'rxjs';
-import { of } from 'rxjs';
 
 /**
  * Компонент создания инвест-продукта
@@ -32,6 +28,7 @@ export class DepositCreateComponent implements OnInit {
     private readonly store = inject(Store);
     private readonly formBuilder = inject(FormBuilder);
     private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly router = inject(Router);
     private readonly depositService = inject(DepositService);
     private readonly referenceService = inject(ReferenceService);
     public formGroup!: FormGroup;
@@ -40,9 +37,9 @@ export class DepositCreateComponent implements OnInit {
 
     public ngOnInit(): void {
         this.formGroup = this.formBuilder.group({
-            bank: this.formBuilder.control(null),
-            type: this.formBuilder.control(null),
-            percent: this.formBuilder.control(0),
+            bank: this.formBuilder.control(null, Validators.required),
+            depositType: this.formBuilder.control(null, Validators.required),
+            percent: this.formBuilder.control(0, [Validators.required, Validators.min(0), Validators.max(100)]),
             amount: this.formBuilder.control(100_000),
             startDate: this.formBuilder.control(
                 new Date(),
@@ -51,6 +48,7 @@ export class DepositCreateComponent implements OnInit {
             endDate: this.formBuilder.control(null, Validators.required),
         });
 
+        // Инициализация формы
         this.activatedRoute.params.pipe(
             map((params) => +params['depositId']),
             filter(
@@ -84,7 +82,7 @@ export class DepositCreateComponent implements OnInit {
         const value = this.formGroup.value;
         this.depositService.saveDeposit$({
             bankId: value.bank.id,
-            typeId: value.type.id,
+            depositTypeId: value.depositType.id,
             amount: value.amount,
             percent: value.percent,
             startDate: value.startDate,
@@ -94,6 +92,8 @@ export class DepositCreateComponent implements OnInit {
         ).subscribe({
             next: response => {
                 console.log(response);
+                // После успешного сохранения переходим на роут /home
+                this.router.navigate(['/home']);
             }
         });
     }
