@@ -25,4 +25,8 @@ export class DepositService extends BaseApiService {
     ): Observable<boolean> {
         return this.post<boolean>('/save', { deposit });
     }
+
+    public deleteDeposit$(depositId: number): Observable<boolean> {
+        return this.delete(`/${depositId}`);
+    }
 }

@@ -22,6 +22,7 @@ export const appConfig: ApplicationConfig = {
         provideZonelessChangeDetection(),
         provideClientHydration(withEventReplay()),
 
+        provideEffects(AuthEffects),
         provideStore({
             auth: authReducer,
             profile: profileReducer,

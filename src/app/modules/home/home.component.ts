@@ -4,11 +4,14 @@ import {
     OnInit,
 } from '@angular/core';
 import { DepositService } from 'src/app/services/api/deposit.service';
-import { map, tap } from 'rxjs';
+import { BehaviorSubject, finalize, map, Observable, switchMap, tap } from 'rxjs';
+import { IDeposit } from 'src/app/api/deposit/deposit.interface';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 /**
  * Компонент домашней страницы
  */
+@UntilDestroy()
 @Component({
     selector: 'banking-home',
     standalone: false,
@@ -16,15 +19,43 @@ import { map, tap } from 'rxjs';
     styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-    public isLoading = false;
     private readonly depositService = inject(DepositService);
-    public deposits$ = this.depositService.getDepositList$().pipe(
-        tap(() => this.isLoading = true),
-        map(response => response.data?.items ?? []),
-        tap(() => this.isLoading = false)
-    );
+    public isLoading$ = new BehaviorSubject<boolean>(false);
+    public deposits$ = new BehaviorSubject<IDeposit[]>([]);
 
     public ngOnInit(): void {
+        this.loadDeposits();
+    }
+
+    public loadDeposits(): void {
+        this.isLoading$.next(true);
+        this.getDeposits().pipe(
+            finalize(() => this.isLoading$.next(false)),
+            untilDestroyed(this)
+        ).subscribe({
+            next: deposits => this.deposits$.next(deposits)
+        });
+    }
+
+    public onDelete(depositId: number): void {
+        this.isLoading$.next(true);
+        this.deleteDeposit(depositId).pipe(
+            switchMap(() => this.getDeposits()),
+            finalize(() => this.isLoading$.next(false)),
+            untilDestroyed(this)
+        ).subscribe({
+            next: deposits => this.deposits$.next(deposits)
+        });
+    }
+
+    private getDeposits(): Observable<IDeposit[]> {
+        return this.depositService.getDepositList$().pipe(
+            map(response => response.data?.items ?? []),
+        );
+    }
+
+    private deleteDeposit(id: number): Observable<boolean> {
+        return this.depositService.deleteDeposit$(id);
     }
 }
 

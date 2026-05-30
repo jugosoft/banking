@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { IDeposit } from '../../../api/deposit/deposit.interface';
 import { MaterialModule } from '../../material/material.module';
 import { SharedModule } from '../shared.module';
@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 })
 export class DepositCardComponent implements OnInit {
     @Input() public deposit!: IDeposit;
+    @Output() public delete = new EventEmitter<number>();
     public daysBeforeClose: number | null = null;
     public daysTotal: number | null = null;
     public isClosingSoon = false;

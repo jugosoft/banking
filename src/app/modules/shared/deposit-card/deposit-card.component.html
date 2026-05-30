@@ -21,9 +21,7 @@
     <p>Текущий доход: {{ deposit.percent | percent }}</p>
     <p>{{ deposit.comment }}</p>
   </mat-card-content>
-  <mat-card-actions class="deposit-card__actions">
-    <button mat-button color="primary" (click)="editDeposit()">Редактировать</button>
-    <button mat-raised-button color="warn">Удалить</button>
-  </mat-card-actions>
+  <mat-card-actions class="deposit-card__actions">    <button mat-button color="primary" (click)="editDeposit()">Редактировать</button>
+    <button mat-raised-button color="warn" (click)="delete.emit(deposit.id)">Удалить</button></mat-card-actions>
 </mat-card>
 }
