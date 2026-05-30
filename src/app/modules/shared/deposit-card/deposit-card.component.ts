@@ -27,9 +27,10 @@ export class DepositCardComponent implements OnInit {
             this.daysBeforeClose = this.getDaysBeforeClose();
             this.daysTotal = this.getDaysTotal();
             this.isClosingSoon = this.getIsClosingSoon();
-            this.progressBarPercentage =
-                ((this.daysTotal - this.daysBeforeClose) / this.daysTotal) *
-                100;
+            this.progressBarPercentage = Math.min(
+                ((this.daysTotal - this.daysBeforeClose) / this.daysTotal) * 100,
+                100
+            );
         }
 
         if (this.isClosingSoon) {

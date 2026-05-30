@@ -14,14 +14,16 @@ export class ToastService {
     public error(
         message: string,
         action?: string
-    ): MatSnackBarRef<TextOnlySnackBar> {
-        return this.snackBar.open(message, action);
+    ): MatSnackBarRef<TextOnlySnackBar> | null {
+        // return this.snackBar.open(message, action);
+        return null;
     }
 
     public success(
         message: string,
         action?: string
-    ): MatSnackBarRef<TextOnlySnackBar> {
-        return this.snackBar.open(message, action);
+    ): MatSnackBarRef<TextOnlySnackBar> | null {
+        // return this.snackBar.open(message, action);
+        return null;
     }
 }

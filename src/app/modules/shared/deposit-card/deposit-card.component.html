@@ -1,4 +1,5 @@
-<mat-card *ngIf="deposit" class="deposit-card" appearance="outlined">
+@if (deposit) {
+<mat-card class="deposit-card" appearance="outlined">
   <mat-card-header>
     <div mat-card-avatar class="deposit-card__avatar"></div>
     <mat-card-title>
@@ -12,12 +13,12 @@
   </mat-card-header>
   <mat-card-content class="deposit-card__content">
     @if (deposit.endDate) {
-    <mat-progress-bar class="deposit-card__progress-bar" [color]="progressBarColor"
-      [value]="progressBarPercentage"></mat-progress-bar>
+    <mat-progress-bar class="deposit-card__progress-bar" [color]="progressBarColor" [value]="progressBarPercentage">
+    </mat-progress-bar>
     @if (isClosingSoon) {
     <p>До закрытия {{ daysBeforeClose }} дней</p>
     } }
-    <p>Текущий доход: {{ 'deposit.currentAmount' }}</p>
+    <p>Текущий доход: {{ deposit.percent | percent }}</p>
     <p>{{ deposit.comment }}</p>
   </mat-card-content>
   <mat-card-actions class="deposit-card__actions">
@@ -25,3 +26,4 @@
     <button mat-raised-button color="warn">Удалить</button>
   </mat-card-actions>
 </mat-card>
+}

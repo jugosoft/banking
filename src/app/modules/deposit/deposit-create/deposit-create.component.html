@@ -5,17 +5,18 @@
     <mat-form-field>
       <mat-label>Банк</mat-label>
       <mat-select [compareWith]="compareFn" formControlName="bank">
-        <mat-option [value]="1">Тиньков</mat-option>
-        <mat-option [value]="0">Альфа</mat-option>
+        @for (bank of banks$ | async; track bank.id) {
+        <mat-option [value]="bank">{{ bank.shortName }}</mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Тип продукта</mat-label>
       <mat-select [compareWith]="compareFn" formControlName="type">
-        <mat-option [value]="0">Вклад</mat-option>
-        <mat-option [value]="1">Накопительный счёт</mat-option>
-        <mat-option [value]="2">Инвестиции</mat-option>
+        @for (type of depositTypes$ | async; track type.id) {
+        <mat-option [value]="type">{{ type.name }}</mat-option>
+        }
       </mat-select>
     </mat-form-field>
 
