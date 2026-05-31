@@ -1,21 +1,199 @@
+@use 'variables';
+@use 'mixins';
+
 .deposit-card {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all $transition-base;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  box-shadow: $box-shadow-md;
+  background: $white;
+  border: 1px solid rgba($color-primary, 0.1);
+  
+  &:hover {
+    box-shadow: $box-shadow-lg;
+    transform: translateY(-2px);
+    border-color: $color-attention;
+  }
+
+  &__header {
+    padding: $gutter-large;
+    background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
+    color: $white;
+  }
 
   &__avatar {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: $border-radius-round;
+    border: 2px solid $white;
   }
 
-  &__progress-bar {
-    margin-bottom: 1rem;
+  &__title {
+    font-size: $font-size-md;
+    font-weight: $font-weight-bold;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  &__subtitle {
+    font-size: $font-size-sm;
+    opacity: 0.9;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: $gutter-small;
+    
+    mat-icon {
+      font-size: 16px;
+      color: rgba($white, 0.8);
+    }
   }
 
   &__content {
+    padding: $gutter-large;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__progress-container {
+    margin-bottom: $gutter-large;
+  }
+
+  &__progress-bar {
+    border-radius: $border-radius-md;
+    height: 8px !important;
+    margin-bottom: $gutter-small;
+    
+    ::ng-deep .mat-mdc-progress-bar {
+      background-color: rgba($color-primary, 0.1);
+      
+      .mdc-linear-progress__buffer {
+        background-color: rgba($color-primary, 0.2);
+      }
+      
+      .mdc-linear-progress__primary-bar,
+      .mdc-linear-progress__secondary-bar {
+        background-color: $color-attention;
+      }
+    }
+  }
+
+  &__progress-text {
+    font-size: $font-size-sm;
+    color: $font-color-secondary;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    &--closing-soon {
+      color: $color-warning;
+      font-weight: $font-weight-bold;
+      
+      mat-icon {
+        color: $color-warning;
+        font-size: 18px;
+      }
+    }
+  }
+
+  &__info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: $gutter-small 0;
+    border-bottom: 1px dashed $color-secondary;
+    font-size: $font-size-md;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    &__label {
+      color: $font-color-secondary;
+    }
+    
+    &__value {
+      font-weight: $font-weight-semibold;
+      color: $color-primary;
+    }
+  }
+
+  &__comment {
+    margin-top: $gutter-large;
+    font-style: italic;
+    color: $font-color-secondary;
+    font-size: $font-size;
+    line-height: 1.5;
   }
 
   &__actions {
+    padding: $gutter-large;
+    border-top: 1px solid $color-secondary;
     display: flex;
-    gap: 1rem;
+    gap: $gutter-medium;
+    
+    @include mixins.respond-to('mobile') {
+      flex-direction: column;
+    }
+  }
+
+  &__action-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $gutter-small;
+    padding: $gutter-small $gutter-medium;
+    border-radius: $border-radius-md;
+    font-weight: $font-weight-medium;
+    text-transform: none;
+    transition: all $transition-base;
+    border: 1px solid transparent;
+    
+    &--edit {
+      background: rgba($color-primary, 0.05);
+      color: $color-primary;
+      
+      &:hover {
+        background: rgba($color-primary, 0.1);
+        border-color: $color-primary;
+        transform: translateY(-1px);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+    
+    &--delete {
+      background: rgba($color-error, 0.05);
+      color: $color-error;
+      
+      &:hover {
+        background: rgba($color-error, 0.1);
+        border-color: $color-error;
+        transform: translateY(-1px);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // Responsive adjustments
+  @include mixins.respond-to('mobile') {
+    &__content {
+      padding: $gutter-medium;
+    }
+    
+    &__actions {
+      padding: $gutter-medium;
+    }
   }
 }
