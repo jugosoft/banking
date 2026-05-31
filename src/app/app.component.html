@@ -1,17 +1,7 @@
 @if (isSubmitting | async) {
-<div class="preloader">
-  <mat-spinner></mat-spinner>
-</div>
-} @else {
-<banking-wrapper>
-  <main>
-    <router-outlet></router-outlet>
-  </main>
-</banking-wrapper>
-
-<footer>
-  <div class="container">
-    <banking-footer></banking-footer>
+  <div class="preloader">
+    <mat-spinner></mat-spinner>
   </div>
-</footer>
+} @else {
+  <banking-wrapper></banking-wrapper>
 }

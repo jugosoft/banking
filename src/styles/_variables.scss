@@ -1,7 +1,8 @@
 $breakpoints: (
-    'small': (min-width: 767px),
-    'medium': (min-width: 992px),
-    'large': (min-width: 1200px)) !default;
+    'mobile': (max-width: 767px),
+    'tablet': (min-width: 768px) and (max-width: 1023px),
+    'desktop': (min-width: 1024px)
+) !default;
 
 // Spacing
 $gutter: 8px;
@@ -15,6 +16,9 @@ $color-primary: #222831;
 $color-secondary: #f2f2f2;
 $color-info: #393e46;
 $color-attention: #f96d00;
+$color-success: #4CAF50;
+$color-warning: #FF9800;
+$color-error: #F44336;
 
 $color-border-header: $color-secondary;
 
@@ -22,28 +26,60 @@ $color-background-gray: #6b6b6b;
 
 // Sizing
 $container-width: 1190px;
+$container-mobile: 100%;
+$container-tablet: 95%;
 
 // Fonts settings
-$font-family: Roboto,
-    sans-serif;
+$font-family: 'Roboto', sans-serif;
+$font-family-logo: 'Montserrat', sans-serif;
 
 $font-size: 14px;
-$font-size-medium: 18px;
-$font-size-large: 24px;
+$font-size-sm: 12px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
 
 $line-height: 22px;
-$line-height-large: 32px;
+$line-height-lg: 32px;
 
 $font-weight: 400;
-$font-weight-bold: 800;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
 
 $font-color: $color-primary;
 $font-color-attention: $color-attention;
+$font-color-secondary: #666666;
+$font-color-light: #999999;
 
 $letter-spacing-logo: 4px;
+$letter-spacing-normal: 0.5px;
+$letter-spacing-wide: 1px;
 
 // Borders
 $border-header: 1px solid $color-border-header;
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-round: 50%;
 
 // Shadows
 $box-shadow: rgba(0, 0, 0, 0.1) 0px 17px 14px -7px;
+$box-shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+$box-shadow-md: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+$box-shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+$box-shadow-xl: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+// Animations
+$transition-base: 0.3s ease;
+$transition-fast: 0.15s ease;
+$transition-slow: 0.5s ease;
+$animation-slide: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+$animation-fade: 0.2s linear;
+
+// Z-index
+$z-index-header: 1000;
+$z-index-sidenav: 1001;
+$z-index-overlay: 1002;
+$z-index-dialog: 1003;

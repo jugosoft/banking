@@ -19,17 +19,5 @@
   max-width: $container-width;
 }
 
-main {
-  flex: 1;
-  padding: 2rem;
-  overflow-y: auto;
-
-  @include respond-to('large') {
-    height: 100%;
-  }
-}
-
-footer {
-  flex: 0 0 auto;
-  background-color: $color-info;
-}
+// Все стили теперь управляются внутри wrapper-component
+// Удалены дублирующие стили, так как wrapper теперь полный layout

@@ -1,13 +1,148 @@
 @import 'variables';
 
+// Responsive breakpoints
 @mixin respond-to($breakpoint) {
     @if map-has-key($breakpoints, $breakpoint) {
         @media #{inspect(map-get($breakpoints, $breakpoint))} {
             @content;
         }
-    }
-
-    @else {
+    } @else {
         @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. Available breakpoints are: #{map-keys($breakpoints)}.";
     }
+}
+
+// Fluid typography
+@mixin fluid-typography($min-vw: 320px, $max-vw: 1440px, $min-font-size: 16px, $max-font-size: 24px) {
+    font-size: calc(#{$min-font-size} + #{$max-font-size - $min-font-size} * ((100vw - #{$min-vw}) / #{$max-vw - $min-vw}));
+}
+
+// Flexbox centering
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// Container mixin
+@mixin container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 $gutter-medium;
+
+    @include respond-to('mobile') {
+        max-width: $container-mobile;
+    }
+
+    @include respond-to('tablet') {
+        max-width: $container-tablet;
+        padding: 0 $gutter-large;
+    }
+
+    @include respond-to('desktop') {
+        max-width: $container-width;
+        padding: 0 $gutter-large;
+    }
+}
+
+// Button mixin
+@mixin button-style($bg-color: $color-primary, $text-color: $white, $border-radius: $border-radius-md) {
+    background-color: $bg-color;
+    color: $text-color;
+    border: none;
+    border-radius: $border-radius;
+    padding: $gutter-small $gutter-medium;
+    font-family: $font-family;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-md;
+    cursor: pointer;
+    transition: all $transition-base;
+    box-shadow: $box-shadow-sm;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $box-shadow-md;
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: $box-shadow-sm;
+    }
+
+    &:focus {
+        outline: 2px solid $color-primary;
+        outline-offset: 2px;
+    }
+}
+
+// Animation mixins
+@mixin slide-in-left {
+    @keyframes slide-in-left {
+        from {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    animation: slide-in-left $animation-slide forwards;
+}
+
+@mixin slide-out-left {
+    @keyframes slide-out-left {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+    }
+    animation: slide-out-left $animation-slide forwards;
+}
+
+@mixin fade-in {
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    animation: fade-in $animation-fade forwards;
+}
+
+@mixin fade-out {
+    @keyframes fade-out {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+    animation: fade-out $animation-fade forwards;
+}
+
+// Elevation mixin
+@mixin elevation($level: 1) {
+    @if $level == 1 {
+        box-shadow: $box-shadow-sm;
+    } @else if $level == 2 {
+        box-shadow: $box-shadow-md;
+    } @else if $level == 3 {
+        box-shadow: $box-shadow-lg;
+    } @else if $level == 4 {
+        box-shadow: $box-shadow-xl;
+    } @else {
+        box-shadow: none;
+    }
+}
+
+// Gradient background
+@mixin gradient-bg {
+    background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
 }
