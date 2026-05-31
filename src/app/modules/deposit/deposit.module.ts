@@ -14,7 +14,6 @@ import { DepositCreateComponent } from './deposit-create/deposit-create.componen
         DepositRoutingModule,
         MaterialModule,
         DepositCardComponent,
-        BankingUiModule,
     ],
 })
 export class DepositModule { }

@@ -5,7 +5,6 @@ import { RegisterComponent } from './register/register.component';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { AuthService } from './services/auth.service';
-import { BankingUiModule } from '../banking-ui/banking-ui.module';
 import { ValidationErrorsComponent } from '../shared/validation-errors/validation-errors.component';
 import { LoginComponent } from './login/login.component';
 
@@ -16,7 +15,6 @@ import { LoginComponent } from './login/login.component';
         ReactiveFormsModule,
         AuthRoutingModule,
         MaterialModule,
-        BankingUiModule,
         ValidationErrorsComponent,
     ],
     providers: [AuthService],

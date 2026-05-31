@@ -18,7 +18,6 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
         MaterialModule,
         ReactiveFormsModule,
         SharedModule,
-        BankingUiModule,
         MatFormField,
         MatFormFieldModule,
         MatProgressSpinner,

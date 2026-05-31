@@ -55,7 +55,7 @@ export class DepositCardComponent implements OnInit {
      */
     private getDaysTotal(): number {
         return dateDiffInDays(
-            new Date(this.deposit.beginDate),
+            new Date(this.deposit.startDate),
             new Date(this.deposit.endDate!)
         );
     }

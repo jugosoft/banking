@@ -9,7 +9,7 @@ export interface IDeposit {
   readonly type: IDepositType;
   readonly percent: number;
   readonly name: string;
-  readonly beginDate: Date;
+  readonly startDate: Date;
   readonly endDate: Date;
   readonly comment?: Date;
   readonly description?: string;

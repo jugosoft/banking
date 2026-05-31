@@ -13,7 +13,6 @@ import { BankingUiModule } from '../banking-ui/banking-ui.module';
         HomeRoutingModule,
         MaterialModule,
         DepositCardComponent,
-        BankingUiModule,
     ],
 })
 export class HomeModule { }
