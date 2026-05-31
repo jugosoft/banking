@@ -19,6 +19,10 @@ export class WrapperComponent {
     private readonly store = inject(Store);
     public readonly isLoggedIn$ = this.store.pipe(select(selectIsLoggedIn));
 
+    public onHomeClick(): void {
+        void this.router.navigate(['/home']);
+    }
+
     public onLoginClick(): void {
         void this.router.navigate(['/auth', 'login']);
     }

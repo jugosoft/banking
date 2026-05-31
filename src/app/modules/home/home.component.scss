@@ -28,4 +28,11 @@
             max-width: 450px;
         }
     }
+
+    &__no-deposits {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
 }
