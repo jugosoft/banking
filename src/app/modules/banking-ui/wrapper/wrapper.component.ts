@@ -1,5 +1,5 @@
-import { CommonModule, Location } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { CommonModule, isPlatformBrowser, Location } from '@angular/common';
+import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Store } from '@ngrx/store';
@@ -39,6 +39,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class WrapperComponent implements OnInit {
     private readonly router = inject(Router);
+    private readonly platformId = inject(PLATFORM_ID);
     private readonly store = inject(Store);
     private readonly breakpointObserver = inject(BreakpointObserver);
     private readonly destroy$ = new Subject<void>();
@@ -54,12 +55,14 @@ export class WrapperComponent implements OnInit {
     );
 
     public ngOnInit(): void {
-        // Обработка скролла для компактного хедера
-        fromEvent(window, 'scroll').pipe(
-            untilDestroyed(this)
-        ).subscribe(() => {
-            this.isScrolled.set(window.pageYOffset > 20);
-        });
+        if (isPlatformBrowser(this.platformId)) {
+            // Обработка скролла для компактного хедера
+            fromEvent(window, 'scroll').pipe(
+                untilDestroyed(this)
+            ).subscribe(() => {
+                this.isScrolled.set(window.pageYOffset > 20);
+            });
+        }
     }
 
     public toggleSidenav(): void {

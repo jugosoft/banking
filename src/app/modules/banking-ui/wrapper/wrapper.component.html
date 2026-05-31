@@ -1,15 +1,15 @@
-<header class="wrapper__header" [ngClass]="{ 'wrapper__header--compact': isScrolled }">
+<header class="wrapper__header" [class.--compact]="isScrolled()">
     <div class="wrapper__container">
         <div class="wrapper__header-content">
             <!-- Logo -->
-            <div class="wrapper__logo" [ngClass]="{ 'wrapper__logo--compact': isScrolled }" @logoAnimation>
+            <div class="wrapper__logo" [class.--compact]="isScrolled()">
                 <a routerLink="/home" class="wrapper__logo-link">
                     <span class="wrapper__logo-text">BANKING</span>
                 </a>
             </div>
 
             <!-- Desktop Navigation -->
-            <nav class="wrapper__nav" @navAnimation *ngIf="!(isMobile | async)">
+            <nav class="wrapper__nav" *ngIf="!(isMobile | async)">
                 <ul class="wrapper__nav-list">
                     @if (isLoggedIn$ | async) {
                     <li class="wrapper__nav-item">
@@ -54,8 +54,7 @@
 
             <!-- Mobile Navigation Trigger -->
             <button class="wrapper__mobile-menu" (click)="toggleSidenav()"
-                [attr.aria-label]="isSidenavOpen() ? 'Закрыть меню' : 'Открыть меню'" *ngIf="isMobile | async"
-                @mobileMenuAnimation>
+                [attr.aria-label]="isSidenavOpen() ? 'Закрыть меню' : 'Открыть меню'" *ngIf="isMobile | async">
                 <mat-icon>{{ isSidenavOpen() ? 'close' : 'menu' }}</mat-icon>
             </button>
         </div>
@@ -68,15 +67,6 @@
         [opened]="isSidenavOpen()" (opened)="onSidenavOpened()" (closed)="onSidenavClosed()">
 
         <div class="wrapper__sidenav-content">
-            <div class="wrapper__sidenav-header">
-                <div class="wrapper__logo">
-                    <span class="wrapper__logo-text">BANKING</span>
-                </div>
-                <button mat-icon-button class="wrapper__sidenav-close" (click)="toggleSidenav()">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </div>
-
             <nav class="wrapper__sidenav-nav">
                 <ul class="wrapper__sidenav-list">
                     @if (isLoggedIn$ | async) {
