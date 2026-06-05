@@ -1,17 +1,15 @@
-@use 'variables';
-@use 'mixins';
+@import 'variables';
+@import 'mixins';
 
 .deposit-card {
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: all $transition-base;
-  border-radius: $border-radius-lg;
   overflow: hidden;
   box-shadow: $box-shadow-md;
   background: $white;
   border: 1px solid rgba($color-primary, 0.1);
-  
+
   &:hover {
     box-shadow: $box-shadow-lg;
     transform: translateY(-2px);
@@ -47,7 +45,7 @@
     display: flex;
     align-items: center;
     gap: $gutter-small;
-    
+
     mat-icon {
       font-size: 16px;
       color: rgba($white, 0.8);
@@ -69,14 +67,14 @@
     border-radius: $border-radius-md;
     height: 8px !important;
     margin-bottom: $gutter-small;
-    
+
     ::ng-deep .mat-mdc-progress-bar {
       background-color: rgba($color-primary, 0.1);
-      
+
       .mdc-linear-progress__buffer {
         background-color: rgba($color-primary, 0.2);
       }
-      
+
       .mdc-linear-progress__primary-bar,
       .mdc-linear-progress__secondary-bar {
         background-color: $color-attention;
@@ -90,11 +88,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
     &--closing-soon {
       color: $color-warning;
       font-weight: $font-weight-bold;
-      
+
       mat-icon {
         color: $color-warning;
         font-size: 18px;
@@ -108,15 +106,15 @@
     padding: $gutter-small 0;
     border-bottom: 1px dashed $color-secondary;
     font-size: $font-size-md;
-    
+
     &:last-child {
       border-bottom: none;
     }
-    
+
     &__label {
       color: $font-color-secondary;
     }
-    
+
     &__value {
       font-weight: $font-weight-semibold;
       color: $color-primary;
@@ -136,8 +134,8 @@
     border-top: 1px solid $color-secondary;
     display: flex;
     gap: $gutter-medium;
-    
-    @include mixins.respond-to('mobile') {
+
+    @include respond-to('mobile') {
       flex-direction: column;
     }
   }
@@ -152,46 +150,44 @@
     border-radius: $border-radius-md;
     font-weight: $font-weight-medium;
     text-transform: none;
-    transition: all $transition-base;
     border: 1px solid transparent;
-    
+
     &--edit {
       background: rgba($color-primary, 0.05);
       color: $color-primary;
-      
+
       &:hover {
         background: rgba($color-primary, 0.1);
         border-color: $color-primary;
         transform: translateY(-1px);
       }
-      
+
       &:active {
         transform: translateY(0);
       }
     }
-    
+
     &--delete {
       background: rgba($color-error, 0.05);
       color: $color-error;
-      
+
       &:hover {
         background: rgba($color-error, 0.1);
         border-color: $color-error;
         transform: translateY(-1px);
       }
-      
+
       &:active {
         transform: translateY(0);
       }
     }
   }
 
-  // Responsive adjustments
-  @include mixins.respond-to('mobile') {
+  @include respond-to('mobile') {
     &__content {
       padding: $gutter-medium;
     }
-    
+
     &__actions {
       padding: $gutter-medium;
     }

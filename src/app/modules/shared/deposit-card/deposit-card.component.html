@@ -3,12 +3,11 @@
   <mat-card-header class="deposit-card__header">
     <div mat-card-avatar class="deposit-card__avatar"></div>
     <mat-card-title class="deposit-card__title">
-      {{ deposit.type.name }},
+      {{ deposit.depositType.name }},
       {{ deposit.startAmount | currency : 'RUB' : 'symbol-narrow' }} -
       {{ deposit.percent | percent }}
     </mat-card-title>
     <mat-card-subtitle class="deposit-card__subtitle">
-      <mat-icon>apartment</mat-icon>
       {{ deposit.bank.shortName }}
     </mat-card-subtitle>
   </mat-card-header>
@@ -31,8 +30,8 @@
     }
 
     <div class="deposit-card__info-item">
-      <span class="deposit-card__info-item__label">Текущий доход:</span>
-      <span class="deposit-card__info-item__value">{{ deposit.percent | percent }}</span>
+      <span class="deposit-card__info-item__label">Процент:</span>
+      <span class="deposit-card__info-item__value">{{ deposit.percent }}</span>
     </div>
 
     <div class="deposit-card__info-item">
@@ -55,13 +54,11 @@
 
   <mat-card-actions class="deposit-card__actions">
     <button class="deposit-card__action-button deposit-card__action-button--edit" mat-button (click)="editDeposit()">
-      <mat-icon>edit</mat-icon>
       Редактировать
     </button>
 
     <button class="deposit-card__action-button deposit-card__action-button--delete" mat-button
       (click)="delete.emit(deposit.id)">
-      <mat-icon>delete</mat-icon>
       Удалить
     </button>
   </mat-card-actions>

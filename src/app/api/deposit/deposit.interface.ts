@@ -6,7 +6,7 @@ export interface IDeposit {
   readonly startAmount: number;
   readonly rate: number;
   readonly term: number;
-  readonly type: IDepositType;
+  readonly depositType: IDepositType;
   readonly percent: number;
   readonly name: string;
   readonly startDate: Date;

@@ -21,15 +21,14 @@
     background: linear-gradient(145deg, $color-primary 0%, $color-secondary 100%);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    transition: all $transition-base;
-    box-shadow: $box-shadow-sm;
+    // box-shadow: $box-shadow-sm;
 
     &--compact {
       padding: 0.5rem 0;
       background: rgba(34, 40, 49, 0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      box-shadow: $box-shadow-md;
+      // box-shadow: $box-shadow-md;
     }
   }
 
@@ -38,10 +37,10 @@
     justify-content: space-between;
     align-items: center;
     height: 72px;
-    padding: 0 $gutter-medium;
+    // padding: 0 $gutter-medium;
 
     @include respond-to('tablet') {
-      padding: 0 $gutter-large;
+      // padding: 0 $gutter-large;
     }
   }
 
@@ -104,7 +103,6 @@
     font-weight: $font-weight-medium;
     font-size: $font-size-md;
     border-radius: $border-radius-md;
-    transition: all $transition-base;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -153,7 +151,6 @@
     border-radius: $border-radius-round;
     color: $white;
     cursor: pointer;
-    transition: all $transition-base;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
 
@@ -238,7 +235,6 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: all $transition-base;
 
     &:hover {
       background: rgba($white, 0.15);
