@@ -16,6 +16,10 @@ export abstract class BaseApiService {
     private readonly isBrowser: boolean;
 
     constructor(entity: ApiEntity) {
+        if (!entity) {
+            throw new Error('Entity is required');
+        }
+
         this.entity = entity;
         this.isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
     }

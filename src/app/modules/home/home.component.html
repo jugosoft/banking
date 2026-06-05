@@ -5,8 +5,23 @@
 } @else {
 <div class="home__container">
     <header class="home__header">
-        <h1 class="home__title">Мои вклады</h1>
     </header>
+
+    @let stats = depositStats$ | async;
+
+    @if (stats) {
+    <div class="home__banner">
+        <div class="home__banner-content">
+            <p class="home__banner-text">
+                <span class="home__banner-text-value">Всего вкладов: {{ stats.totalAmount }}</span>
+            </p>
+            <p class="home__banner-text">
+                <span class="home__banner-text-value">
+                    Средняя ставка: {{ stats?.totalInterest}}%</span>
+            </p>
+        </div>
+    </div>
+    }
 
     @if ((deposits$ | async)?.length === 0) {
     <div class="home__no-deposits">

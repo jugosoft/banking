@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ISaveDepositProps } from '../../modules/deposit/store/model/save-deposit.interfaces';
-import { IGetDepositResponse, IGetDepositListResponse, IDeposit } from '@api/deposit';
+import { IGetDepositResponse, IGetDepositListResponse, IDeposit, IGetDepositStatsResponse } from '@api/deposit';
 import { BaseApiService } from './base-api.service';
 
 @Injectable({
@@ -18,6 +18,10 @@ export class DepositService extends BaseApiService {
 
     public getDeposit$(depositId: number): Observable<IGetDepositResponse> {
         return this.get<IGetDepositResponse>(`/${depositId}`);
+    }
+
+    public getDepositStats$(): Observable<IGetDepositStatsResponse> {
+        return this.get<IGetDepositStatsResponse>('/stats');
     }
 
     public saveDeposit$(

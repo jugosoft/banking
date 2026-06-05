@@ -1,5 +1,5 @@
 @use 'mixins';
-@use 'variables';
+@use 'variables' as *;
 
 :host {
     display: flex;
@@ -14,6 +14,37 @@
 
     &__header {
         // margin-bottom: $gutter-large;
+    }
+
+    &__banner {
+        background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 10%) 100%);
+        border-radius: $border-radius-lg;
+        padding: $gutter;
+        margin-bottom: $gutter;
+        color: $white;
+        box-shadow: $box-shadow-lg;
+
+        &-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: $gutter-medium;
+        }
+
+        &-text {
+            font-size: $font-size-md;
+            font-weight: $font-weight-semibold;
+            margin: 0;
+
+            &-value {
+                font-weight: $font-weight-bold;
+                font-size: $font-size-lg;
+            }
+
+            &:not(:last-child)::after {
+                content: "\B7";
+                margin-left: $gutter-small;
+            }
+        }
     }
 
     &__title {
