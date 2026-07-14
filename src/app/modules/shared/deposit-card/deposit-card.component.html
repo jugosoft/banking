@@ -1,66 +1,43 @@
 @if (deposit) {
-<mat-card class="deposit-card" appearance="outlined">
-  <mat-card-header class="deposit-card__header">
-    <div mat-card-avatar class="deposit-card__avatar"></div>
-    <mat-card-title class="deposit-card__title">
-      {{ deposit.depositType.name }},
-      {{ deposit.startAmount | currency : 'RUB' : 'symbol-narrow' }} -
-      {{ deposit.percent | percent }}
-    </mat-card-title>
-    <mat-card-subtitle class="deposit-card__subtitle">
-      {{ deposit.bank.shortName }}
-    </mat-card-subtitle>
-  </mat-card-header>
-
-  <mat-card-content class="deposit-card__content">
+<div class="deposit-card">
+  <div class="deposit-card__header">
+    <div class="deposit-card__header-info">
+      <span class="deposit-card__header-bank">{{ deposit.bank.shortName }}</span>
+    </div>
+    <span class="deposit-card__header-rate">{{ deposit.percent }}</span>
+  </div>
+  
+  <div class="deposit-card__body">
+    <h3 class="deposit-card__title">{{ deposit.name }}</h3>
+    <p class="deposit-card__subtitle">{{ deposit.startAmount | currency : 'RUB' : 'symbol-narrow' }}</p>
+    
     @if (deposit.endDate) {
-    <div class="deposit-card__progress-container">
-      <mat-progress-bar class="deposit-card__progress-bar" [color]="progressBarColor" [value]="progressBarPercentage">
-      </mat-progress-bar>
-
-      <div class="deposit-card__progress-text" [class.--closing-soon]="isClosingSoon">
-        @if (isClosingSoon) {
-        <mat-icon>schedule</mat-icon>
-        До закрытия {{ daysBeforeClose }} дней
-        } @else {
-        Осталось {{ daysBeforeClose }} дней
-        }
+    <div class="deposit-card__progress">
+      <div class="deposit-card__progress-bar">
+        <div class="deposit-card__progress-fill" [style.width.%]="progressBarPercentage"></div>
       </div>
+      <span class="deposit-card__progress-text" [class.--closing-soon]="isClosingSoon">
+        @if (isClosingSoon) {
+        <span class="deposit-card__icon">⏰</span>
+        } 
+        {{ daysBeforeClose }} д. до закрытия
+      </span>
     </div>
     }
-
-    <div class="deposit-card__info-item">
-      <span class="deposit-card__info-item__label">Процент:</span>
-      <span class="deposit-card__info-item__value">{{ deposit.percent }}</span>
+    
+    <div class="deposit-card__info">
+      <span class="deposit-card__info-label">Дата открытия:</span>
+      <span class="deposit-card__info-value">{{ deposit.startDate | date : 'dd.MM.yyyy' }}</span>
     </div>
-
-    <div class="deposit-card__info-item">
-      <span class="deposit-card__info-item__label">Сумма вклада:</span>
-      <span class="deposit-card__info-item__value">{{ deposit.startAmount | currency : 'RUB' : 'symbol-narrow' }}</span>
-    </div>
-
-    <div class="deposit-card__info-item">
-      <span class="deposit-card__info-item__label">Дата открытия:</span>
-      <span class="deposit-card__info-item__value">{{ deposit.startDate | date : 'dd.MM.yyyy' }}</span>
-    </div>
-
-    @if (deposit.comment) {
-    <p class="deposit-card__comment">
-      <mat-icon>comment</mat-icon>
-      {{ deposit.comment }}
-    </p>
-    }
-  </mat-card-content>
-
-  <mat-card-actions class="deposit-card__actions">
-    <button class="deposit-card__action-button deposit-card__action-button--edit" mat-button (click)="editDeposit()">
+  </div>
+  
+  <div class="deposit-card__footer">
+    <button class="deposit-card__btn deposit-card__btn--edit" (click)="editDeposit()">
       Редактировать
     </button>
-
-    <button class="deposit-card__action-button deposit-card__action-button--delete" mat-button
-      (click)="delete.emit(deposit.id)">
+    <button class="deposit-card__btn deposit-card__btn--delete" (click)="delete.emit(deposit.id)">
       Удалить
     </button>
-  </mat-card-actions>
-</mat-card>
+  </div>
+</div>
 }

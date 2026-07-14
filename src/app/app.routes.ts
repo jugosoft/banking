@@ -16,6 +16,7 @@ export const appRoutes: Routes = [
             { path: '', pathMatch: 'full', redirectTo: 'home' },
             {
                 path: 'home',
+                data: { title: 'Вклады' },
                 loadChildren: () =>
                     import('./modules/home/home.module').then(
                         (module) => module.HomeModule
@@ -23,6 +24,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'deposit',
+                data: { title: 'Вклады' },
                 loadChildren: () =>
                     import('./modules/deposit/deposit.module').then(
                         (module) => module.DepositModule
@@ -30,6 +32,7 @@ export const appRoutes: Routes = [
             },
             {
                 path: 'profile',
+                data: { title: 'Профиль' },
                 loadChildren: () =>
                     import('./modules/profile/profile.module').then(
                         (module) => module.ProfileModule

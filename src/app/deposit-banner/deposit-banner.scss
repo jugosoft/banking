@@ -1,0 +1,61 @@
+@import 'variables';
+@import 'mixins';
+
+.deposit-banner {
+  background: linear-gradient(135deg, $color-primary 0%, darken($color-primary, 10%) 100%);
+  border-radius: $border-radius-lg;
+  padding: $gutter-large;
+  color: $white;
+  box-shadow: $box-shadow-md;
+  margin-bottom: $gutter-large;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $gutter-medium;
+  }
+
+  &__stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $gutter-small;
+  }
+
+  &__stat-value {
+    font-size: 2rem;
+    font-weight: $font-weight-bold;
+    line-height: 1.2;
+
+    @include respond-to('mobile') {
+      font-size: 1.5rem;
+    }
+
+    @include respond-to('tablet') {
+      font-size: 2rem;
+    }
+
+    @include respond-to('desktop') {
+      font-size: 2.5rem;
+    }
+  }
+
+  &__stat-label {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: $font-weight-medium;
+
+    @include respond-to('mobile') {
+      font-size: 0.875rem;
+    }
+
+    @include respond-to('tablet') {
+      font-size: 1rem;
+    }
+
+    @include respond-to('desktop') {
+      font-size: 1.125rem;
+    }
+  }
+}

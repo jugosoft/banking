@@ -1,0 +1,28 @@
+@import 'variables';
+@import 'mixins';
+
+.page-header {
+  padding: $gutter-large $gutter-small;
+  background: $white;
+  border-bottom: 1px solid $color-secondary;
+  box-shadow: $box-shadow-sm;
+
+  &__title {
+    font-size: 2rem;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    margin: 0;
+
+    @include respond-to('mobile') {
+      font-size: 1.5rem;
+    }
+
+    @include respond-to('tablet') {
+      font-size: 1.75rem;
+    }
+
+    @include respond-to('desktop') {
+      font-size: 2rem;
+    }
+  }
+}
