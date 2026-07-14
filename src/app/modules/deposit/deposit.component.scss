@@ -1,9 +1,70 @@
+@use 'variables' as *;
+
 :host {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
-.deposit-card {
-  max-width: 450px;
+.deposit {
+  &__container {
+    padding: $gutter-large $gutter-small;
+    padding-bottom: 80px;
+  }
+
+  &__header {
+    margin-bottom: $gutter-large;
+  }
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    margin: 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $gutter-medium;
+  }
+
+  &__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    text-align: center;
+    color: $font-color-secondary;
+
+    &-title {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+      color: $color-primary;
+      margin: 0 0 $gutter-small 0;
+    }
+
+    &-text {
+      font-size: $font-size-md;
+      margin: 0 0 $gutter-large 0;
+      line-height: $line-height;
+    }
+  }
+
+  &__create-button {
+    background: $color-attention;
+    color: $white;
+    padding: $gutter-small $gutter-large;
+    font-weight: $font-weight-bold;
+    border-radius: $border-radius-md;
+    box-shadow: $box-shadow-sm;
+    transition: background $transition-base;
+
+    &:hover {
+      background: darken($color-attention, 10%);
+      transform: translateY(-2px);
+      box-shadow: $box-shadow-md;
+    }
+  }
 }

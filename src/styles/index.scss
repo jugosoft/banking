@@ -2,3 +2,61 @@
 @import "mixins";
 @import "fonts";
 @import "reset";
+
+html,
+body {
+  height: 100%;
+  font-family: $font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: $color-secondary;
+  color: $font-color;
+}
+
+preloader {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: $gutter-large * 2; // space for bottom nav
+}
+
+// Preloader styles
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba($white, 0.8);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Material button styles override
+.mat-mdc-raised-button.mat-primary {
+  --mdc-protected-button-container-color: $color-attention;
+  --mdc-protected-button-label-color: $white;
+}
+
+.mat-mdc-button-base {
+  --mdc-protected-button-container-color: $color-attention;
+}

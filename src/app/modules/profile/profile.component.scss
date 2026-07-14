@@ -1,99 +1,108 @@
-:host {
-    padding: 24px;
-    max-width: 800px;
-    margin: 0 auto;
+@use 'variables' as *;
 
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 .profile {
-    &__title {
-        margin-bottom: 24px;
-        font-size: 24px;
-        font-weight: 500;
+  &__container {
+    padding: $gutter-large $gutter-small;
+    padding-bottom: 80px;
+  }
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    margin: 0 0 $gutter-large 0;
+  }
+
+  &__section {
+    background: $white;
+    border-radius: $border-radius-md;
+    padding: $gutter-large;
+    margin-bottom: $gutter-medium;
+    box-shadow: $box-shadow-sm;
+  }
+
+  &__section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $gutter-medium;
+  }
+
+  &__section-title {
+    margin: 0;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    color: $color-primary;
+  }
+
+  &__content {
+    p {
+      margin: $gutter-small 0;
+      line-height: $line-height;
+      color: $font-color-secondary;
     }
+  }
 
-    &__section {
-        background: white;
-        border-radius: 8px;
-        padding: 24px;
-        margin-bottom: 24px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  &__field {
+    display: flex;
+    gap: $gutter-small;
+    align-items: center;
+  }
+
+  &__label {
+    font-weight: $font-weight-medium;
+    color: $color-primary;
+    min-width: 100px;
+  }
+
+  &__value {
+    color: $font-color-secondary;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $gutter-medium;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $gutter-small;
+    margin-top: $gutter-medium;
+  }
+
+  &__edit-button {
+    color: $color-attention;
+  }
+
+  &__cancel-button {
+    color: $font-color-secondary;
+  }
+
+  &__submit-button {
+    background: $color-attention;
+    color: $white;
+    box-shadow: $box-shadow-sm;
+
+    &:hover {
+      background: darken($color-attention, 10%);
+      transform: translateY(-2px);
+      box-shadow: $box-shadow-md;
     }
+  }
 
-    &__section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-    }
+  &__input {
+    width: 100%;
+  }
 
-    &__section-title {
-        margin: 0;
-        font-size: 18px;
-        font-weight: 500;
-    }
-
-    &__content {
-        text-overflow: ellipsis;
-        overflow: hidden;
-
-        p {
-            margin: 8px 0;
-            line-height: 1.6;
-        }
-    }
-
-    &__field {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-    }
-
-    &__label {
-        font-weight: 500;
-        min-width: 100px;
-    }
-
-    &__value {
-        color: #555;
-    }
-
-    &__form {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 16px;
-
-        @media (min-width: 600px) {
-            grid-template-columns: 1fr 1fr;
-        }
-    }
-
-    &__actions {
-        grid-column: 1 / -1;
-        display: flex;
-        justify-content: flex-end;
-        gap: 8px;
-        margin-top: 16px;
-    }
-
-    &__edit-button {
-        color: #1976d2;
-    }
-
-    &__cancel-button {
-        color: #555;
-    }
-
-    &__submit-button {
-        background: #1976d2;
-        color: white;
-    }
-
-    &__input {
-        width: 100%;
-    }
-
-    .mat-mdc-form-field {
-        width: 100%;
-    }
+  .mat-mdc-form-field {
+    width: 100%;
+  }
 }
