@@ -3,11 +3,10 @@ import { IDepositType } from "@api/deposit-type";
 
 export interface IDeposit {
   readonly id: number;
-  readonly startAmount: number;
-  readonly rate: number;
+  readonly amount: number;
+  readonly percent: number;
   readonly term: number;
   readonly depositType: IDepositType;
-  readonly percent: number;
   readonly name: string;
   readonly startDate: Date;
   readonly endDate: Date;
