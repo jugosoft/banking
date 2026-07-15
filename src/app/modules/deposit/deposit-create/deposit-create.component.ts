@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { saveDeposit } from '../store/deposit.actions';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, map, switchMap } from 'rxjs';
@@ -91,7 +90,6 @@ export class DepositCreateComponent implements OnInit {
             untilDestroyed(this)
         ).subscribe({
             next: response => {
-                console.log(response);
                 // После успешного сохранения переходим на роут /home
                 this.router.navigate(['/home']);
             }

@@ -2,8 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DepositComponent } from './deposit.component';
 import { DepositCreateComponent } from './deposit-create/deposit-create.component';
+import { DepositListComponent } from './deposit-list/deposit-list.component';
 
 const routes: Routes = [
+    {
+        path: 'list',
+        component: DepositListComponent,
+    },
     {
         path: 'create',
         component: DepositCreateComponent,
@@ -15,7 +20,7 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/home',
+        redirectTo: 'list',
     },
 ];
 

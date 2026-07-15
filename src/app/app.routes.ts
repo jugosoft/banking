@@ -13,10 +13,9 @@ export const appRoutes: Routes = [
         path: '',
         canActivate: [authGuard],
         children: [
-            { path: '', pathMatch: 'full', redirectTo: 'home' },
             {
                 path: 'home',
-                data: { title: 'Вклады' },
+                data: { title: 'Главная' },
                 loadChildren: () =>
                     import('./modules/home/home.module').then(
                         (module) => module.HomeModule
@@ -38,6 +37,7 @@ export const appRoutes: Routes = [
                         (module) => module.ProfileModule
                     ),
             },
+            { path: '', pathMatch: 'full', redirectTo: 'home' },
         ],
     },
     {

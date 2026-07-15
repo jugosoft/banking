@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ISaveDepositProps } from '../../modules/deposit/store/model/save-deposit.interfaces';
-import { IGetDepositResponse, IGetDepositListResponse, IDeposit, IGetDepositStatsResponse } from '@api/deposit';
+import { IGetDepositResponse, IGetDepositListResponse, IGetDepositStatsResponse } from '@api/deposit';
 import { BaseApiService } from './base-api.service';
+import { ISaveDepositProps } from 'src/app/modules/deposit/store/model/save-deposit.interfaces';
 
 @Injectable({
     providedIn: 'root',

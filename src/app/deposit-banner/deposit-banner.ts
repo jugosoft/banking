@@ -16,8 +16,6 @@ export class DepositBanner {
 
   public get calculatedTotalInterest(): number {
     const sum = this.deposits.reduce((sum, deposit) => sum + +deposit.percent, 0);
-    console.log(sum);
-
     return sum / this.deposits.length;
   }
 }

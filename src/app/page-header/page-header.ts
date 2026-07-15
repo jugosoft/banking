@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 
@@ -11,7 +11,7 @@ import { filter, map } from 'rxjs';
 export class PageHeader {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  public title: string = '';
+  public title = signal('');
 
   constructor() {
     this.router.events
@@ -27,7 +27,7 @@ export class PageHeader {
         })
       )
       .subscribe((title) => {
-        this.title = title;
+        this.title.set(title);
       });
   }
 }

@@ -5,9 +5,10 @@ import { DepositCardComponent } from '../shared/deposit-card/deposit-card.compon
 import { DepositComponent } from './deposit.component';
 import { DepositRoutingModule } from './deposit-routing.module';
 import { DepositCreateComponent } from './deposit-create/deposit-create.component';
+import { DepositListComponent } from './deposit-list/deposit-list.component';
 
 @NgModule({
-    declarations: [DepositComponent, DepositCreateComponent],
+    declarations: [DepositComponent, DepositCreateComponent, DepositListComponent],
     imports: [
         SharedModule,
         DepositRoutingModule,

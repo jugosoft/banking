@@ -4,11 +4,9 @@
 </div>
 } @else {
 <div class="home__container">
+    @let deposits = deposits$ | async;
 
-    <!-- @if (deposits) { -->
-    <app-deposit-banner [deposits]="[]"></app-deposit-banner>
-    <!-- } -->
-
+    @if (deposits?.length === 0) {
     <div class="home__no-deposits">
         <h2 class="home__no-deposits-title">У вас пока нет вкладов</h2>
         <p class="home__no-deposits-text">Создайте первый вклад и начните накапливать средства с выгодной процентной
@@ -17,5 +15,13 @@
             Создать новый вклад
         </button>
     </div>
+    } @else {
+    <section class="home__deposit-list">
+        @for (deposit of deposits; track deposit.id) {
+        <banking-deposit-card class="home__deposit-item" [deposit]="deposit" (delete)="onDelete($event)">
+        </banking-deposit-card>
+        }
+    </section>
+    }
 </div>
 }

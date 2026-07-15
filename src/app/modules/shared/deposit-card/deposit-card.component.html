@@ -6,11 +6,11 @@
     </div>
     <span class="deposit-card__header-rate">{{ deposit.percent }}</span>
   </div>
-  
+
   <div class="deposit-card__body">
     <h3 class="deposit-card__title">{{ deposit.name }}</h3>
-    <p class="deposit-card__subtitle">{{ deposit.startAmount | currency : 'RUB' : 'symbol-narrow' }}</p>
-    
+    <p class="deposit-card__subtitle">{{ deposit.amount | currency : 'RUB' : 'symbol-narrow' }}</p>
+
     @if (deposit.endDate) {
     <div class="deposit-card__progress">
       <div class="deposit-card__progress-bar">
@@ -19,18 +19,18 @@
       <span class="deposit-card__progress-text" [class.--closing-soon]="isClosingSoon">
         @if (isClosingSoon) {
         <span class="deposit-card__icon">⏰</span>
-        } 
+        }
         {{ daysBeforeClose }} д. до закрытия
       </span>
     </div>
     }
-    
+
     <div class="deposit-card__info">
       <span class="deposit-card__info-label">Дата открытия:</span>
       <span class="deposit-card__info-value">{{ deposit.startDate | date : 'dd.MM.yyyy' }}</span>
     </div>
   </div>
-  
+
   <div class="deposit-card__footer">
     <button class="deposit-card__btn deposit-card__btn--edit" (click)="editDeposit()">
       Редактировать
