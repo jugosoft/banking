@@ -4,18 +4,8 @@
 </div>
 } @else {
 <div class="home__container">
-
-    <!-- @if (deposits) { -->
     <app-deposit-banner [deposits]="[]"></app-deposit-banner>
-    <!-- } -->
 
-    <div class="home__no-deposits">
-        <h2 class="home__no-deposits-title">У вас пока нет вкладов</h2>
-        <p class="home__no-deposits-text">Создайте первый вклад и начните накапливать средства с выгодной процентной
-            ставкой</p>
-        <button class="home__create-button" mat-raised-button (click)="onCreateDeposit()">
-            Создать новый вклад
-        </button>
-    </div>
+    <banking-empty-state (createDeposit)="onCreateDeposit()"></banking-empty-state>
 </div>
 }
