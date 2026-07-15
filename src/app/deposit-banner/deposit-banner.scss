@@ -3,7 +3,6 @@
 
 :host {
   display: block;
-  width: 100%;
   background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
   border-radius: $border-radius-sm;
   padding: $gutter-small;
@@ -32,17 +31,17 @@
     line-height: 1.2;
     color: #e8f5e9;
 
-    @include respond-to('mobile') {
-      font-size: 1.5rem;
-    }
+    // @include respond-to('mobile') {
+    //   font-size: 1.5rem;
+    // }
 
-    @include respond-to('tablet') {
-      font-size: 2rem;
-    }
+    // @include respond-to('tablet') {
+    //   font-size: 2rem;
+    // }
 
-    @include respond-to('desktop') {
-      font-size: 2.5rem;
-    }
+    // @include respond-to('desktop') {
+    //   font-size: 2.5rem;
+    // }
   }
 
   &__stat-label {
@@ -51,16 +50,16 @@
     font-weight: $font-weight-medium;
     color: #c8e6c9;
 
-    @include respond-to('mobile') {
-      font-size: 0.875rem;
-    }
+    // @include respond-to('mobile') {
+    //   font-size: 0.875rem;
+    // }
 
-    @include respond-to('tablet') {
-      font-size: 1rem;
-    }
+    // @include respond-to('tablet') {
+    //   font-size: 1rem;
+    // }
 
-    @include respond-to('desktop') {
-      font-size: 1.125rem;
-    }
+    // @include respond-to('desktop') {
+    //   font-size: 1.125rem;
+    // }
   }
 }

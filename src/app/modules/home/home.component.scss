@@ -1,6 +1,10 @@
 @import 'variables';
 @import 'mixins';
 
+:host {
+  display: block;
+}
+
 .home {
   &__container {
     display: flex;
@@ -9,12 +13,18 @@
     gap: $gutter-medium;
 
     @include respond-to('tablet') {
-      flex-direction: row;
-      flex-wrap: wrap;
+      // flex-direction: row;
+      // flex-wrap: wrap;
     }
 
     @include respond-to('desktop') {
       gap: $gutter-large;
     }
+  }
+
+  &__container-item {
+    display: flex;
+    width: 100%;
+    justify-content: center;
   }
 }
