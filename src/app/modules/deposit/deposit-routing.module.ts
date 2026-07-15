@@ -6,10 +6,6 @@ import { DepositListComponent } from './deposit-list/deposit-list.component';
 
 const routes: Routes = [
     {
-        path: 'list',
-        component: DepositListComponent,
-    },
-    {
         path: 'create',
         component: DepositCreateComponent,
     },
@@ -20,7 +16,7 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'list',
+        component: DepositListComponent,
     },
 ];
 

@@ -17,6 +17,18 @@
 }
 
 .page-header {
+  &__container {
+    display: flex;
+    align-items: center;
+    gap: $gutter-small;
+    min-height: 24px;
+  }
+
+  &__spacer {
+    width: 24px;
+    height: 24px;
+  }
+
   &__title {
     font-size: 2rem;
     font-size: 1.5rem;

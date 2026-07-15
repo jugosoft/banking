@@ -1,1 +1,8 @@
-<h1 class="page-header__title">{{ title() }}</h1>
+<div class="page-header__container">
+    @if (showBackButton()) {
+    <mat-icon (click)="onBack()">chevron_left</mat-icon>
+    } @else {
+    <div class="page-header__spacer"></div>
+    }
+    <h1 class="page-header__title">{{ title() }}</h1>
+</div>
