@@ -8,4 +8,8 @@
   gap: $gutter-small;
 }
 
-.profile {}
+.profile {
+  &__container {
+    padding: $gutter-small;
+  }
+}

@@ -1,8 +1,11 @@
-<!-- Карточка персональной информации -->
-<banking-personal-info [user]="user" (save)="onPersonalInfoSave($event)"></banking-personal-info>
+@if (!user) {
+<mat-spinner></mat-spinner>
+} @else {
+<div class="profile__container">
+  <banking-personal-info [user]="user" (save)="onPersonalInfoSave($event)"></banking-personal-info>
 
-<!-- Карточка контактной информации -->
-<banking-contact-info [user]="user" (save)="onContactInfoSave($event)"></banking-contact-info>
+  <banking-contact-info [user]="user" (save)="onContactInfoSave($event)"></banking-contact-info>
 
-<!-- Карточка безопасности -->
-<banking-security (save)="onSecuritySave($event)"></banking-security>
+  <banking-security (save)="onSecuritySave($event)"></banking-security>
+</div>
+}
