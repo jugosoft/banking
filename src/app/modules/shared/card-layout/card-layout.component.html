@@ -6,6 +6,8 @@
   <ng-content select="[card-body]"></ng-content>
 </div>
 
+@if (!noFooter) {
 <footer class="card-layout__footer">
   <ng-content select="[card-footer]"></ng-content>
 </footer>
+}

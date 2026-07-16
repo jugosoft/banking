@@ -22,8 +22,14 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px 24px;
-    color: $sber-white;
     background: $sber-header-gradient;
+
+    ::ng-deep {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: $white;
+    }
   }
 
   &__body {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'banking-card-layout',
@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './card-layout.component.html',
   styleUrl: './card-layout.component.scss',
 })
-export class CardLayoutComponent { }
+export class CardLayoutComponent {
+  @Input() public noFooter = false;
+}
