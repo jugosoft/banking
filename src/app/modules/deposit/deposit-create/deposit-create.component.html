@@ -1,6 +1,4 @@
 <div class="deposit-create__wrapper">
-  <h1 class="deposit-create__title mat-h1">Добавление продукта</h1>
-
   <form class="deposit-create__form" [formGroup]="formGroup">
     <mat-form-field>
       <mat-label>Банк</mat-label>
@@ -18,7 +16,9 @@
         <mat-option [value]="type">{{ type.name }}</mat-option>
         }
       </mat-select>
-    </mat-form-field>    <mat-form-field floatLabel="always">
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always">
       <mat-label>Начальная сумма</mat-label>
       <input matInput type="number" placeholder="0,00" formControlName="amount" />
     </mat-form-field>
@@ -27,7 +27,9 @@
       <mat-label>Процентная ставка</mat-label>
       <input matInput type="number" placeholder="0,00" formControlName="percent" />
       <mat-hint>Введите процентную ставку (0-100)</mat-hint>
-    </mat-form-field><mat-form-field>
+    </mat-form-field>
+
+    <mat-form-field>
       <mat-label>Дата открытия</mat-label>
       <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
       <mat-hint>ММ.ДД.ГГГГ</mat-hint>
@@ -37,12 +39,24 @@
 
     <mat-form-field>
       <mat-label>Дата закрытия</mat-label>
-      <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+      <input matInput [matDatepicker]="endDatePicker" formControlName="endDate" (dateChange)="onEndDateChange($event)">
       <mat-hint>ММ.ДД.ГГГГ</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #endDatePicker></mat-datepicker>
+      @if (formGroup.get('endDate')?.touched && !isEndDateValid()) {
+      <mat-error>Дата закрытия не может быть раньше даты начала</mat-error>
+      }
     </mat-form-field>
 
-    <button mat-raised-button type="submit" onsubmit="return false;" (click)="save()">Создать</button>
+    <!-- Сегментный переключатель для выбора периода -->
+    <mat-button-toggle-group [value]="selectedPeriod" (change)="onPeriodChange($event.value)" multiple="false">
+      @for (option of periodOptions; track option.label) {
+      <mat-button-toggle [value]="option.value">
+        {{ option.label }}
+      </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+
+    <button mat-raised-button type="submit" (click)="save()">Создать</button>
   </form>
 </div>

@@ -5,6 +5,7 @@ import {
     OnInit,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -13,7 +14,7 @@ import { DepositService } from '../../../services/api/deposit.service';
 import { ReferenceService } from '../../../services/api/reference.service';
 
 /**
- * Компонент создания инвест-продукта
+ * Компонент создания инвести-продукта
  */
 @UntilDestroy()
 @Component({
@@ -33,6 +34,16 @@ export class DepositCreateComponent implements OnInit {
     public formGroup!: FormGroup;
     public banks$ = this.referenceService.banks$;
     public depositTypes$ = this.referenceService.depositTypes$;
+
+    // Сегментные кнопки для быстрого выбора периода
+    public readonly periodOptions = [
+        { label: '3 месяца', value: 3 },
+        { label: '4 месяца', value: 4 },
+        { label: '6 месяцев', value: 6 },
+        { label: '1 год', value: 12 },
+        { label: 'Собственное', value: 'custom' as const },
+    ];
+    public selectedPeriod: number | 'custom' = 'custom';
 
     public ngOnInit(): void {
         this.formGroup = this.formBuilder.group({
@@ -64,6 +75,8 @@ export class DepositCreateComponent implements OnInit {
                 this.formGroup.setValue({
                     ...deposit,
                 });
+                // После загрузки данных обновляем активную кнопку сегмента
+                this.updatePeriodFromDates();
             },
         });
     }
@@ -99,4 +112,63 @@ export class DepositCreateComponent implements OnInit {
     public readonly compareFn = <T extends { id: number }>(a?: T, b?: T) => {
         return a?.id === b?.id;
     };
+
+    // Обработчик изменения даты окончания
+    public onEndDateChange(event: MatDatepickerInputEvent<Date>): void {
+        this.updatePeriodFromDates();
+    }
+
+    // Проверка валидации даты окончания не раньше даты начала
+    public isEndDateValid(): boolean {
+        const startDate = this.formGroup.get('startDate')?.value;
+        const endDate = this.formGroup.get('endDate')?.value;
+
+        if (!startDate || !endDate) {
+            return true;
+        }
+
+        return new Date(endDate) >= new Date(startDate);
+    }
+
+    // Обновление активной кнопки сегмента на основе выбранных дат
+    private updatePeriodFromDates(): void {
+        const startDate = this.formGroup.get('startDate')?.value;
+        const endDate = this.formGroup.get('endDate')?.value;
+
+        if (!startDate || !endDate) {
+            this.selectedPeriod = 'custom';
+            return;
+        }
+
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        // Вычисляем разницу в месяцах
+        const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+
+        // Проверяем, совпадает ли с одним из предустановленных периодов
+        const matchingPeriod = this.periodOptions.find(
+            option => option.value !== 'custom' && option.value === months
+        );
+
+        this.selectedPeriod = matchingPeriod ? matchingPeriod.value : 'custom';
+    }
+
+    // Обработка выбора периода через сегментный переключатель
+    public onPeriodChange(period: number | 'custom'): void {
+        this.selectedPeriod = period;
+
+        if (period !== 'custom') {
+            const startDate = this.formGroup.get('startDate')?.value;
+            if (startDate) {
+                const start = new Date(startDate);
+                const endDate = new Date(start);
+                endDate.setMonth(endDate.getMonth() + period);
+
+                this.formGroup.patchValue({
+                    endDate: endDate
+                });
+            }
+        }
+    }
 }

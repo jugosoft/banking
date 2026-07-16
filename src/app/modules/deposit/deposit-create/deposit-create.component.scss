@@ -1,4 +1,5 @@
 @use 'mixins';
+@use '@angular/material' as mat;
 
 :host {
   display: flex;
@@ -13,6 +14,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding: 1.5rem;
 
     @include mixins.respond-to('medium') {
       justify-content: center;
@@ -27,6 +29,7 @@
 
   &__title {
     margin-bottom: 2rem;
+    text-align: center;
   }
 
   &__form {
