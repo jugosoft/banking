@@ -9,6 +9,7 @@ export interface INearestDepositClosingInfo {
 export interface IStatistics {
   totalAmount: number;
   totalInterest: number;
+  currentIncome: number;
   nearestDepositClosingInfo: INearestDepositClosingInfo;
 }
 

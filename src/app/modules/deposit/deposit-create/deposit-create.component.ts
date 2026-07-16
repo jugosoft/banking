@@ -12,6 +12,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, map, switchMap } from 'rxjs';
 import { DepositService } from '../../../services/api/deposit.service';
 import { ReferenceService } from '../../../services/api/reference.service';
+import e from 'express';
 
 /**
  * Компонент создания инвести-продукта
@@ -69,11 +70,17 @@ export class DepositCreateComponent implements OnInit {
             switchMap((depositId) => {
                 return this.depositService.getDeposit$(depositId);
             }),
+            map(response => response.data!),
             untilDestroyed(this)
         ).subscribe({
-            next: (deposit) => {
+            next: deposit => {
                 this.formGroup.setValue({
-                    ...deposit,
+                    bank: deposit.bank,
+                    depositType: deposit.depositType,
+                    percent: deposit.percent,
+                    amount: deposit.amount,
+                    startDate: deposit.startDate,
+                    endDate: deposit.endDate
                 });
                 // После загрузки данных обновляем активную кнопку сегмента
                 this.updatePeriodFromDates();

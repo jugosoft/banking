@@ -7,6 +7,7 @@ import { DatePipe } from "@angular/common";
 import { IDeposit } from "@api/deposit";
 import { ModalService } from "../modal/modal.service";
 import { Router } from "@angular/router";
+import { filter } from "rxjs";
 
 @Component({
     selector: 'banking-deposit-card',
@@ -66,7 +67,9 @@ export class DepositCardComponent implements OnInit {
             cancelText: 'Отмена'
         };
 
-        this.modalService.openConfirmDeleteModal(modalData).subscribe(() => {
+        this.modalService.openConfirmDeleteModal(modalData).pipe(
+            filter(result => !!result)
+        ).subscribe((result) => {
             this.delete.emit(this.deposit.id);
         });
     }

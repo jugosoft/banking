@@ -1,10 +1,10 @@
 @import 'variables';
 @import 'mixins';
 
-.home {
+.deposit-list {
   &__container {
-    padding: $gutter-large $gutter-small;
-    padding-bottom: 80px; // space for bottom nav
+    padding: $gutter-small;
+    padding-bottom: 80px;
   }
 
   &__deposit-list {
