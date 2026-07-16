@@ -1,21 +1,34 @@
-import { Component, Input } from '@angular/core';
-import { IDeposit } from '@api/deposit';
+import { Component, inject, OnInit } from '@angular/core';
+import { StatisticsService } from 'src/app/services/api/statistics.service';
+import { IGetStatisticsResponse, IStatistics } from '@api/statistics';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-deposit-banner',
   standalone: false,
   templateUrl: './deposit-banner.html',
-  styleUrl: './deposit-banner.scss',
+  styleUrl: './deposit-banner.scss'
 })
-export class DepositBanner {
-  @Input() deposits: IDeposit[] = [];
+export class DepositBanner implements OnInit {
+  private readonly statisticsService = inject(StatisticsService);
 
-  public get calculatedTotalAmount(): number {
-    return this.deposits.reduce((sum, deposit) => sum + deposit.amount, 0);
+  public isLoading$ = new BehaviorSubject<boolean>(false);
+  public statistics$ = new BehaviorSubject<IStatistics | undefined>(undefined);
+
+  public ngOnInit(): void {
+    this.loadStatistics();
   }
 
-  public get calculatedTotalInterest(): number {
-    const sum = this.deposits.reduce((sum, deposit) => sum + +deposit.percent, 0);
-    return sum / this.deposits.length;
+  public loadStatistics(): void {
+    this.isLoading$.next(true);
+    this.statisticsService.getDepositsStatistics$().pipe(
+      finalize(() => this.isLoading$.next(false)),
+    ).subscribe({
+      next: (response: IGetStatisticsResponse) => {
+        this.statistics$.next(response.data);
+      }
+    });
   }
 }

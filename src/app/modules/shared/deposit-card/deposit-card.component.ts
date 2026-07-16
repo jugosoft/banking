@@ -1,12 +1,12 @@
-import { Component, inject, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { IDeposit } from '../../../api/deposit/deposit.interface';
-import { MaterialModule } from '../../material/material.module';
-import { SharedModule } from '../shared.module';
-import { dateDiffInDays } from '../../../common/utils/date-utils';
-import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDeleteDialogComponent, ConfirmDialogData } from '../confirm-delete-dialog/confirm-delete-dialog.component';
+import { dateDiffInDays } from "src/app/common/utils/date-utils";
+import { ConfirmModalData } from "../confirm-delete-modal";
+import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { MaterialModule } from "../../material/material.module";
+import { SharedModule } from "../shared.module";
+import { DatePipe } from "@angular/common";
+import { IDeposit } from "@api/deposit";
+import { ModalService } from "../modal/modal.service";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'banking-deposit-card',
@@ -23,14 +23,14 @@ export class DepositCardComponent implements OnInit {
     public isClosingSoon = false;
     public progressBarColor: 'primary' | 'accent' | 'warn' = 'primary';
     public progressBarPercentage = 0;
-    
+
     // Расчётные данные
     public currentAmount: number = 0;
     public interestEarned: number = 0;
     public timeToClose: string = '';
 
     private readonly router = inject(Router);
-    private readonly dialog = inject(MatDialog);
+    private readonly modalService = inject(ModalService);
 
     public ngOnInit(): void {
         if (this.deposit.endDate) {
@@ -41,10 +41,10 @@ export class DepositCardComponent implements OnInit {
                 ((this.daysTotal - this.daysBeforeClose) / this.daysTotal) * 100,
                 100
             );
-            
+
             // Расчёт текущей суммы и начисленных процентов
             this.calculateDepositDetails();
-            
+
             // Форматирование времени до закрытия
             this.formatTimeToClose();
         }
@@ -59,22 +59,15 @@ export class DepositCardComponent implements OnInit {
     }
 
     public onDelete(): void {
-        const dialogData: ConfirmDialogData = {
+        const modalData: ConfirmModalData = {
             title: 'Подтверждение удаления',
             message: 'Вы уверены, что хотите удалить этот вклад?',
             confirmText: 'Удалить',
             cancelText: 'Отмена'
         };
 
-        const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
-            data: dialogData,
-            width: '400px'
-        });
-
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result) {
-                this.delete.emit(this.deposit.id);
-            }
+        this.modalService.openConfirmDeleteModal(modalData).subscribe(() => {
+            this.delete.emit(this.deposit.id);
         });
     }
 
@@ -109,18 +102,18 @@ export class DepositCardComponent implements OnInit {
         const startDate = new Date(this.deposit.startDate);
         const endDate = new Date(this.deposit.endDate!);
         const now = new Date();
-        
+
         // Определяем, сколько дней прошло с момента открытия
         const daysPassed = Math.max(0, dateDiffInDays(startDate, now));
         const totalDays = Math.max(1, dateDiffInDays(startDate, endDate));
-        
+
         // Рассчитываем текущую сумму (простые проценты)
         // Формула: текущая сумма = начальная сумма + (начальная сумма * ставка * дни / 365 / 100)
         const annualRate = this.deposit.percent;
         const dailyRate = annualRate / 365 / 100;
         const amount = Number(this.deposit.amount) || 0;
         const interest = amount * dailyRate * daysPassed;
-        
+
         this.currentAmount = amount + interest;
         this.interestEarned = interest;
     }

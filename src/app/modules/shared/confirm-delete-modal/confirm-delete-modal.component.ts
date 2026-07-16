@@ -1,7 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogActions, MatDialogTitle } from '@angular/material/dialog';
 
-export interface ConfirmDialogData {
+export interface ConfirmModalData {
   title: string;
   message: string;
   confirmText?: string;
@@ -9,7 +12,9 @@ export interface ConfirmDialogData {
 }
 
 @Component({
-  selector: 'confirm-delete-dialog',
+  selector: 'banking-confirm-delete-modal',
+  standalone: true,
+  imports: [MatButtonModule, MatIconModule, MatDialogModule, MatDialogActions, MatDialogTitle],
   template: `
     <h2 mat-dialog-title>{{ data.title }}</h2>
     <mat-dialog-content>
@@ -54,11 +59,11 @@ export interface ConfirmDialogData {
     }
   `]
 })
-export class ConfirmDeleteDialogComponent implements OnInit {
+export class ConfirmDeleteModalComponent implements OnInit {
   constructor(
-    public dialogRef: MatDialogRef<ConfirmDeleteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
-  ) {}
+    public dialogRef: MatDialogRef<ConfirmDeleteModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmModalData
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

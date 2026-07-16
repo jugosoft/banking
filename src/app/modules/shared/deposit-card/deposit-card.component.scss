@@ -241,48 +241,6 @@
     background: #f9fafb;
   }
 
-  &__btn {
-    flex: 1;
-    padding: 10px 16px;
-    border: none;
-    border-radius: $border-radius-md;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all $transition-base;
-    text-transform: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    &--edit {
-      background: $sber-btn-edit-bg;
-      color: $sber-white;
-
-      &:hover {
-        background: $sber-btn-edit-hover;
-      }
-
-      &:active {
-        background: $sber-btn-edit-active;
-      }
-    }
-
-    &--delete {
-      background: $sber-btn-delete-bg;
-      color: $sber-red;
-
-      &:hover {
-        background: $sber-btn-delete-hover;
-      }
-
-      &:active {
-        background: $sber-btn-delete-active;
-      }
-    }
-  }
-
   @include respond-to('tablet') {
     flex: 1 1 calc(50% - (#{$gutter-large} / 2));
   }
