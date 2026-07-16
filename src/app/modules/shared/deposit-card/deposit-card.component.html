@@ -26,12 +26,12 @@
       </div>
 
       <!-- Расчётная текущая сумма -->
-      <div class="deposit-card__current-info">
-        <span class="deposit-card__current-label">Текущая сумма:</span>
-        <span class="deposit-card__current-value">{{ currentAmount | currency : 'RUB' : 'symbol-narrow' }}</span>
-        <span class="deposit-card__earned-info" *ngIf="interestEarned > 0">
-          +{{ interestEarned | currency : 'RUB' : 'symbol-narrow' }}
-        </span>
+      <div class="deposit-card__amount-info">
+        <span class="deposit-card__amount-label">Текущая сумма:</span>
+        <span class="deposit-card__amount-value">{{ currentAmount | currency : 'RUB' : 'symbol-narrow' }}</span>
+        @if (interestEarned > 0) {
+        <span class="deposit-card__amount-earned"> +{{ interestEarned | currency : 'RUB' : 'symbol-narrow' }}</span>
+        }
       </div>
 
       <!-- Прогресс-бар с временем до закрытия -->

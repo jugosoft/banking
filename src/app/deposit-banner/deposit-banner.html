@@ -1,40 +1,48 @@
-<div class="deposit-banner__content">
-  @if (isLoading$ | async) {
-  <div class="deposit-banner__loading">
-    <mat-spinner></mat-spinner>
-  </div>
-  } @else {
-  @let statistics = statistics$ | async;
+<banking-card-layout>
+  <ng-container card-header>
+    <h2 class="deposit-banner__title">Статистика.Вклады</h2>
+  </ng-container>
 
-  @if (statistics) {
-  <div class="deposit-banner__stat">
-    <label class="deposit-banner__stat-label">Всего вкладов</label>
-    <span class="deposit-banner__stat-value">{{ statistics.totalAmount | currency:'RUB':'symbol':'1.0-0' }}</span>
-  </div>
+  <div card-body>
+    <div class="deposit-banner__content">
+      @if (isLoading$ | async) {
+      <div class="deposit-banner__loading">
+        <mat-spinner></mat-spinner>
+      </div>
+      } @else {
+      @let statistics = statistics$ | async;
 
-  <div class="deposit-banner__stat">
-    <label class="deposit-banner__stat-label">Средний процент</label>
-    <span class="deposit-banner__stat-value">{{ statistics.totalInterest | currency:'RUB':'symbol':'1.0-0' }}</span>
-  </div>
+      @if (statistics) {
+      <div class="deposit-banner__stat">
+        <label class="deposit-banner__stat-label">Всего вкладов</label>
+        <span class="deposit-banner__stat-value">{{ statistics.totalAmount | currency:'RUB':'symbol':'1.0-0' }}</span>
+      </div>
 
-  <div class="deposit-banner__stat">
-    <label class="deposit-banner__stat-label">Начислено процентов</label>
-    <span class="deposit-banner__stat-value">{{ statistics.currentIncome | currency:'RUB':'symbol':'1.0-0' }}</span>
-  </div>
+      <div class="deposit-banner__stat">
+        <label class="deposit-banner__stat-label">Средний процент</label>
+        <span class="deposit-banner__stat-value">{{ statistics.totalInterest | currency:'RUB':'symbol':'1.0-0' }}</span>
+      </div>
 
-  <div class="deposit-banner__stat">
-    <label class="deposit-banner__stat-label">Ближайшее закрытие</label>
-    <span class="deposit-banner__stat-value">
-      {{ statistics.nearestDepositClosingInfo.bankName }}
-      <span class="deposit-banner__stat-subvalue">
-        ({{ statistics.nearestDepositClosingInfo.closeDate | date:'dd.MM.yyyy' }})
-      </span>
-    </span>
+      <div class="deposit-banner__stat">
+        <label class="deposit-banner__stat-label">Начислено процентов</label>
+        <span class="deposit-banner__stat-value">{{ statistics.currentIncome | currency:'RUB':'symbol':'1.0-0' }}</span>
+      </div>
+
+      <div class="deposit-banner__stat">
+        <label class="deposit-banner__stat-label">Ближайшее закрытие</label>
+        <span class="deposit-banner__stat-value">
+          {{ statistics.nearestDepositClosingInfo.bankName }}
+          <span class="deposit-banner__stat-subvalue">
+            ({{ statistics.nearestDepositClosingInfo.closeDate | date:'dd.MM.yyyy' }})
+          </span>
+        </span>
+      </div>
+      } @else {
+      <div class="deposit-banner__empty">
+        <p>Нет данных о вкладах</p>
+      </div>
+      }
+      }
+    </div>
   </div>
-  } @else {
-  <div class="deposit-banner__empty">
-    <p>Нет данных о вкладах</p>
-  </div>
-  }
-  }
-</div>
+</banking-card-layout>

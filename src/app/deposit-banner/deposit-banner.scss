@@ -1,15 +1,6 @@
 @import 'variables';
 @import 'mixins';
 
-:host {
-  display: block;
-  background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
-  border-radius: $border-radius-sm;
-  padding: $gutter-small;
-  color: $white;
-  box-shadow: $box-shadow-md;
-}
-
 .deposit-banner {
   &__content {
     display: flex;
@@ -29,37 +20,21 @@
     font-size: 2rem;
     font-weight: $font-weight-bold;
     line-height: 1.2;
-    color: #e8f5e9;
-
-    // @include respond-to('mobile') {
-    //   font-size: 1.5rem;
-    // }
-
-    // @include respond-to('tablet') {
-    //   font-size: 2rem;
-    // }
-
-    // @include respond-to('desktop') {
-    //   font-size: 2.5rem;
-    // }
+    color: #1a237e;
   }
 
   &__stat-label {
     font-size: 1rem;
     opacity: 0.9;
     font-weight: $font-weight-medium;
-    color: #c8e6c9;
+    color: #3949ab;
+  }
 
-    // @include respond-to('mobile') {
-    //   font-size: 0.875rem;
-    // }
-
-    // @include respond-to('tablet') {
-    //   font-size: 1rem;
-    // }
-
-    // @include respond-to('desktop') {
-    //   font-size: 1.125rem;
-    // }
+  &__loading,
+  &__empty {
+    padding: $gutter-medium;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

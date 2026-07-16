@@ -69,11 +69,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-left: 4px solid $sber-blue-light;
     padding: 16px;
     background: $sber-gray-lighter;
     border-radius: $border-radius-md;
     margin-bottom: 16px;
   }
+
+  &__amount-earned {
+    font-size: 14px;
+    font-weight: 500;
+    color: $sber-green;
+    margin-left: 12px;
+  }
+
 
   &__amount-label {
     font-size: 14px;
@@ -85,36 +94,6 @@
     font-size: 16px;
     font-weight: 600;
     color: $sber-blue;
-  }
-
-  &__current-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    background: $sber-current-gradient;
-    border-radius: $border-radius-md;
-    margin-bottom: 20px;
-    border-left: 4px solid $sber-blue-light;
-  }
-
-  &__current-label {
-    font-size: 14px;
-    font-weight: 400;
-    color: $sber-gray-text;
-  }
-
-  &__current-value {
-    font-size: 20px;
-    font-weight: 600;
-    color: $sber-blue;
-  }
-
-  &__earned-info {
-    font-size: 14px;
-    font-weight: 500;
-    color: $sber-green;
-    margin-left: 12px;
   }
 
   &__progress {
