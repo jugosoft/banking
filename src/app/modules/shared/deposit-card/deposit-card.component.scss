@@ -1,7 +1,7 @@
 @import 'variables';
 @import 'mixins';
 
-.deposit-card {
+:host {
   background: $sber-gray-light;
   border-radius: $border-radius-lg;
   overflow: hidden;
@@ -14,9 +14,10 @@
 
   &:hover {
     box-shadow: $box-shadow-md;
-    transform: translateY(-2px);
   }
+}
 
+.deposit-card {
   &__header {
     display: flex;
     justify-content: space-between;
@@ -239,13 +240,5 @@
     padding: 16px 24px;
     border-top: 1px solid $sber-gray-border;
     background: #f9fafb;
-  }
-
-  @include respond-to('tablet') {
-    flex: 1 1 calc(50% - (#{$gutter-large} / 2));
-  }
-
-  @include respond-to('desktop') {
-    flex: 1 1 calc(50% - (#{$gutter-large} / 2));
   }
 }

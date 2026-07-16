@@ -13,7 +13,6 @@ import { authReducer } from './modules/auth/store/auth.reducer';
 import { AuthService } from './modules/auth/services/auth.service';
 import { AuthEffects } from './modules/auth/store/auth.effects';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
-import { profileReducer } from './modules/profile/store/profile.reducer';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -25,7 +24,6 @@ export const appConfig: ApplicationConfig = {
         provideEffects(AuthEffects),
         provideStore({
             auth: authReducer,
-            profile: profileReducer,
         }),
 
         isDevMode() ? [provideStoreDevtools({

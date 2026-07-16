@@ -7,4 +7,7 @@ export interface IUserInfo {
   readonly email: string;
   readonly roles: IRole[];
   readonly name: string;
+  readonly firstName?: string;
+  readonly lastName?: string;
+  readonly patronymic?: string;
 }

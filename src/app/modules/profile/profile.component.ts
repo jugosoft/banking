@@ -6,22 +6,11 @@ import {
     Validators,
 } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { ProfileState } from './store/profile.state';
+import { filter, Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ProfileService } from './services/profile.service';
-import {
-    updateName,
-    updateEmail,
-    updateUsername,
-    updatePassword,
-} from './store/profile.actions';
-import {
-    selectIsSubmitting,
-    selectValidationErrors,
-} from './store/profile.selectors';
+import { IUserInfo } from '@api/user/user.interface';
 import { selectCurrentUser } from '../auth/store/auth.selectors';
-import { loadCurrentUser } from './store/profile.actions';
 
 @UntilDestroy()
 @Component({
@@ -32,29 +21,38 @@ import { loadCurrentUser } from './store/profile.actions';
 })
 export class ProfileComponent implements OnInit {
     private readonly store = inject(Store);
+
     public readonly currentUser$ = this.store.pipe(select(selectCurrentUser));
-    public readonly isSubmitting$ = this.store.pipe(select(selectIsSubmitting));
-    public readonly validationErrors$ = this.store.pipe(select(selectValidationErrors));
+    // public readonly isSubmitting$ = this.store.pipe(select(selectIsSubmitting));
+    // public readonly validationErrors$ = this.store.pipe(select(selectValidationErrors));
     private readonly formBuilder = inject(FormBuilder);
     public personalForm!: FormGroup;
     public contactForm!: FormGroup;
     public passwordForm!: FormGroup;
-    public editMode = {
-        personal: false,
-        contact: false,
-        password: false,
-    };
-    public loading = {
-        personal: false,
-        contact: false,
-        password: false,
-    };
 
+    public isEditing = false;
+    public user: IUserInfo | null = null;
 
     public ngOnInit(): void {
         this.initForms();
-        this.subscribeToLoading();
-        this.store.dispatch(loadCurrentUser());
+
+        this.currentUser$.pipe(
+            filter(currentUser => !!currentUser),
+            untilDestroyed(this)
+        ).subscribe(user => {
+            this.user = user;
+            if (user) {
+                this.personalForm.patchValue({
+                    firstName: user.firstName || '',
+                    lastName: user.lastName || '',
+                    patronymic: user.patronymic || '',
+                });
+                this.contactForm.patchValue({
+                    email: user.email || '',
+                    username: user.name || '',
+                });
+            }
+        });
     }
 
     private initForms(): void {
@@ -85,17 +83,6 @@ export class ProfileComponent implements OnInit {
         );
     }
 
-    private subscribeToLoading(): void {
-        this.isSubmitting$
-            .pipe(untilDestroyed(this))
-            .subscribe((isSubmitting) => {
-                Object.keys(this.loading).forEach((key) => {
-                    //@ts-ignore
-                    this.loading[key] = isSubmitting;
-                });
-            });
-    }
-
     private passwordMatchValidator(form: FormGroup) {
         const newPassword = form.get('newPassword')?.value;
         const confirmPassword = form.get('confirmPassword')?.value;
@@ -105,50 +92,8 @@ export class ProfileComponent implements OnInit {
             : { passwordMismatch: true };
     }
 
-    public toggleEdit(section: keyof typeof this.editMode): void {
-        this.editMode[section] = !this.editMode[section];
-
-        if (this.editMode[section]) {
-            // Заполняем форму текущими данными при открытии редактирования
-            // this.currentUser$.pipe(untilDestroyed(this)).subscribe((user) => {
-            //     if (user) {
-            //         switch (section) {
-            //             case 'personal':
-            //                 this.personalForm.patchValue({
-            //                     firstName: user.firstName,
-            //                     lastName: user.lastName,
-            //                     patronymic: user.patronymic,
-            //                 });
-            //                 break;
-            //             case 'contact':
-            //                 this.contactForm.patchValue({
-            //                     email: user.email,
-            //                     username: user.username,
-            //                 });
-            //                 break;
-            //         }
-            //     }
-            // });
-        }
-    }
-
-    public cancelEdit(section: keyof typeof this.editMode): void {
-        this.editMode[section] = false;
-        this.clearFormErrors(section);
-    }
-
-    private clearFormErrors(section: string): void {
-        switch (section) {
-            case 'personal':
-                this.personalForm.setErrors(null);
-                break;
-            case 'contact':
-                this.contactForm.setErrors(null);
-                break;
-            case 'password':
-                this.passwordForm.setErrors(null);
-                break;
-        }
+    public toggleEdit(): void {
+        this.isEditing = !this.isEditing;
     }
 
     public savePersonal(): void {
@@ -157,8 +102,8 @@ export class ProfileComponent implements OnInit {
             return;
         }
 
-        this.store.dispatch(updateName(this.personalForm.value));
-        this.editMode.personal = false;
+        // this.store.dispatch(updateName(this.personalForm.value));
+        this.isEditing = false;
     }
 
     public saveContact(): void {
@@ -167,9 +112,9 @@ export class ProfileComponent implements OnInit {
             return;
         }
 
-        this.store.dispatch(updateEmail(this.contactForm.value));
-        this.store.dispatch(updateUsername(this.contactForm.value));
-        this.editMode.contact = false;
+        // this.store.dispatch(updateEmail(this.contactForm.value));
+        // this.store.dispatch(updateUsername(this.contactForm.value));
+        this.isEditing = false;
     }
 
     public savePassword(): void {
@@ -179,8 +124,8 @@ export class ProfileComponent implements OnInit {
         }
 
         const { oldPassword, newPassword } = this.passwordForm.value;
-        this.store.dispatch(updatePassword({ oldPassword, newPassword }));
-        this.editMode.password = false;
+        // this.store.dispatch(updatePassword({ oldPassword, newPassword }));
+        this.isEditing = false;
         this.passwordForm.reset();
     }
 

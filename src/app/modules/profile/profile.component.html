@@ -1,85 +1,82 @@
-@if (currentUser$ | async; as user) {
-<div class="profile__section">
-    <div class="profile__section-header">
-        <h2 class="profile__section-title">Персональная информация</h2>
-        <button class="profile__edit-button" mat-icon-button (click)="toggleEdit('personal')">
-            <mat-icon>edit</mat-icon>
-        </button>
+<!-- Карточка персональной информации -->
+@if (user) {
+<div class="profile__card">
+    <div class="profile__card-header">
+        <h2 class="profile__card-title">Персональная информация</h2>
     </div>
 
-    <!-- @if (!editMode.personal) {
-        <div class="profile__content">
-            <p class="profile__field">
-                <span class="profile__label">Имя:</span>
-                <span class="profile__value">{{ user.firstName }}</span>
-            </p>
-            <p class="profile__field">
-                <span class="profile__label">Фамилия:</span>
-                <span class="profile__value">{{ user.lastName }}</span>
-            </p>
-            <p class="profile__field">
-                <span class="profile__label">Отчество:</span>
-                <span class="profile__value">{{ user.patronymic | notSpecified }}</span>
-            </p>
-        </div>
-        } @else {
-        <form [formGroup]="personalForm" (ngSubmit)="savePersonal()" class="profile__form">
-            <mat-form-field class="profile__input" appearance="outline">
-                <mat-label>Имя</mat-label>
-                <input matInput formControlName="firstName" required>
-                <mat-error>
-                    @if (getErrorsFor(personalForm, 'firstName')?.['required']) {
-                    Имя обязательно для заполнения
-                    }
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="profile__input" appearance="outline">
-                <mat-label>Фамилия</mat-label>
-                <input matInput formControlName="lastName" required>
-                <mat-error>
-                    @if (getErrorsFor(personalForm, 'lastName')?.['required']) {
-                    Фамилия обязательна для заполнения
-                    }
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="profile__input" appearance="outline">
-                <mat-label>Отчество</mat-label>
-                <input matInput formControlName="patronymic">
-            </mat-form-field>
-
-            <div class="profile__actions">
-                <button class="profile__cancel-button" mat-button type="button"
-                    (click)="cancelEdit('personal')">Отмена</button>
-                <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
-                    [disabled]="personalForm.invalid || loading.personal">
-                    <mat-spinner *ngIf="loading.personal" diameter="20"></mat-spinner>
-                    <span *ngIf="!loading.personal">Сохранить</span>
-                </button>
-            </div>
-        </form>
-        } -->
-</div>
-
-<div class="profile__section">
-    <div class="profile__section-header">
-        <h2 class="profile__section-title">Контактная информация</h2>
-        <button class="profile__edit-button" mat-icon-button (click)="toggleEdit('contact')">
-            <mat-icon>edit</mat-icon>
-        </button>
-    </div>
-
-    @if (!editMode.contact) {
+    @if (!isEditing) {
     <div class="profile__content">
-        <p class="profile__field">
+        <div class="profile__field">
+            <span class="profile__label">Имя:</span>
+            <span class="profile__value">{{ user.firstName || 'Не указано' }}</span>
+        </div>
+        <div class="profile__field">
+            <span class="profile__label">Фамилия:</span>
+            <span class="profile__value">{{ user.lastName || 'Не указано' }}</span>
+        </div>
+        <div class="profile__field">
+            <span class="profile__label">Отчество:</span>
+            <span class="profile__value">{{ user.patronymic | notSpecified }}</span>
+        </div>
+    </div>
+    } @else {
+    <form [formGroup]="personalForm" (ngSubmit)="savePersonal()" class="profile__form">
+        <mat-form-field class="profile__input" appearance="outline">
+            <mat-label>Имя</mat-label>
+            <input matInput formControlName="firstName" required>
+            <mat-error>
+                @if (getErrorsFor(personalForm, 'firstName')?.['required']) {
+                Имя обязательно для заполнения
+                }
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="profile__input" appearance="outline">
+            <mat-label>Фамилия</mat-label>
+            <input matInput formControlName="lastName" required>
+            <mat-error>
+                @if (getErrorsFor(personalForm, 'lastName')?.['required']) {
+                Фамилия обязательна для заполнения
+                }
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="profile__input" appearance="outline">
+            <mat-label>Отчество</mat-label>
+            <input matInput formControlName="patronymic">
+        </mat-form-field>
+
+        <div class="profile__actions">
+            <button class="profile__cancel-button" mat-button type="button" (click)="toggleEdit()">Отмена</button>
+            <button class="profile__save-button" mat-raised-button color="primary" type="submit"
+                [disabled]="personalForm.invalid">
+                <mat-spinner diameter="20"></mat-spinner>
+                <span>Сохранить</span>
+            </button>
+        </div>
+    </form>
+    }
+</div>
+}
+
+<!-- Карточка контактной информации -->
+@if (user) {
+<div class="profile__card">
+    <div class="profile__card-header">
+        <h2 class="profile__card-title">Контактная информация</h2>
+    </div>
+
+    @if (!isEditing) {
+    <div class="profile__content">
+        <div class="profile__field">
             <span class="profile__label">Email:</span>
             <span class="profile__value">{{ user.email }}</span>
-        </p>
-        <p class="profile__field">
+        </div>
+        <div class="profile__field">
             <span class="profile__label">Логин:</span>
             <span class="profile__value">{{ user.name }}</span>
-        </p>
+        </div>
     </div>
     } @else {
     <form [formGroup]="contactForm" (ngSubmit)="saveContact()" class="profile__form">
@@ -107,29 +104,31 @@
         </mat-form-field>
 
         <div class="profile__actions">
-            <button class="profile__cancel-button" mat-button type="button"
-                (click)="cancelEdit('contact')">Отмена</button>
-            <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
-                [disabled]="contactForm.invalid || loading.contact">
-                <mat-spinner *ngIf="loading.contact" diameter="20"></mat-spinner>
-                <span *ngIf="!loading.contact">Сохранить</span>
+            <button class="profile__cancel-button" mat-button type="button" (click)="toggleEdit()">Отмена</button>
+            <button class="profile__save-button" mat-raised-button color="primary" type="submit"
+                [disabled]="contactForm.invalid">
+                <mat-spinner diameter="20"></mat-spinner>
+                <span>Сохранить</span>
             </button>
         </div>
     </form>
     }
 </div>
+}
 
-<div class="profile__section">
-    <div class="profile__section-header">
-        <h2 class="profile__section-title">Смена пароля</h2>
-        <button class="profile__edit-button" mat-icon-button (click)="toggleEdit('password')">
-            <mat-icon>edit</mat-icon>
-        </button>
+<!-- Карточка безопасности -->
+@if (user) {
+<div class="profile__card">
+    <div class="profile__card-header">
+        <h2 class="profile__card-title">Безопасность</h2>
     </div>
 
-    @if (!editMode.password) {
+    @if (!isEditing) {
     <div class="profile__content">
-        <p class="profile__field">Пароль скрыт для безопасности</p>
+        <div class="profile__field">
+            <span class="profile__label">Пароль:</span>
+            <span class="profile__value profile__value-password">********</span>
+        </div>
     </div>
     } @else {
     <form [formGroup]="passwordForm" (ngSubmit)="savePassword()" class="profile__form">
@@ -169,12 +168,11 @@
         </mat-form-field>
 
         <div class="profile__actions">
-            <button class="profile__cancel-button" mat-button type="button"
-                (click)="cancelEdit('password')">Отмена</button>
-            <button class="profile__submit-button" mat-raised-button color="primary" type="submit"
-                [disabled]="passwordForm.invalid || loading.password">
-                <mat-spinner *ngIf="loading.password" diameter="20"></mat-spinner>
-                <span *ngIf="!loading.password">Сменить пароль</span>
+            <button class="profile__cancel-button" mat-button type="button" (click)="toggleEdit()">Отмена</button>
+            <button class="profile__save-button" mat-raised-button color="primary" type="submit"
+                [disabled]="passwordForm.invalid">
+                <mat-spinner diameter="20"></mat-spinner>
+                <span>Сменить пароль</span>
             </button>
         </div>
     </form>
