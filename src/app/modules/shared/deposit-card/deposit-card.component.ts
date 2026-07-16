@@ -4,11 +4,14 @@ import { MaterialModule } from '../../material/material.module';
 import { SharedModule } from '../shared.module';
 import { dateDiffInDays } from '../../../common/utils/date-utils';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteDialogComponent, ConfirmDialogData } from '../confirm-delete-dialog/confirm-delete-dialog.component';
 
 @Component({
     selector: 'banking-deposit-card',
     standalone: true,
-    imports: [MaterialModule, SharedModule],
+    imports: [MaterialModule, SharedModule, DatePipe],
     templateUrl: './deposit-card.component.html',
     styleUrl: './deposit-card.component.scss',
 })
@@ -20,8 +23,14 @@ export class DepositCardComponent implements OnInit {
     public isClosingSoon = false;
     public progressBarColor: 'primary' | 'accent' | 'warn' = 'primary';
     public progressBarPercentage = 0;
+    
+    // Расчётные данные
+    public currentAmount: number = 0;
+    public interestEarned: number = 0;
+    public timeToClose: string = '';
 
     private readonly router = inject(Router);
+    private readonly dialog = inject(MatDialog);
 
     public ngOnInit(): void {
         if (this.deposit.endDate) {
@@ -32,6 +41,12 @@ export class DepositCardComponent implements OnInit {
                 ((this.daysTotal - this.daysBeforeClose) / this.daysTotal) * 100,
                 100
             );
+            
+            // Расчёт текущей суммы и начисленных процентов
+            this.calculateDepositDetails();
+            
+            // Форматирование времени до закрытия
+            this.formatTimeToClose();
         }
 
         if (this.isClosingSoon) {
@@ -43,15 +58,35 @@ export class DepositCardComponent implements OnInit {
         void this.router.navigate(['/deposit', 'edit', this.deposit.id]);
     }
 
+    public onDelete(): void {
+        const dialogData: ConfirmDialogData = {
+            title: 'Подтверждение удаления',
+            message: 'Вы уверены, что хотите удалить этот вклад?',
+            confirmText: 'Удалить',
+            cancelText: 'Отмена'
+        };
+
+        const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+            data: dialogData,
+            width: '400px'
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this.delete.emit(this.deposit.id);
+            }
+        });
+    }
+
     /**
-     * Поучить число дней до закрытия
+     * Получить число дней до закрытия
      */
     private getDaysBeforeClose(): number {
         return -dateDiffInDays(new Date(this.deposit.endDate!), new Date());
     }
 
     /**
-     * Поучить число прогресс-бара
+     * Получить число дней всего
      */
     private getDaysTotal(): number {
         return dateDiffInDays(
@@ -64,6 +99,71 @@ export class DepositCardComponent implements OnInit {
      * Показывать ли, сколько дней осталось до окончания срочного вклада
      */
     private getIsClosingSoon(): boolean {
-        return this.daysBeforeClose ? this.daysBeforeClose < 15 : false;
+        return this.daysBeforeClose ? this.daysBeforeClose < 30 : false;
+    }
+
+    /**
+     * Расчёт текущей суммы и начисленных процентов
+     */
+    private calculateDepositDetails(): void {
+        const startDate = new Date(this.deposit.startDate);
+        const endDate = new Date(this.deposit.endDate!);
+        const now = new Date();
+        
+        // Определяем, сколько дней прошло с момента открытия
+        const daysPassed = Math.max(0, dateDiffInDays(startDate, now));
+        const totalDays = Math.max(1, dateDiffInDays(startDate, endDate));
+        
+        // Рассчитываем текущую сумму (простые проценты)
+        // Формула: текущая сумма = начальная сумма + (начальная сумма * ставка * дни / 365 / 100)
+        const annualRate = this.deposit.percent;
+        const dailyRate = annualRate / 365 / 100;
+        const amount = Number(this.deposit.amount) || 0;
+        const interest = amount * dailyRate * daysPassed;
+        
+        this.currentAmount = amount + interest;
+        this.interestEarned = interest;
+    }
+
+    /**
+     * Форматирование времени до закрытия
+     */
+    private formatTimeToClose(): void {
+        if (this.daysBeforeClose === null) {
+            this.timeToClose = '';
+            return;
+        }
+
+        if (this.daysBeforeClose === 0) {
+            this.timeToClose = 'Заканчивается сегодня';
+            return;
+        }
+
+        if (this.daysBeforeClose === 1) {
+            this.timeToClose = 'Заканчивается завтра';
+            return;
+        }
+
+        if (this.daysBeforeClose < 30) {
+            this.timeToClose = `Заканчивается через ${this.daysBeforeClose} дней`;
+            return;
+        }
+
+        const months = Math.floor(this.daysBeforeClose / 30);
+        const days = this.daysBeforeClose % 30;
+
+        if (months === 1 && days === 0) {
+            this.timeToClose = 'Заканчивается через 1 месяц';
+        } else if (months === 1 && days === 1) {
+            this.timeToClose = 'Заканчивается через 1 месяц и 1 день';
+        } else if (months === 1) {
+            this.timeToClose = `Заканчивается через 1 месяц и ${days} дней`;
+        } else if (days === 0) {
+            this.timeToClose = `Заканчивается через ${months} месяцев`;
+        } else if (days === 1) {
+            this.timeToClose = `Заканчивается через ${months} месяцев и 1 день`;
+        } else {
+            this.timeToClose = `Заканчивается через ${months} месяцев и ${days} дней`;
+        }
     }
 }

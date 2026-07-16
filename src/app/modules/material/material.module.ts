@@ -15,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     declarations: [],
@@ -34,6 +35,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatTooltipModule,
         MatDatepickerModule,
         MatProgressSpinnerModule,
+        MatDialogModule,
     ],
     exports: [
         MatButtonModule,
@@ -51,6 +53,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
         MatTooltipModule,
         MatDatepickerModule,
         MatProgressSpinnerModule,
+        MatDialogModule,
     ],
 })
 export class MaterialModule { }
