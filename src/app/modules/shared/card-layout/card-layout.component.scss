@@ -1,0 +1,40 @@
+@import 'variables';
+@import 'mixins';
+
+:host {
+  background: $sber-gray-light;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $box-shadow-sm;
+  transition: box-shadow $transition-base, transform $transition-base;
+  border: 1px solid $sber-gray-border;
+
+  &:hover {
+    box-shadow: $box-shadow-md;
+  }
+}
+
+.card-layout {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: $sber-header-gradient;
+  }
+
+  &__body {
+    padding: $gutter-small;
+    flex-grow: 1;
+  }
+
+  &__footer {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid $sber-gray-border;
+    background: #f9fafb;
+  }
+}

@@ -3,18 +3,18 @@ import { ConfirmModalData } from "../confirm-delete-modal";
 import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
 import { MaterialModule } from "../../material/material.module";
 import { SharedModule } from "../shared.module";
-import { DatePipe } from "@angular/common";
 import { IDeposit } from "@api/deposit";
 import { ModalService } from "../modal/modal.service";
 import { Router } from "@angular/router";
 import { filter } from "rxjs";
+import { CardLayoutComponent } from "../card-layout/card-layout.component";
 
 @Component({
     selector: 'banking-deposit-card',
     standalone: true,
-    imports: [MaterialModule, SharedModule, DatePipe],
     templateUrl: './deposit-card.component.html',
     styleUrl: './deposit-card.component.scss',
+    imports: [SharedModule, MaterialModule, CardLayoutComponent],
 })
 export class DepositCardComponent implements OnInit {
     @Input() public deposit!: IDeposit;
