@@ -1,15 +1,11 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CreateButtonComponent } from "../../banking-ui/create-button/create-button.component";
 
 @Component({
   selector: 'banking-empty-state',
-  standalone: false,
+  standalone: true,
   templateUrl: './empty-state.html',
   styleUrl: './empty-state.scss',
 })
 export class EmptyState {
-  @Output() createDeposit = new EventEmitter<void>();
-
-  onCreateDeposit(): void {
-    this.createDeposit.emit();
-  }
 }

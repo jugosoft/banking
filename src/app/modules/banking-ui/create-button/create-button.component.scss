@@ -1,0 +1,20 @@
+.create-button {
+  background: $color-primary;
+  color: $white;
+  padding: $gutter-small $gutter-large;
+  font-weight: $font-weight-bold;
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-sm;
+  transition: all $transition-base;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $gutter-small;
+
+  &:hover {
+    background: darken($color-primary, 10%);
+    transform: translateY(-2px);
+    box-shadow: $box-shadow-md;
+  }
+}

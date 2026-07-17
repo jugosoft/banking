@@ -1,0 +1,6 @@
+<button mat-raised-button color="primary" class="create-button" (click)="handleClick()">
+  @if (icon) {
+  <mat-icon matButtonIcon>{{ icon }}</mat-icon>
+  }
+  <ng-content></ng-content>
+</button>
