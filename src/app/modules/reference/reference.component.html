@@ -1,0 +1,16 @@
+<div class="reference__container">
+  <div class="reference__list">
+    @for (item of referenceItems; track $index) {
+    <div class="reference__item" (click)="navigateTo(item.route)">
+      <div class="reference__item-content">
+        <mat-icon class="reference__icon">{{ item.icon }}</mat-icon>
+        <div class="reference__item-info">
+          <h3 class="reference__item-title">{{ item.title }}</h3>
+          <p class="reference__item-description">{{ item.description }}</p>
+        </div>
+      </div>
+      <mat-icon class="reference__chevron">chevron_right</mat-icon>
+    </div>
+    }
+  </div>
+</div>

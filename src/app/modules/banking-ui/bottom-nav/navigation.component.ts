@@ -22,5 +22,6 @@ export class NavigationComponent {
     { label: 'Вклады', route: '/deposit', icon: 'account_balance' },
     { label: 'Инвестиции', route: '/invest', icon: 'trending_up' },
     { label: 'Профиль', route: '/profile', icon: 'person' },
+    { label: 'Настройки', route: '/reference', icon: 'settings' },
   ];
 }

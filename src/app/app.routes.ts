@@ -45,6 +45,14 @@ export const appRoutes: Routes = [
                         (module) => module.ProfileModule
                     ),
             },
+            {
+                path: 'reference',
+                data: { title: 'Настройки' },
+                loadChildren: () =>
+                    import('./modules/reference/reference.module').then(
+                        (module) => module.ReferenceModule
+                    ),
+            },
             { path: '', pathMatch: 'full', redirectTo: 'home' },
         ],
     },

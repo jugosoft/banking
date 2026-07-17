@@ -1,23 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { IInvestListItem } from '@api/invest';
-import { MatIcon } from '@angular/material/icon';
 import { CardLayoutComponent } from '../layouts/card-layout/card-layout.component';
+import { MaterialModule } from '../../material/material.module';
 
 @Component({
     selector: 'banking-invest-card',
     standalone: true,
     templateUrl: './invest-card.component.html',
     styleUrl: './invest-card.component.scss',
-    imports: [CurrencyPipe, MatIcon, CardLayoutComponent],
+    imports: [CurrencyPipe, MaterialModule, CardLayoutComponent],
 })
 export class InvestCardComponent {
     @Input() public invest!: IInvestListItem;
-    @Output() public delete = new EventEmitter<number>();
-
-    public formatCurrency(amount: number): string {
-        return new CurrencyPipe('ru-RU').transform(amount, 'RUB', 'symbol-narrow') || '';
-    }
+    @Output() public readonly delete = new EventEmitter<number>();
 
     public formatDate(date: Date): string {
         const d = new Date(date);

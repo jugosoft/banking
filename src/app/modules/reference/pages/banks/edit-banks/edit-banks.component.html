@@ -1,0 +1,51 @@
+<div class="banks__container">
+  <div class="banks__header">
+    <h1 class="banks__title">Банки</h1>
+    <button mat-raised-button color="primary" (click)="onCreate()">
+      <mat-icon>add</mat-icon>
+      Добавить банк
+    </button>
+  </div>
+
+  @if (isLoading$) {
+    <mat-spinner></mat-spinner>
+  } @else {
+    <div class="banks__table-container">
+      <table mat-table [dataSource]="banks" class="banks__table">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Название </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Short Name Column -->
+        <ng-container matColumnDef="shortName">
+          <th mat-header-cell *matHeaderCellDef> Короткое название </th>
+          <td mat-cell *matCellDef="let element"> {{element.shortName}} </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Действия </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="onEdit(element.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="onDelete(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  }
+</div>
