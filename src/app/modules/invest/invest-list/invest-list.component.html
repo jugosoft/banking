@@ -1,0 +1,25 @@
+@if (isLoading$ | async) {
+<div class="invest-list__loading">
+    <mat-spinner></mat-spinner>
+</div>
+} @else {
+<div class="invest-list__container">
+    @let invests = invests$ | async;
+
+    @if (invests?.length === 0) {
+    <!-- <banking-empty-state></banking-empty-state> -->
+    }
+
+    <header class="invest-list__header">
+        <!-- <banking-create-button>Создать новую инвестицию</banking-create-button> -->
+        <banking-create-button>Завести инвестицию</banking-create-button>
+    </header>
+
+    <section class="invest-list__invest-list">
+        @for (invest of invests; track invest.id) {
+        <banking-invest-card class="invest-list__invest-item" [invest]="invest">
+        </banking-invest-card>
+        }
+    </section>
+</div>
+}

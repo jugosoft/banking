@@ -11,8 +11,8 @@ import { EmptyState } from "../home/empty-state/empty-state";
 import { CreateButtonComponent } from "../banking-ui/create-button/create-button.component";
 
 @NgModule({
-    declarations: [DepositComponent, DepositCreateComponent, DepositListComponent],
-    imports: [
+  declarations: [DepositComponent, DepositCreateComponent, DepositListComponent],
+  imports: [
     SharedModule,
     DepositRoutingModule,
     MaterialModule,
@@ -20,6 +20,6 @@ import { CreateButtonComponent } from "../banking-ui/create-button/create-button
     BankingUiModule,
     EmptyState,
     CreateButtonComponent
-],
+  ],
 })
 export class DepositModule { }

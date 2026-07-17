@@ -3,11 +3,14 @@ import { StatisticsService } from 'src/app/services/api/statistics.service';
 import { IGetStatisticsResponse, IStatistics } from '@api/statistics';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { CardLayoutComponent } from "src/app/modules/shared/layouts/card-layout/card-layout.component";
+import { MatProgressSpinner } from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-deposit-banner',
-  standalone: false,
+  standalone: true,
+  imports: [CardLayoutComponent, MatProgressSpinner, CommonModule],
   templateUrl: './deposit-banner.html',
   styleUrl: './deposit-banner.scss'
 })

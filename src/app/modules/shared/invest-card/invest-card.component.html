@@ -1,0 +1,51 @@
+<banking-card-layout>
+  <!-- Шапка с логотипом банка и типом инвестиции -->
+  <ng-container card-header>
+    <div class="invest-card__header-info">
+      <mat-icon class="invest-card__bank-icon" aria-hidden="false" aria-label="Иконка банка">account_balance</mat-icon>
+      <div class="invest-card__bank-info">
+        <span class="invest-card__header-bank">{{ invest.bank.shortName }}</span>
+        <span class="invest-card__header-type">{{ invest.depositType.name }}</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Основной контент -->
+  <div card-body>
+    <div class="invest-card__body">
+      <!-- Информация о сумме -->
+      <div class="invest-card__amount-info">
+        <span class="invest-card__amount-label">Сумма:</span>
+        <span class="invest-card__amount-value">{{ invest.amount | currency : 'RUB' : 'symbol-narrow' }}</span>
+      </div>
+
+      <!-- Данные об инвестиции -->
+      <div class="invest-card__info">
+        <div class="invest-card__info-item">
+          <mat-icon class="invest-card__info-icon">event</mat-icon>
+          <div class="invest-card__info-text">
+            <span class="invest-card__info-label">Дата начала:</span>
+            <span class="invest-card__info-value">{{ formatDate(invest.startDate) }}</span>
+          </div>
+        </div>
+        <div class="invest-card__info-item">
+          <mat-icon class="invest-card__info-icon">event_available</mat-icon>
+          <div class="invest-card__info-text">
+            <span class="invest-card__info-label">Дата окончания:</span>
+            <span class="invest-card__info-value">{{ formatDate(invest.endDate) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Подвал с кнопками действий -->
+  <div card-footer>
+    <div class="invest-card__footer">
+      <button mat-button (click)="onDelete()">
+        <mat-icon matButtonIcon>delete</mat-icon>
+        Удалить
+      </button>
+    </div>
+  </div>
+</banking-card-layout>

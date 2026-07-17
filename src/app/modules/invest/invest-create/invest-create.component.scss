@@ -1,0 +1,24 @@
+@import 'variables';
+@import 'mixins';
+
+.invest-create {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $gutter-medium;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: $gutter-small;
+  }
+
+  &__label {
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
+    // color: $font-color-primary;
+  }
+}

@@ -4,12 +4,13 @@ import { MaterialModule } from '../material/material.module';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { DepositCardComponent } from '../shared/deposit-card/deposit-card.component';
-import { DepositBanner } from 'src/app/deposit-banner/deposit-banner';
 import { CardLayoutComponent } from "../shared/layouts/card-layout/card-layout.component";
 import { BankingUiModule } from '../banking-ui/banking-ui.module';
+import { DepositBanner } from 'src/app/components/deposit-banner/deposit-banner';
+import { InvestBanner } from 'src/app/components/invest-banner/invest-banner';
 
 @NgModule({
-    declarations: [HomeComponent, DepositBanner],
+    declarations: [HomeComponent],
     imports: [
         SharedModule,
         HomeRoutingModule,
@@ -17,7 +18,8 @@ import { BankingUiModule } from '../banking-ui/banking-ui.module';
         DepositCardComponent,
         CardLayoutComponent,
         BankingUiModule,
+        DepositBanner,
+        InvestBanner
     ],
-    exports: [DepositBanner],
 })
 export class HomeModule { }

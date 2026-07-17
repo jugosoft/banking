@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store';
 import { MaterialModule } from './modules/material/material.module';
 import { selectIsSubmiting } from './modules/auth/store/auth.selectors';
 import { NavigationComponent } from './modules/banking-ui/bottom-nav/navigation.component';
-import { PageHeader } from './page-header/page-header';
+import { PageHeader } from './components/page-header/page-header';
 
 @Component({
     selector: 'app-root',

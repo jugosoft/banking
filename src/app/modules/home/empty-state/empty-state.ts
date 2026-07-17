@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { CreateButtonComponent } from "../../banking-ui/create-button/create-button.component";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'banking-empty-state',

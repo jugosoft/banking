@@ -30,6 +30,14 @@ export const appRoutes: Routes = [
                     ),
             },
             {
+                path: 'invest',
+                data: { title: 'Инвестиции' },
+                loadChildren: () =>
+                    import('./modules/invest/invest.module').then(
+                        (module) => module.InvestModule
+                    ),
+            },
+            {
                 path: 'profile',
                 data: { title: 'Профиль' },
                 loadChildren: () =>

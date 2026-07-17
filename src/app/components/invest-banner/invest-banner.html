@@ -1,0 +1,28 @@
+<banking-card-layout [noFooter]="true">
+  <div card-header>
+    <h2>Статистика.Инвестиции</h2>
+  </div>
+
+  <div card-body>
+    <div class="invest-banner__content">
+      @if (isLoading()) {
+      <div class="invest-banner__loading">
+        <mat-spinner></mat-spinner>
+      </div>
+      } @else {
+      @let statistics = statistics$ | async;
+
+      @if (statistics) {
+      <div class="invest-banner__stat">
+        <label class="invest-banner__stat-label">Всего инвестиций</label>
+        <span class="invest-banner__stat-value">{{ statistics.totalAmount | currency:'RUB':'symbol':'1.0-0' }}</span>
+      </div>
+      } @else {
+      <div class="invest-banner__empty">
+        <p>Нет данных об инвестициях</p>
+      </div>
+      }
+      }
+    </div>
+  </div>
+</banking-card-layout>
