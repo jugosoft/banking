@@ -41,7 +41,11 @@
 
   <!-- Подвал с кнопками действий -->
   <div card-footer>
-    <div class="invest-card__footer">
+    <div class="deposit-card__footer">
+      <button mat-button (click)="editInvest()">
+        <mat-icon matButtonIcon>edit</mat-icon>
+        Редактировать
+      </button>
       <button mat-button (click)="onDelete()">
         <mat-icon matButtonIcon>delete</mat-icon>
         Удалить

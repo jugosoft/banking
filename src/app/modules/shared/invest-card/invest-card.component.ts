@@ -27,4 +27,8 @@ export class InvestCardComponent {
     public onDelete(): void {
         this.delete.emit(this.invest.id);
     }
+
+    public editInvest(): void {
+        void 0;
+    }
 }

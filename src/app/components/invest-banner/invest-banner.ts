@@ -25,7 +25,7 @@ export class InvestBanner implements OnInit {
   }
 
   public loadStatistics(): void {
-    this.isLoading.set(true)
+    this.isLoading.set(true);
     this.statisticsService.getInvestStatistics$().pipe(
       finalize(() => this.isLoading.set(false)),
     ).subscribe({

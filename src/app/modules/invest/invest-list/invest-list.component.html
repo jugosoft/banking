@@ -15,9 +15,9 @@
         <banking-create-button>Завести инвестицию</banking-create-button>
     </header>
 
-    <section class="invest-list__invest-list">
+    <section class="invest-list__list">
         @for (invest of invests; track invest.id) {
-        <banking-invest-card class="invest-list__invest-item" [invest]="invest">
+        <banking-invest-card class="invest-list__item" [invest]="invest">
         </banking-invest-card>
         }
     </section>

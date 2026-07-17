@@ -4,26 +4,22 @@
 .invest-list {
   &__container {
     padding: $gutter-small;
-    padding-bottom: 80px;
   }
 
-  &__invest-list {
-    display: grid;
+  &__list {
+    display: flex;
     flex-direction: column;
-    gap: $gutter-medium;
+    gap: $gutter-small;
 
     @include respond-to('tablet') {
       flex-direction: row;
       flex-wrap: wrap;
-      gap: $gutter-large;
     }
 
-    @include respond-to('desktop') {
-      gap: $gutter-large;
-    }
+    @include respond-to('desktop') {}
   }
 
-  &__invest-item {
+  &__item {
     flex: 1 1 100%;
     min-width: 280px;
 
@@ -79,26 +75,5 @@
     display: flex;
     justify-content: flex-start;
     margin-bottom: $gutter-medium;
-  }
-
-  &__create-link {
-    background: $color-primary;
-    color: $white;
-    padding: $gutter-small $gutter-large;
-    font-weight: $font-weight-bold;
-    border-radius: $border-radius-md;
-    box-shadow: $box-shadow-sm;
-    transition: all $transition-base;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: $gutter-small;
-
-    &:hover {
-      background: darken($color-primary, 10%);
-      transform: translateY(-2px);
-      box-shadow: $box-shadow-md;
-    }
   }
 }
