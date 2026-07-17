@@ -33,6 +33,50 @@ export class DepositCardComponent implements OnInit {
     private readonly router = inject(Router);
     private readonly modalService = inject(ModalService);
 
+    public get term(): string {
+        if (!this.deposit.startDate || !this.deposit.endDate) {
+            return '';
+        }
+
+        const startDate = new Date(this.deposit.startDate);
+        const endDate = new Date(this.deposit.endDate);
+
+        // Вычисляем разницу в месяцах
+        const months = (endDate.getFullYear() - startDate.getFullYear()) * 12 + (endDate.getMonth() - startDate.getMonth());
+
+        // Если меньше года (меньше 12 месяцев), показываем месяцы
+        if (months < 12) {
+            if (months === 1) {
+                return '1 месяц';
+            } else if (months < 5) {
+                return `${months} месяца`;
+            } else {
+                return `${months} месяцев`;
+            }
+        }
+
+        // Иначе показываем годы с дробью
+        const years = months / 12;
+        const wholeYears = Math.floor(years);
+        const remainingMonths = Math.round((years - wholeYears) * 12);
+
+        if (remainingMonths === 0) {
+            // Точное количество лет
+            if (wholeYears === 1) {
+                return '1 год';
+            } else if (wholeYears < 5) {
+                return `${wholeYears} года`;
+            } else {
+                return `${wholeYears} лет`;
+            }
+        }
+
+        // Дробное количество лет (например, 1,5 года)
+        // Для простоты, если есть остаток месяцев, показываем в формате X.Y лет
+        const formattedYears = years.toFixed(1).replace('.', ',');
+        return `${formattedYears} года`;
+    }
+
     public ngOnInit(): void {
         if (this.deposit.endDate) {
             this.daysBeforeClose = this.getDaysBeforeClose();

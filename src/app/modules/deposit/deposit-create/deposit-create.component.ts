@@ -57,6 +57,7 @@ export class DepositCreateComponent implements OnInit {
                 Validators.required
             ),
             endDate: this.formBuilder.control(null, Validators.required),
+            term: this.formBuilder.control(0, Validators.required),
         });
 
         // Инициализация формы
@@ -80,7 +81,8 @@ export class DepositCreateComponent implements OnInit {
                     percent: deposit.percent,
                     amount: deposit.amount,
                     startDate: deposit.startDate,
-                    endDate: deposit.endDate
+                    endDate: deposit.endDate,
+                    term: null
                 });
                 // После загрузки данных обновляем активную кнопку сегмента
                 this.updatePeriodFromDates();
@@ -106,6 +108,7 @@ export class DepositCreateComponent implements OnInit {
             percent: value.percent,
             startDate: value.startDate,
             endDate: value.endDate,
+            term: value.term,
         }).pipe(
             untilDestroyed(this)
         ).subscribe({
@@ -144,6 +147,7 @@ export class DepositCreateComponent implements OnInit {
 
         if (!startDate || !endDate) {
             this.selectedPeriod = 'custom';
+            this.formGroup.patchValue({ term: 0 });
             return;
         }
 
@@ -153,12 +157,13 @@ export class DepositCreateComponent implements OnInit {
         // Вычисляем разницу в месяцах
         const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
 
-        // Проверяем, совпадает ли с одним из предустановленных периодов
+        // Проверяем, совпадает ли с одним из предустановлен��ых периодов
         const matchingPeriod = this.periodOptions.find(
             option => option.value !== 'custom' && option.value === months
         );
 
         this.selectedPeriod = matchingPeriod ? matchingPeriod.value : 'custom';
+        this.formGroup.patchValue({ term: months });
     }
 
     // Обработка выбора периода через сегментный переключатель
@@ -173,7 +178,8 @@ export class DepositCreateComponent implements OnInit {
                 endDate.setMonth(endDate.getMonth() + period);
 
                 this.formGroup.patchValue({
-                    endDate: endDate
+                    endDate: endDate,
+                    term: period
                 });
             }
         }

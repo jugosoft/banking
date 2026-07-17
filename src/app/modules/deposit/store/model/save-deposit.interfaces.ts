@@ -6,5 +6,6 @@ export interface ISaveDepositProps {
         percent: number;
         startDate: Date;
         endDate: Date;
+        term: number;
     };
 }
