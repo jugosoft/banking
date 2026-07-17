@@ -1,20 +1,8 @@
-<div class="bottom-nav">
-  <div class="bottom-nav__item bottom-nav__item--active">
-    <a routerLink="/home" class="bottom-nav__link">
-      <mat-icon class="bottom-nav__icon">home</mat-icon>
-      <span class="bottom-nav__label">Главная</span>
-    </a>
-  </div>
-  <div class="bottom-nav__item">
-    <a routerLink="/deposit" class="bottom-nav__link">
-      <mat-icon class="bottom-nav__icon">account_balance</mat-icon>
-      <span class="bottom-nav__label">Вклады</span>
-    </a>
-  </div>
-  <div class="bottom-nav__item">
-    <a routerLink="/profile" class="bottom-nav__link">
-      <mat-icon class="bottom-nav__icon">person</mat-icon>
-      <span class="bottom-nav__label">Профиль</span>
-    </a>
-  </div>
+@for (item of navItems; track $index) {
+<div class="bottom-nav__item" routerLinkActive="_active">
+  <a [routerLink]="item.route" class="bottom-nav__link">
+    <mat-icon class="bottom-nav__icon">{{ item.icon }}</mat-icon>
+    <span class="bottom-nav__label">{{ item.label }}</span>
+  </a>
 </div>
+}

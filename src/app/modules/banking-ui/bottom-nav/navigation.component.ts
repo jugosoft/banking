@@ -1,20 +1,25 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+
+interface INavItem {
+  label: string;
+  route: string;
+  icon: string;
+}
 
 @Component({
   selector: 'app-navigation',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatIconModule, RouterLinkActive],
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent {
-  constructor() {}
-
-  isActive(route: string): boolean {
-    const url = window.location.pathname;
-    return url.includes(route);
-  }
+  navItems: INavItem[] = [
+    { label: 'Главная', route: '/home', icon: 'home' },
+    { label: 'Вклады', route: '/deposit', icon: 'account_balance' },
+    { label: 'Профиль', route: '/profile', icon: 'person' },
+  ];
 }
