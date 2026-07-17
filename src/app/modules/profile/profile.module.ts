@@ -11,7 +11,8 @@ import { SharedModule } from '../shared/shared.module';
 import { NotSpecifiedPipe } from '../../pipes/not-specified.pipe';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CardLayoutComponent } from "src/app/modules/shared/card-layout/card-layout.component";
+import { CardLayoutComponent } from "src/app/modules/shared/layouts/card-layout/card-layout.component";
+import { ProfileSectionLayoutComponent } from "src/app/modules/shared/layouts/profile-section-layout/profile-section-layout.component";
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { CardLayoutComponent } from "src/app/modules/shared/card-layout/card-lay
         SharedModule,
         MatFormFieldModule,
         MatProgressSpinnerModule,
-        CardLayoutComponent
+        CardLayoutComponent,
+        ProfileSectionLayoutComponent
     ],
     exports: [
         ProfileComponent

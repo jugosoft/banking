@@ -1,0 +1,50 @@
+@import 'variables';
+@import 'mixins';
+
+.profile-section-layout {
+  &__header {
+    background: linear-gradient(135deg, $sber-green-gradient-start 0%, $sber-green-gradient-end 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    h2 {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: $white;
+      margin: 0;
+    }
+  }
+
+  &__header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  &__edit-button {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  &__body {
+    flex-grow: 1;
+  }
+
+  &__footer {
+    display: flex;
+    gap: 12px;
+    padding: $gutter-small;
+    border-top: 1px solid $sber-gray-border;
+    background: #f9fafb;
+  }
+}

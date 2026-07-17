@@ -1,65 +1,45 @@
-<banking-card-layout>
-  <div class="profile__header" card-header>
-    <h2 class="profile__title">Безопасность</h2>
-    <button class="profile__edit-button" mat-icon-button (click)="toggleEdit()">
-      <mat-icon>edit</mat-icon>
-    </button>
-  </div>
-
-  <div card-body>
-    @if (!isEditing) {
-    <div class="profile__content">
-      <div class="profile__field">
-        <span class="profile__label">Пароль:</span>
-        <span class="profile__value profile__value-password">********</span>
-      </div>
+<profile-section-layout [title]="'Безопасность'">
+  <div class="profile__content" profile-body>
+    <div class="profile__field">
+      <span class="profile__label">Пароль:</span>
+      <span class="profile__value profile__value-password">********</span>
     </div>
-    } @else {
-    <form [formGroup]="passwordForm" (ngSubmit)="saveInfo()" class="profile__form">
-      <mat-form-field class="profile__input" appearance="outline">
-        <mat-label>Текущий пароль</mat-label>
-        <input matInput formControlName="oldPassword" type="password" required>
-        <mat-error>
-          @if (passwordForm.get('oldPassword')?.hasError('required')) {
-          Текущий пароль обязателен
-          }
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="profile__input" appearance="outline">
-        <mat-label>Новый пароль</mat-label>
-        <input matInput formControlName="newPassword" type="password" required>
-        <mat-error>
-          @if (passwordForm.get('newPassword')?.hasError('required')) {
-          Новый пароль обязателен
-          }
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field class="profile__input" appearance="outline">
-        <mat-label>Подтверждение пароля</mat-label>
-        <input matInput formControlName="confirmPassword" type="password" required>
-        <mat-error>
-          @if (passwordForm.get('confirmPassword')?.hasError('required')) {
-          Подтверждение пароля обязательно
-          }
-        </mat-error>
-        <mat-error>
-          @if (passwordForm.errors?.['passwordMismatch']) {
-          Пароли не совпадают
-          }
-        </mat-error>
-      </mat-form-field>
-
-      <div class="profile__actions">
-        <button class="profile__cancel-button" mat-button type="button" (click)="isEditing = false">Отмена</button>
-        <button class="profile__save-button" mat-raised-button color="primary" type="submit"
-          [disabled]="passwordForm.invalid">
-          <mat-spinner diameter="20"></mat-spinner>
-          <span>Сменить пароль</span>
-        </button>
-      </div>
-    </form>
-    }
   </div>
-</banking-card-layout>
+
+  <form [formGroup]="passwordForm" (ngSubmit)="saveInfo()" class="profile__form" profile-form>
+    <mat-form-field class="profile__input" appearance="outline">
+      <mat-label>Текущий пароль</mat-label>
+      <input matInput formControlName="oldPassword" type="password" required>
+      <mat-error>
+        @if (passwordForm.get('oldPassword')?.hasError('required')) {
+        Текущий пароль обязателен
+        }
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="profile__input" appearance="outline">
+      <mat-label>Новый пароль</mat-label>
+      <input matInput formControlName="newPassword" type="password" required>
+      <mat-error>
+        @if (passwordForm.get('newPassword')?.hasError('required')) {
+        Новый пароль обязателен
+        }
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="profile__input" appearance="outline">
+      <mat-label>Подтверждение пароля</mat-label>
+      <input matInput formControlName="confirmPassword" type="password" required>
+      <mat-error>
+        @if (passwordForm.get('confirmPassword')?.hasError('required')) {
+        Подтверждение пароля обязательно
+        }
+      </mat-error>
+      <mat-error>
+        @if (passwordForm.errors?.['passwordMismatch']) {
+        Пароли не совпадают
+        }
+      </mat-error>
+    </mat-form-field>
+  </form>
+</profile-section-layout>

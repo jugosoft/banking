@@ -1,57 +1,37 @@
-<banking-card-layout>
-  <div class="profile__header" card-header>
-    <h2 class="profile__title">Контактная информация</h2>
-    <button class="profile__edit-button" mat-icon-button (click)="toggleEdit()">
-      <mat-icon>edit</mat-icon>
-    </button>
-  </div>
-
-  <div card-body>
-    @if (!isEditing) {
-    <div class="profile__content">
-      <div class="profile__field">
-        <span class="profile__label">Email:</span>
-        <span class="profile__value">{{ user?.email }}</span>
-      </div>
-      <div class="profile__field">
-        <span class="profile__label">Логин:</span>
-        <span class="profile__value">{{ user?.name }}</span>
-      </div>
+<profile-section-layout [title]="'Контактная информация'">
+  <div class="profile__content" profile-body>
+    <div class="profile__field">
+      <span class="profile__label">Email:</span>
+      <span class="profile__value">{{ user?.email }}</span>
     </div>
-    } @else {
-    <form [formGroup]="contactForm" (ngSubmit)="saveInfo()" class="profile__form">
-      <mat-form-field class="profile__input" appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email" required>
-        <mat-error>
-          @if (contactForm.get('email')?.hasError('required')) {
-          Email обязателен для заполнения
-          }
-          @else if (contactForm.get('email')?.hasError('email')) {
-          Некорректный формат email
-          }
-        </mat-error>
-      </mat-form-field>
+    <div class="profile__field">
+      <span class="profile__label">Логин:</span>
+      <span class="profile__value">{{ user?.name }}</span>
+    </div>
+  </div>
 
-      <mat-form-field class="profile__input" appearance="outline">
-        <mat-label>Логин</mat-label>
-        <input matInput formControlName="username" required>
-        <mat-error>
-          @if (contactForm.get('username')?.hasError('required')) {
-          Логин обязателен для заполнения
-          }
-        </mat-error>
-      </mat-form-field>
-    </form>
-    }
-  </div>
-  @if (isEditing) {
-  <div class="profile__actions" card-footer>
-    <button mat-button type="button" (click)="resetForm()">Отмена</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="contactForm.invalid">
-      <mat-spinner diameter="20"></mat-spinner>
-      <span>Сохранить</span>
-    </button>
-  </div>
-  }
-</banking-card-layout>
+  <form [formGroup]="contactForm" (ngSubmit)="saveInfo()" class="profile__form" profile-form>
+    <mat-form-field class="profile__input" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email" required>
+      <mat-error>
+        @if (contactForm.get('email')?.hasError('required')) {
+        Email обязателен для заполнения
+        }
+        @else if (contactForm.get('email')?.hasError('email')) {
+        Некорректный формат email
+        }
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="profile__input" appearance="outline">
+      <mat-label>Логин</mat-label>
+      <input matInput formControlName="username" required>
+      <mat-error>
+        @if (contactForm.get('username')?.hasError('required')) {
+        Логин обязателен для заполнения
+        }
+      </mat-error>
+    </mat-form-field>
+  </form>
+</profile-section-layout>

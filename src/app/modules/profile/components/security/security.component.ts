@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProfileSectionLayoutComponent } from 'src/app/modules/shared/layouts/profile-section-layout/profile-section-layout.component';
 
 @Component({
   selector: 'banking-security',

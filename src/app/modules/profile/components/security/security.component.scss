@@ -2,69 +2,46 @@
 @import 'mixins';
 
 .profile {
-  &__header {
-    background: linear-gradient(135deg, #66ab56 0%, #77be87 100%);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
+  &__content {
+    .profile__field {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f2f2f2;
 
-  &__header-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
-  }
-
-
-  &__edit-button {
-    color: white;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 8px;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.3);
+      &:last-child {
+        border-bottom: none;
+      }
     }
-  }
 
-  &__field {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid #f2f2f2;
-
-    &:last-child {
-      border-bottom: none;
+    .profile__label {
+      font-weight: 500;
+      color: #333;
+      font-size: 14px;
     }
-  }
 
-  &__label {
-    font-weight: 500;
-    color: #333;
-    font-size: 14px;
-  }
+    .profile__value {
+      color: #666;
+      font-size: 14px;
+      text-align: right;
+    }
 
-  &__value {
-    color: #666;
-    font-size: 14px;
-    text-align: right;
-  }
-
-  &__value-password {
-    font-family: 'Courier New', monospace;
-    letter-spacing: 2px;
-  }
-
-  &__form {
-    padding: 24px 0;
+    .profile__value-password {
+      font-family: 'Courier New', monospace;
+      letter-spacing: 2px;
+    }
   }
 
   &__input {
     width: 100%;
     margin-bottom: 16px;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
   }
 
   .mat-mdc-form-field {

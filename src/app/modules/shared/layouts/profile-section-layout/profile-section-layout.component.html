@@ -1,0 +1,26 @@
+<banking-card-layout [noFooter]="!isEditing()">
+  <div class="profile-section-layout__header" card-header>
+    <h2 class="profile-section-layout__title">{{ title }}</h2>
+    <button class="profile-section-layout__edit-button" mat-icon-button (click)="toggleEdit()">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+
+  <div class="profile-section-layout__body" card-body>
+    @if (isEditing()) {
+    <ng-content select="[profile-form]"></ng-content>
+    } @else {
+    <ng-content select="[profile-body]"></ng-content>
+    }
+  </div>
+
+  <div card-footer>
+    <div class="profile__actions">
+      <button class="profile__cancel-button" mat-button type="button" (click)="toggleEdit()">Отмена</button>
+      <button class="profile__save-button" mat-raised-button color="primary" type="submit" [disabled]="false">
+        <!-- <mat-spinner diameter="20"></mat-spinner> -->
+        <span>Сохранить</span>
+      </button>
+    </div>
+  </div>
+</banking-card-layout>

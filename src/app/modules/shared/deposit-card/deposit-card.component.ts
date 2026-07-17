@@ -7,7 +7,7 @@ import { IDeposit } from "@api/deposit";
 import { ModalService } from "../modal/modal.service";
 import { Router } from "@angular/router";
 import { filter } from "rxjs";
-import { CardLayoutComponent } from "../card-layout/card-layout.component";
+import { CardLayoutComponent } from "../layouts/card-layout/card-layout.component";
 
 @Component({
     selector: 'banking-deposit-card',

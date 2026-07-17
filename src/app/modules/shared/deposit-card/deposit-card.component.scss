@@ -5,8 +5,6 @@
 // These styles are for the inner content within the card layout
 
 .deposit-card {
-
-
   &__header-info {
     display: flex;
     align-items: center;
@@ -22,6 +20,10 @@
   &__bank-info {
     display: flex;
     flex-direction: column;
+  }
+
+  &__spacer {
+    flex-grow: 1;
   }
 
   &__header-bank {
