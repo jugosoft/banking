@@ -4,6 +4,9 @@ import { IInvestListItem } from '@api/invest';
 import { CardLayoutComponent } from '../layouts/card-layout/card-layout.component';
 import { MaterialModule } from '../../material/material.module';
 import { Router } from '@angular/router';
+import { ModalService } from '../modal/modal.service';
+import { filter } from 'rxjs';
+import { ConfirmModalData } from '../confirm-delete-modal';
 
 @Component({
     selector: 'banking-invest-card',
@@ -16,6 +19,7 @@ export class InvestCardComponent {
     @Input() public invest!: IInvestListItem;
     @Output() public readonly delete = new EventEmitter<number>();
     private readonly router = inject(Router);
+    private readonly modalService = inject(ModalService);
 
     public formatDate(date: Date): string {
         const d = new Date(date);
@@ -23,7 +27,18 @@ export class InvestCardComponent {
     }
 
     public onDelete(): void {
-        this.delete.emit(this.invest.id);
+        const modalData: ConfirmModalData = {
+            title: 'Подтверждение удаления',
+            message: 'Вы уверены, что хотите удалить этУ поганую инвестицию?',
+            confirmText: 'Удалить',
+            cancelText: 'Отмена'
+        };
+
+        this.modalService.openConfirmDeleteModal(modalData).pipe(
+            filter(result => !!result)
+        ).subscribe(() => {
+            this.delete.emit(this.invest.id);
+        });
     }
 
     public editInvest(): void {

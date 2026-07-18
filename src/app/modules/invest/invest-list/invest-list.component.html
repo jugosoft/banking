@@ -6,7 +6,7 @@
 <div class="invest-list__container">
     @let invests = invests$ | async;
     <header class="invest-list__header">
-        <banking-create-button>Завести инвестицию</banking-create-button>
+        <banking-create-button (click)="onCreateInvest()">Завести инвестицию</banking-create-button>
     </header>
 
     @if (invests?.length === 0) {
