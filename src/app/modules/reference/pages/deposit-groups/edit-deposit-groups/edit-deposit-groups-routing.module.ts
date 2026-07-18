@@ -6,8 +6,8 @@ const routes: Routes = [
   {
     path: '',
     component: EditDepositGroupsComponent,
-    data: { title: 'Группы сбережений' }
-  }
+    data: { title: 'Группы сбережений' },
+  },
 ];
 
 @NgModule({

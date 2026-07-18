@@ -2,6 +2,23 @@
 @import 'mixins';
 
 .invest-create {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 1.5rem;
+
+    @include mixins.respond-to('medium') {
+      justify-content: center;
+      width: 640px;
+    }
+
+    @include mixins.respond-to('large') {
+      justify-content: center;
+      width: 840px;
+    }
+  }
+
   &__form {
     display: flex;
     flex-direction: column;

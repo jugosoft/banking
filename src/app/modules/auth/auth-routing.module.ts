@@ -7,10 +7,12 @@ const routes: Routes = [
     {
         path: 'register',
         component: RegisterComponent,
+        data: { title: 'Регистрация' },
     },
     {
         path: 'login',
         component: LoginComponent,
+        data: { title: 'Вход' },
     },
     {
         path: '',

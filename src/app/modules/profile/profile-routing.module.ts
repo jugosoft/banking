@@ -8,6 +8,7 @@ const routes: Routes = [
         path: '',
         component: ProfileComponent,
         canActivate: [authGuard],
+        data: { title: 'Профиль' },
     },
 ];
 

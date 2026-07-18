@@ -8,15 +8,18 @@ const routes: Routes = [
     {
         path: 'create',
         component: DepositCreateComponent,
+        data: { title: 'Создание вклада' },
     },
     {
         path: 'edit/:depositId',
         component: DepositCreateComponent,
+        data: { title: 'Изменение вклада' },
     },
     {
         path: '',
         pathMatch: 'full',
         component: DepositListComponent,
+        data: { title: 'Вклады' },
     },
 ];
 

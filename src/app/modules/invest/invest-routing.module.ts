@@ -7,15 +7,18 @@ const routes: Routes = [
     {
         path: 'create',
         component: InvestCreateComponent,
+        data: { title: 'Создание инвестиции' },
     },
     {
         path: 'edit/:investId',
         component: InvestCreateComponent,
+        data: { title: 'Изменение инвестиции' },
     },
     {
         path: '',
         pathMatch: 'full',
         component: InvestListComponent,
+        data: { title: 'Инвестиции' },
     },
 ];
 

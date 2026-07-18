@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: ReferenceComponent,
-    data: { title: 'Настройки' }
+    data: { title: 'Настройки' },
   },
   {
     path: 'deposit-types',
