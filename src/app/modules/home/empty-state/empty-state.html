@@ -1,5 +1,7 @@
-<h3 class="mat-h3 empty-state__title">У вас пока нет вкладов</h3>
+<h3 class="mat-h3 empty-state__title">
+  <ng-content select="[empty-title]"></ng-content>
+</h3>
 
 <p class="empty-state__text">
-  Создайте первый вклад и начните накапливать средства с выгодной процентной ставкой
+  <ng-content select="[empty-message]"></ng-content>
 </p>

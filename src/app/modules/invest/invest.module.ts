@@ -7,6 +7,7 @@ import { CreateButtonComponent } from "../banking-ui/create-button/create-button
 import { InvestCardComponent } from '../shared/invest-card/invest-card.component';
 import { InvestListComponent } from './invest-list/invest-list.component';
 import { InvestCreateComponent } from './invest-create/invest-create.component';
+import { EmptyState } from "../home/empty-state/empty-state";
 
 @NgModule({
     declarations: [InvestCreateComponent, InvestListComponent],
@@ -17,6 +18,7 @@ import { InvestCreateComponent } from './invest-create/invest-create.component';
         InvestCardComponent,
         BankingUiModule,
         CreateButtonComponent,
+        EmptyState
     ],
 })
 export class InvestModule { }

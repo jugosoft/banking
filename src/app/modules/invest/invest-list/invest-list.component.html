@@ -5,19 +5,20 @@
 } @else {
 <div class="invest-list__container">
     @let invests = invests$ | async;
-
-    @if (invests?.length === 0) {
-    <!-- <banking-empty-state></banking-empty-state> -->
-    }
-
     <header class="invest-list__header">
-        <!-- <banking-create-button>Создать новую инвестицию</banking-create-button> -->
         <banking-create-button>Завести инвестицию</banking-create-button>
     </header>
 
+    @if (invests?.length === 0) {
+    <banking-empty-state>
+        <ng-container empty-title>У вас пока нет инвестиций</ng-container>
+        <ng-container empty-message>Ну и нехуй начинать</ng-container>
+    </banking-empty-state>
+    }
+
     <section class="invest-list__list">
         @for (invest of invests; track invest.id) {
-        <banking-invest-card class="invest-list__item" [invest]="invest">
+        <banking-invest-card class="invest-list__item" [invest]="invest" (delete)="onDelete($event)">
         </banking-invest-card>
         }
     </section>

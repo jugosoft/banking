@@ -1,71 +1,73 @@
-.reference__container {
-  padding: 20px;
-}
-
-.reference__title {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 24px;
-}
-
-.reference__list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.reference__item {
-  display: flex;
-  align-items: center;
-  padding: 16px;
-  background-color: var(--mdc-card-fill-color, #ffffff);
-  border-radius: 8px;
-  cursor: pointer;
-
-  &:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+.reference {
+  &__container {
+    padding: 20px;
   }
-}
 
-.reference__item-content {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  gap: 16px;
-}
+  &__title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+  }
 
-.reference__icon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  background-color: var(--mdc-primary-surface-container, #e3f2fd);
-  color: var(--mdc-primary-color, #1976d2);
-  font-size: 24px;
-}
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 
-.reference__item-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background-color: var(--mdc-card-fill-color, #ffffff);
+    border-radius: 8px;
+    cursor: pointer;
 
-.reference__item-title {
-  font-size: 16px;
-  font-weight: 500;
-  margin: 0;
-  color: var(--mdc-text-primary-on-background, #000000);
-}
+    &:hover {
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+    }
+  }
 
-.reference__item-description {
-  font-size: 14px;
-  margin: 0;
-  color: var(--mdc-text-secondary-on-background, #757575);
-}
+  &__item-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 16px;
+  }
 
-.reference__chevron {
-  color: var(--mdc-text-secondary-on-background, #757575);
-  font-size: 24px;
+  &__icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background-color: var(--mdc-primary-surface-container, #e3f2fd);
+    color: var(--mdc-primary-color, #1976d2);
+    font-size: 24px;
+  }
+
+  &__item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__item-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    color: var(--mdc-text-primary-on-background, #000000);
+  }
+
+  &__item-description {
+    font-size: 14px;
+    margin: 0;
+    color: var(--mdc-text-secondary-on-background, #757575);
+  }
+
+  &__chevron {
+    color: var(--mdc-text-secondary-on-background, #757575);
+    font-size: 24px;
+  }
 }

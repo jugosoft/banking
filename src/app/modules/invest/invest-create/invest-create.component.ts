@@ -29,7 +29,6 @@ export class InvestCreateComponent {
         depositType: [null, [Validators.required]],
         amount: [null, [Validators.required, Validators.min(0)]],
         startDate: [new Date(), [Validators.required]],
-        endDate: [null, [Validators.required]],
     });
 
 
@@ -45,7 +44,6 @@ export class InvestCreateComponent {
         const investData = {
             amount: this.form.value.amount,
             startDate: this.form.value.startDate,
-            endDate: this.form.value.endDate,
             // @ts-ignore
             bankId: this.form.value.bank.id,
             // @ts-ignore

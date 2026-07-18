@@ -1,5 +1,6 @@
 export interface ISaveDepositProps {
     deposit: {
+        id?: number;
         bankId: number;
         depositTypeId: number;
         amount: number;

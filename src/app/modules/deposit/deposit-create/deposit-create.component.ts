@@ -33,6 +33,7 @@ export class DepositCreateComponent implements OnInit {
     private readonly depositService = inject(DepositService);
     private readonly referenceService = inject(ReferenceService);
     public formGroup!: FormGroup;
+    private depositId?: number;
     public banks$ = this.referenceService.banks$;
     public depositTypes$ = this.referenceService.depositTypes$;
 
@@ -63,11 +64,7 @@ export class DepositCreateComponent implements OnInit {
         // Инициализация формы
         this.activatedRoute.params.pipe(
             map((params) => +params['depositId']),
-            filter(
-                (depositId): depositId is number =>
-                    typeof depositId === 'number' &&
-                    !Number.isNaN(depositId)
-            ),
+            filter((depositId): depositId is number => typeof depositId === 'number' && !Number.isNaN(depositId)),
             switchMap((depositId) => {
                 return this.depositService.getDeposit$(depositId);
             }),
@@ -75,6 +72,7 @@ export class DepositCreateComponent implements OnInit {
             untilDestroyed(this)
         ).subscribe({
             next: deposit => {
+                this.depositId = deposit.id;
                 this.formGroup.setValue({
                     bank: deposit.bank,
                     depositType: deposit.depositType,
@@ -102,6 +100,7 @@ export class DepositCreateComponent implements OnInit {
 
         const value = this.formGroup.value;
         this.depositService.saveDeposit$({
+            id: this.depositId,
             bankId: value.bank.id,
             depositTypeId: value.depositType.id,
             amount: value.amount,
@@ -112,8 +111,7 @@ export class DepositCreateComponent implements OnInit {
         }).pipe(
             untilDestroyed(this)
         ).subscribe({
-            next: response => {
-                // После успешного сохранения переходим на роут /home
+            next: () => {
                 this.router.navigate(['/home']);
             }
         });

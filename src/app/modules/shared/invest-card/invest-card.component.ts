@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { IInvestListItem } from '@api/invest';
 import { CardLayoutComponent } from '../layouts/card-layout/card-layout.component';
 import { MaterialModule } from '../../material/material.module';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'banking-invest-card',
@@ -14,6 +15,7 @@ import { MaterialModule } from '../../material/material.module';
 export class InvestCardComponent {
     @Input() public invest!: IInvestListItem;
     @Output() public readonly delete = new EventEmitter<number>();
+    private readonly router = inject(Router);
 
     public formatDate(date: Date): string {
         const d = new Date(date);
@@ -25,6 +27,6 @@ export class InvestCardComponent {
     }
 
     public editInvest(): void {
-        void 0;
+        void this.router.navigate(['/invest', this.invest.id]);
     }
 }
