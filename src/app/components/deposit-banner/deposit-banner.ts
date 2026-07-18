@@ -6,11 +6,12 @@ import { finalize } from 'rxjs/operators';
 import { CommonModule, DatePipe } from '@angular/common';
 import { CardLayoutComponent } from "src/app/modules/shared/layouts/card-layout/card-layout.component";
 import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { RubFormatPipe } from 'src/app/pipes/rub-format.pipe';
 
 @Component({
   selector: 'app-deposit-banner',
   standalone: true,
-  imports: [CardLayoutComponent, MatProgressSpinner, CommonModule],
+  imports: [CardLayoutComponent, MatProgressSpinner, CommonModule, RubFormatPipe],
   templateUrl: './deposit-banner.html',
   styleUrl: './deposit-banner.scss'
 })

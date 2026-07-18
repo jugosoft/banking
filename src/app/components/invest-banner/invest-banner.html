@@ -15,7 +15,7 @@
       @if (statistics) {
       <div class="invest-banner__stat">
         <label class="invest-banner__stat-label">Всего инвестиций</label>
-        <span class="invest-banner__stat-value">{{ statistics.totalAmount | currency:'RUB':'symbol':'1.0-0' }}</span>
+        <span class="invest-banner__stat-value">{{ statistics.totalAmount | rubFormat }}</span>
       </div>
       } @else {
       <div class="invest-banner__empty">

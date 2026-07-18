@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { IInvestStatistics } from '@api/statistics/get-invest-statistics.response';
 import { CardLayoutComponent } from "src/app/modules/shared/layouts/card-layout/card-layout.component";
 import { MatProgressSpinner } from "@angular/material/progress-spinner";
+import { RubFormatPipe } from 'src/app/pipes/rub-format.pipe';
 
 @Component({
   selector: 'app-invest-banner',
   standalone: true,
-  imports: [CardLayoutComponent, CommonModule, MatProgressSpinner],
+  imports: [CardLayoutComponent, CommonModule, MatProgressSpinner, RubFormatPipe],
   templateUrl: './invest-banner.html',
   styleUrl: './invest-banner.scss',
 })

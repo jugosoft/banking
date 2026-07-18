@@ -15,7 +15,7 @@
       @if (statistics) {
       <div class="deposit-banner__stat">
         <label class="deposit-banner__stat-label">Всего вкладов</label>
-        <span class="deposit-banner__stat-value">{{ statistics.totalAmount | currency:'RUB':'symbol':'1.0-0' }}</span>
+        <span class="deposit-banner__stat-value">{{ statistics.totalAmount | rubFormat }}</span>
       </div>
 
       <div class="deposit-banner__stat">
@@ -25,7 +25,7 @@
 
       <div class="deposit-banner__stat">
         <label class="deposit-banner__stat-label">Начислено процентов</label>
-        <span class="deposit-banner__stat-value">{{ statistics.currentIncome | currency:'RUB':'symbol':'1.0-0' }}</span>
+        <span class="deposit-banner__stat-value">{{ statistics.currentIncome | rubFormat }}</span>
       </div>
 
       <div class="deposit-banner__stat">
