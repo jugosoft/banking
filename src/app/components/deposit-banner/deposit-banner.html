@@ -14,18 +14,26 @@
 
       @if (statistics) {
       <div class="deposit-banner__stat">
-        <label class="deposit-banner__stat-label">Всего вкладов</label>
+        <label class="deposit-banner__stat-label">Всего вложено</label>
         <span class="deposit-banner__stat-value">{{ statistics.totalAmount | rubFormat }}</span>
+      </div>
+
+      <div class="deposit-banner__stat">
+        <label class="deposit-banner__stat-label">Текущее состояние</label>
+        <span class="deposit-banner__stat-value deposit-banner__stat-value--highlighted">
+          {{ (statistics.totalAmount + statistics.currentIncome) | rubFormat }}
+        </span>
+      </div>
+
+      <div class="deposit-banner__stat">
+        <label class="deposit-banner__stat-label">Начислено процентов</label>
+        <span class="deposit-banner__stat-value deposit-banner__stat-value--green">
+          {{ statistics.currentIncome | rubFormat }}</span>
       </div>
 
       <div class="deposit-banner__stat">
         <label class="deposit-banner__stat-label">Средний процент</label>
         <span class="deposit-banner__stat-value">{{ statistics.totalInterest }}%</span>
-      </div>
-
-      <div class="deposit-banner__stat">
-        <label class="deposit-banner__stat-label">Начислено процентов</label>
-        <span class="deposit-banner__stat-value">{{ statistics.currentIncome | rubFormat }}</span>
       </div>
 
       <div class="deposit-banner__stat">
