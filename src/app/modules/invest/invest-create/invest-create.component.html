@@ -1,7 +1,6 @@
 <h2>Новая инвестиция</h2>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="invest-create__form">
-
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="invest-create__form">
     <mat-form-field>
         <mat-label>Банк</mat-label>
         <mat-select [compareWith]="compareFn" formControlName="bank">

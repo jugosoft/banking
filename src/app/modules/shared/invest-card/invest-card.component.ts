@@ -42,6 +42,6 @@ export class InvestCardComponent {
     }
 
     public editInvest(): void {
-        void this.router.navigate(['/invest', this.invest.id]);
+        void this.router.navigate(['/invest', 'edit', this.invest.id]);
     }
 }
