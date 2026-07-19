@@ -1,29 +1,38 @@
-.deposit-groups__container {
-  padding: 20px;
-}
+.deposit-groups {
+  &__container {
+    padding: 20px;
+  }
 
-.deposit-groups__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
 
-.deposit-groups__title {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 0;
-}
+  &__title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+  }
 
-.deposit-groups__table-container {
-  background-color: var(--mdc-card-fill-color, #ffffff);
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
-}
+  &__table-container {
+    background-color: var(--mdc-card-fill-color, #ffffff);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+  }
 
-.deposit-groups__table {
-  width: 100%;
+  &__table {
+    width: 100%;
+
+    &-actions {
+      display: flex;
+      align-items: center;
+      padding-top: 4px;
+      gap: 8px;
+    }
+  }
 }
 
 mat-spinner {

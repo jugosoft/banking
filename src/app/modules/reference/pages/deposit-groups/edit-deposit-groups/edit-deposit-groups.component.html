@@ -1,41 +1,46 @@
-<div class="deposit-groups__container">
-  <div class="deposit-groups__header">
-    <h1 class="deposit-groups__title">Группы сбережений</h1>
-    <button mat-raised-button color="primary" (click)="onCreate()">
-      <mat-icon>add</mat-icon>
-      Добавить группу
-    </button>
-  </div>
+<div class="deposit-groups__header">
+  <button mat-raised-button color="primary" (click)="onCreate()">
+    <mat-icon>add</mat-icon>
+    Добавить группу
+  </button>
+</div>
 
-  <div class="deposit-groups__table-container">
-    <table mat-table [dataSource]="depositGroups" class="deposit-groups__table">
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> ID </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
+<div class="deposit-groups__table-container">
+  <table mat-table [dataSource]="depositGroups" class="deposit-groups__table">
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Название </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
+    <!-- Code Column -->
+    <ng-container matColumnDef="code">
+      <th mat-header-cell *matHeaderCellDef> Код </th>
+      <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+    </ng-container>
 
-      <!-- Actions Column -->
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef> Действия </th>
-        <td mat-cell *matCellDef="let element">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Название </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Действия </th>
+      <td mat-cell *matCellDef="let element">
+        <div class="deposit-groups__table-actions">
           <button mat-icon-button color="primary" (click)="onEdit(element.id)">
-            <mat-icon>edit</mat-icon>
+            <mat-icon style="color: #1976d2;">edit</mat-icon>
           </button>
           <button mat-icon-button color="warn" (click)="onDelete(element.id)">
-            <mat-icon>delete</mat-icon>
+            <mat-icon style="color: #d32f2f;">delete</mat-icon>
           </button>
-        </td>
-      </ng-container>
+        </div>
+      </td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>

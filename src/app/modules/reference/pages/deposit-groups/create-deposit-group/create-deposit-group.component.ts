@@ -33,22 +33,7 @@ export class CreateDepositGroupComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loadDepositGroups();
     this.loadDepositGroup();
-  }
-
-  public loadDepositGroups(): void {
-    this.referenceService.depositGroups$
-      .pipe(untilDestroyed(this))
-      .subscribe({
-        next: (groups) => {
-          this.depositGroups = groups;
-        },
-        error: (error) => {
-          console.error('Error loading deposit groups:', error);
-          this.depositGroups = [];
-        }
-      });
   }
 
   public loadDepositGroup(): void {
@@ -90,26 +75,5 @@ export class CreateDepositGroupComponent implements OnInit {
         void this.router.navigate(['/reference/deposit-groups']);
       }
     });
-  }
-
-  public onCreate(): void {
-    this.depositGroupId = undefined;
-    this.formGroup.reset();
-  }
-
-  public onEdit(id: number): void {
-    void this.router.navigate(['/reference/deposit-groups', id]);
-  }
-
-  public onDelete(id: number): void {
-    this.referenceService.deleteDepositGroup$(id)
-      .pipe(untilDestroyed(this))
-      .subscribe();
-  }
-
-  public onCancel(): void {
-    this.depositGroupId = undefined;
-    this.formGroup.reset();
-    void this.router.navigate(['/reference/deposit-groups']);
   }
 }
