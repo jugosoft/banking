@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IDepositGroup } from '@api/deposit-group';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ReferenceService } from 'src/app/services/api/reference.service';
@@ -12,7 +13,7 @@ import { ReferenceService } from 'src/app/services/api/reference.service';
 })
 export class EditDepositGroupsComponent implements OnInit {
   private readonly referenceService = inject(ReferenceService);
-  public isLoading$ = true;
+  private readonly router = inject(Router);
   public depositGroups: IDepositGroup[] = [];
   public displayedColumns: string[] = ['id', 'name', 'actions'];
 
@@ -21,14 +22,17 @@ export class EditDepositGroupsComponent implements OnInit {
   }
 
   public loadDepositGroups(): void {
-    this.referenceService.depositGroups$.pipe(
-      untilDestroyed(this)
-    ).subscribe({
-      next: (groups) => {
-        this.depositGroups = groups;
-        this.isLoading$ = false;
-      }
-    });
+    this.referenceService.depositGroups$
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: (groups) => {
+          this.depositGroups = groups;
+        },
+        error: (error) => {
+          console.error('Error loading deposit groups:', error);
+          this.depositGroups = [];
+        }
+      });
   }
 
   public onDelete(id: number): void {
@@ -42,7 +46,6 @@ export class EditDepositGroupsComponent implements OnInit {
   }
 
   public onCreate(): void {
-    // TODO: Implement create logic
-    console.log('Create new deposit group');
+    void this.router.navigate(['/reference', 'deposit-groups', 'create']);
   }
 }

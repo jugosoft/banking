@@ -7,12 +7,45 @@
     </button>
   </div>
 
+  <!-- Форма редактирования -->
+  <div class="deposit-groups__form-container" *ngIf="formGroup">
+    <h2 class="deposit-groups__form-title">
+      {{ isEdit ? 'Редактирование группы' : 'Создание группы' }}
+    </h2>
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="deposit-groups__form">
+      <mat-form-field>
+        <mat-label>Код</mat-label>
+        <input matInput formControlName="code" placeholder="Введите код группы" required />
+        <mat-error *ngIf="formGroup.get('code')?.hasError('required')">Код обязателен</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Наименование</mat-label>
+        <input matInput formControlName="name" placeholder="Введите наименование группы" required />
+        <mat-error *ngIf="formGroup.get('name')?.hasError('required')">Наименование обязательно</mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button type="submit" [disabled]="formGroup.invalid">
+        {{ isEdit ? 'Сохранить' : 'Создать' }}
+      </button>
+      <button mat-button type="button" (click)="onCancel()" *ngIf="isEdit">
+        Отмена
+      </button>
+    </form>
+  </div>
+
   <div class="deposit-groups__table-container">
     <table mat-table [dataSource]="depositGroups" class="deposit-groups__table">
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> ID </th>
         <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Code Column -->
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Код </th>
+        <td mat-cell *matCellDef="let element"> {{element.code}} </td>
       </ng-container>
 
       <!-- Name Column -->

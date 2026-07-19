@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: 'deposit-groups',
     loadChildren: () =>
-      import('./pages/deposit-groups/edit-deposit-groups/edit-deposit-groups.module').then(
+      import('./pages/deposit-groups/deposit-groups.module').then(
         (module) => module.EditDepositGroupsModule
       ),
   },

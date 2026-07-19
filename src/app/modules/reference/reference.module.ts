@@ -9,6 +9,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
 import { ReferenceRoutingModule } from './reference-routing.module';
 import { ReferenceComponent } from './reference.component';
 
@@ -26,7 +27,8 @@ import { ReferenceComponent } from './reference.component';
         MatProgressSpinnerModule,
         MatTableModule,
         MatPaginatorModule,
-        MatSortModule
+        MatSortModule,
+        MatIconModule
     ],
     exports: [
         ReferenceComponent

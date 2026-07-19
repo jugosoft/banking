@@ -6,29 +6,23 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { EditDepositGroupsComponent } from './edit-deposit-groups.component';
-import { EditDepositGroupsRoutingModule } from './edit-deposit-groups-routing.module';
+import { EditDepositGroupsComponent } from './edit-deposit-groups/edit-deposit-groups.component';
+import { DepositGroupsRoutingModule } from './deposit-groups-routing.module';
 import { MaterialModule } from 'src/app/modules/material/material.module';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { CreateDepositGroupComponent } from './create-deposit-group/create-deposit-group.component';
 
 @NgModule({
     declarations: [
-        EditDepositGroupsComponent
+        EditDepositGroupsComponent,
+        CreateDepositGroupComponent
     ],
     imports: [
         CommonModule,
-        EditDepositGroupsRoutingModule,
+        DepositGroupsRoutingModule,
         MaterialModule,
         ReactiveFormsModule,
         SharedModule,
-        MatFormFieldModule,
-        MatProgressSpinnerModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule
-    ],
-    exports: [
-        EditDepositGroupsComponent
     ],
     providers: [],
 })

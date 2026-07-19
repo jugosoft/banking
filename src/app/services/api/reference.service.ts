@@ -6,6 +6,7 @@ import { IDepositGroup } from '@api/deposit-group';
 import { IBank, IGetBanksResponse } from '@api/bank';
 import { IDepositType } from '@api/deposit-type';
 import { IGetDepositTypesResponse } from '@api/reference/get-deposit-types.response';
+import { IApiResponse } from '@api/api.interfaces';
 
 @Injectable({
     providedIn: 'root',
@@ -36,16 +37,20 @@ export class ReferenceService extends BaseApiService {
 
 
     private loadDepositGroups(): Observable<IDepositGroup[]> {
-        return this.get<IGetDepositGroupsResponse>('/deposit-groups').pipe(
+        return this.get<IGetDepositGroupsResponse>('/deposit-group/list').pipe(
             map(response => response.data?.items ?? [])
         );
     }
 
+    public getDepositGroup$(depositGroupId: number): Observable<IApiResponse<IDepositGroup>> {
+        return this.get<IApiResponse<IDepositGroup>>(`/deposit-group/${depositGroupId}`);
+    }
+
     public saveDepositGroup$(depositGroup: Partial<IDepositGroup>): Observable<boolean> {
-        return this.post<boolean>('/deposit-groups/save', { depositGroup });
+        return this.post<boolean>('/deposit-group', { depositGroup });
     }
 
     public deleteDepositGroup$(depositGroupId: number): Observable<boolean> {
-        return this.delete(`/deposit-groups/${depositGroupId}`);
+        return this.delete(`/deposit-group/${depositGroupId}`);
     }
 }
