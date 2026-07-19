@@ -2,18 +2,18 @@ import { Component, inject, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { filter, finalize, switchMap } from 'rxjs';
 import { IDepositType } from '@api/deposit-type';
-import { ReferenceService } from '../../../reference.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { ReferenceService } from 'src/app/services/api/reference.service';
 
 @UntilDestroy()
 @Component({
-  selector: 'banking-edit-deposit-types',
-  standalone: false,
-  templateUrl: './edit-deposit-types.component.html',
-  styleUrls: ['./edit-deposit-types.component.scss'],
+    selector: 'banking-edit-deposit-types',
+    standalone: false,
+    templateUrl: './edit-deposit-types.component.html',
+    styleUrls: ['./edit-deposit-types.component.scss'],
 })
 export class EditDepositTypesComponent implements OnInit {
     private readonly referenceService = inject(ReferenceService);

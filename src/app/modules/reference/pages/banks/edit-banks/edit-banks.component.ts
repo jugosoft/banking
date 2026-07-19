@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ReferenceService } from '../../../reference.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ReferenceService } from 'src/app/services/api/reference.service';
 
 @UntilDestroy()
 @Component({

@@ -1,0 +1,1 @@
+export * from './deposit-group.interface';

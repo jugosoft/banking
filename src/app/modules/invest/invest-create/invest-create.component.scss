@@ -8,12 +8,12 @@
     width: 100%;
     padding: 1.5rem;
 
-    @include mixins.respond-to('medium') {
+    @include respond-to('medium') {
       justify-content: center;
       width: 640px;
     }
 
-    @include mixins.respond-to('large') {
+    @include respond-to('large') {
       justify-content: center;
       width: 840px;
     }
