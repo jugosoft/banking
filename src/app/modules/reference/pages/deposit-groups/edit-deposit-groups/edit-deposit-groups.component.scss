@@ -1,8 +1,7 @@
-.deposit-groups {
-  &__container {
-    padding: 20px;
-  }
+@import 'variables';
+@import 'mixins';
 
+.deposit-groups {
   &__header {
     display: flex;
     justify-content: space-between;
@@ -10,10 +9,8 @@
     margin-bottom: 24px;
   }
 
-  &__title {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0;
+  &__container {
+    padding: $gutter-small;
   }
 
   &__table-container {

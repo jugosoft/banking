@@ -25,7 +25,7 @@ export class ReferenceComponent {
     {
       title: 'Банки',
       route: '/reference/banks',
-      icon: 'bank',
+      icon: 'monetization_on',
       description: 'Управление банками'
     }
   ];
