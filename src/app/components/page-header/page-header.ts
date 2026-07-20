@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { MatIcon } from "@angular/material/icon";
@@ -13,6 +14,7 @@ import { MatIcon } from "@angular/material/icon";
 export class PageHeader {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly location = inject(Location);
   public title = signal('');
   public showBackButton = signal(false);
 
@@ -51,7 +53,7 @@ export class PageHeader {
       });
   }
 
-  onBack(): void {
-    this.router.navigate(['/']);
+  public onBack(): void {
+    this.location.back();
   }
 }
