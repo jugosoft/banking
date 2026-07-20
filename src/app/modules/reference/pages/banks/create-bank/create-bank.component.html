@@ -1,0 +1,20 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="create-banks__form">
+  <mat-form-field>
+    <mat-label>Название</mat-label>
+    <input matInput formControlName="name" placeholder="Введите название банка" required />
+    <mat-error *ngIf="formGroup.get('name')?.hasError('required')">Название обязательно</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Короткое название</mat-label>
+    <input matInput formControlName="shortName" placeholder="Введите короткое название банка" required />
+    <mat-error *ngIf="formGroup.get('shortName')?.hasError('required')">Короткое название обязательно</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button type="submit" [disabled]="formGroup.invalid">
+    {{ isEdit ? 'Сохранить' : 'Создать' }}
+  </button>
+  <button mat-button type="button" (click)="onCancel()" *ngIf="isEdit">
+    Отмена
+  </button>
+</form>

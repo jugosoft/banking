@@ -1,11 +1,16 @@
 @import 'variables';
 @import 'mixins';
 
-.create-deposit-group {
+.create-banks {
+  &__container {
+    padding: 20px;
+  }
+
   &__form {
     display: flex;
     flex-direction: column;
     gap: $gutter-medium;
     max-width: 500px;
+    margin: 0 auto;
   }
 }

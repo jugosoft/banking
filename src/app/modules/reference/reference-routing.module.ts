@@ -11,8 +11,8 @@ const routes: Routes = [
   {
     path: 'deposit-types',
     loadChildren: () =>
-      import('./pages/deposit-types/edit-deposit-types/edit-deposit-types.module').then(
-        (module) => module.EditDepositTypesModule
+      import('./pages/deposit-types/deposit-types.module').then(
+        (module) => module.DepositTypesModule
       ),
   },
   {
@@ -25,8 +25,8 @@ const routes: Routes = [
   {
     path: 'banks',
     loadChildren: () =>
-      import('./pages/banks/edit-banks/edit-banks.module').then(
-        (module) => module.EditBanksModule
+      import('./pages/banks/banks.module').then(
+        (module) => module.BanksModule
       ),
   },
 ];

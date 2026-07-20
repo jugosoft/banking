@@ -1,0 +1,21 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="create-deposit-type__form">
+  <mat-form-field>
+    <mat-label>Название</mat-label>
+    <input matInput formControlName="name" placeholder="Введите название типа" required />
+    <mat-error *ngIf="formGroup.get('name')?.hasError('required')">Название обязательно</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Группа сбережений</mat-label>
+    <mat-select [compareWith]="compareFn" formControlName="depositGroup" required>
+      @for (group of depositGroups$ | async; track group.id) {
+      <mat-option [value]="group">{{ group.name }}</mat-option>
+      }
+    </mat-select>
+    <mat-error *ngIf="formGroup.get('depositGroup')?.hasError('required')">Группа обязательна</mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button type="submit" [disabled]="formGroup.invalid">
+    {{ isEdit ? 'Сохранить' : 'Создать' }}
+  </button>
+</form>
