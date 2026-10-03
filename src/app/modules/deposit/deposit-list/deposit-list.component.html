@@ -8,6 +8,20 @@
     <banking-create-button (click)="onCreateDeposit()">Создать новый вклад</banking-create-button>
   </header>
 
+  <!-- Фильтр по банкам -->
+  <div class="deposit-list__bank-filters">
+    <mat-chip-set>
+      <mat-chip [class.active]="!filter.bankId?.length" (click)="selectBank(null)">
+        Все банки
+      </mat-chip>
+      @for (bank of banks$ | async; track bank.id) {
+      <mat-chip (click)="selectBank(bank.id)">
+        {{ bank.shortName }}
+      </mat-chip>
+      }
+    </mat-chip-set>
+  </div>
+
   @let deposits = deposits$ | async;
   @if (deposits?.length === 0) {
   <banking-empty-state>
@@ -20,9 +34,16 @@
 
   <section class="deposit-list__deposit-list">
     @for (deposit of deposits; track deposit.id) {
-    <banking-deposit-card class="deposit-list__deposit-item" [deposit]="deposit" (delete)="onDelete($event)">
+    <banking-deposit-card class="deposit-list__deposit-item" [deposit]="deposit" (delete)="onDelete($event)"
+      appScrollTrigger (scrollEnd)="loadMoreDeposits()">
     </banking-deposit-card>
     }
   </section>
+
+  @if (isLoadingMore) {
+  <div class="deposit-list__loader">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+  }
 </div>
 }

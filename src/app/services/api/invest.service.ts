@@ -11,8 +11,8 @@ export class InvestService extends BaseApiService {
         super('/invest');
     }
 
-    public getInvestList$(): Observable<IGetInvestListResponse> {
-        return this.get<IGetInvestListResponse>('/list');
+    public getInvestList$(page: number = 0, size: number = 10): Observable<IGetInvestListResponse> {
+        return this.get<IGetInvestListResponse>('/list', { page, size });
     }
 
     public getInvest$(investId: number): Observable<IGetInvestResponse> {

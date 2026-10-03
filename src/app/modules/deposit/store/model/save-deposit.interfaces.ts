@@ -8,5 +8,6 @@ export interface ISaveDepositProps {
         startDate: Date;
         endDate: Date;
         term: number;
+        capitalization: boolean;
     };
 }

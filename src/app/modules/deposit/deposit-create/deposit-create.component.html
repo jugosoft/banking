@@ -49,6 +49,9 @@
     </mat-form-field>
 
     <!-- Сегментный переключатель для выбора периода -->
+    <mat-checkbox formControlName="capitalization">Капитализация процентов</mat-checkbox>
+
+    <!-- Сегментный переключатель для выбора периода -->
     <mat-button-toggle-group [value]="selectedPeriod" (change)="onPeriodChange($event.value)" multiple="false">
       @for (option of periodOptions; track option.label) {
       <mat-button-toggle [value]="option.value">

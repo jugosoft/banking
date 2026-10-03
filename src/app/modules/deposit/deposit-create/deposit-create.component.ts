@@ -59,6 +59,7 @@ export class DepositCreateComponent implements OnInit {
             ),
             endDate: this.formBuilder.control(null, Validators.required),
             term: this.formBuilder.control(0, Validators.required),
+            capitalization: this.formBuilder.control(false),
         });
 
         // Инициализация формы
@@ -80,7 +81,8 @@ export class DepositCreateComponent implements OnInit {
                     amount: deposit.amount,
                     startDate: deposit.startDate,
                     endDate: deposit.endDate,
-                    term: null
+                    term: null,
+                    capitalization: deposit.capitalization
                 });
                 // После загрузки данных обновляем активную кнопку сегмента
                 this.updatePeriodFromDates();
@@ -108,6 +110,7 @@ export class DepositCreateComponent implements OnInit {
             startDate: value.startDate,
             endDate: value.endDate,
             term: value.term,
+            capitalization: value.capitalization,
         }).pipe(
             untilDestroyed(this)
         ).subscribe({

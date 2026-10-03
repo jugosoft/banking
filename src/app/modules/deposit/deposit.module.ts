@@ -7,8 +7,9 @@ import { DepositRoutingModule } from './deposit-routing.module';
 import { DepositCreateComponent } from './deposit-create/deposit-create.component';
 import { DepositListComponent } from './deposit-list/deposit-list.component';
 import { BankingUiModule } from '../banking-ui/banking-ui.module';
-import { EmptyState } from "../home/empty-state/empty-state";
-import { CreateButtonComponent } from "../banking-ui/create-button/create-button.component";
+import { EmptyState } from '../home/empty-state/empty-state';
+import { CreateButtonComponent } from '../banking-ui/create-button/create-button.component';
+import { ScrollTriggerDirective } from 'src/app/common/directives/scroll.directive';
 
 @NgModule({
   declarations: [DepositComponent, DepositCreateComponent, DepositListComponent],
@@ -19,7 +20,8 @@ import { CreateButtonComponent } from "../banking-ui/create-button/create-button
     DepositCardComponent,
     BankingUiModule,
     EmptyState,
-    CreateButtonComponent
+    CreateButtonComponent,
+    ScrollTriggerDirective
   ],
 })
 export class DepositModule { }

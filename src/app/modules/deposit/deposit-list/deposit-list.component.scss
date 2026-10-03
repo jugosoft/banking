@@ -81,6 +81,20 @@
     margin-bottom: $gutter-medium;
   }
 
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $gutter-large;
+  }
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: $gutter-medium;
+  }
+
   &__create-link {
     background: $color-primary;
     color: $white;

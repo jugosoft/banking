@@ -13,4 +13,5 @@ export interface IDeposit {
   readonly description?: string;
   readonly archived: boolean;
   readonly bank: IBank;
+  readonly capitalization: boolean;
 }

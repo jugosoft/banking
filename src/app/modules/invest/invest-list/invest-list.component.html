@@ -18,9 +18,20 @@
 
     <section class="invest-list__list">
         @for (invest of invests; track invest.id) {
-        <banking-invest-card class="invest-list__item" [invest]="invest" (delete)="onDelete($event)">
+        <banking-invest-card 
+            class="invest-list__item" 
+            [invest]="invest" 
+            (delete)="onDelete($event)"
+            appScrollTrigger
+            (scrollEnd)="loadMoreInvests()">
         </banking-invest-card>
         }
     </section>
+
+    @if (isLoadingMore) {
+    <div class="invest-list__loader">
+        <mat-spinner diameter="40"></mat-spinner>
+    </div>
+    }
 </div>
 }
