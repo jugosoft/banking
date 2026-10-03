@@ -5,28 +5,36 @@ import {
 } from '@angular/core';
 import { InvestService } from 'src/app/services/api/invest.service';
 import { IInvestListItem } from 'src/app/api/invest';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Router } from '@angular/router';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { BehaviorSubject, finalize, map, Observable, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ScrollTriggerDirective } from 'src/app/common/directives/scroll.directive';
+import { EmptyState } from '../../home/empty-state/empty-state';
+import { InvestCardComponent } from '../../shared/invest-card/invest-card.component';
+import { CreateButtonComponent } from '../../banking-ui/create-button/create-button.component';
 
-/**
- * Компонент домашней страницы инвестиций
- */
-@UntilDestroy()
 @Component({
     selector: 'app-invest-list',
-    standalone: false,
+    standalone: true,
+    imports: [
+        AsyncPipe,
+        MatProgressSpinnerModule,
+        EmptyState,
+        InvestCardComponent,
+        CreateButtonComponent,
+        ScrollTriggerDirective,
+    ],
     templateUrl: './invest-list.component.html',
     styleUrl: './invest-list.component.scss',
 })
 export class InvestListComponent implements OnInit {
     private readonly investService = inject(InvestService);
     private readonly router = inject(Router);
-    
+
     public isLoading$ = new BehaviorSubject<boolean>(false);
     public invests$ = new BehaviorSubject<IInvestListItem[]>([]);
-    
-    // Пагинация
+
     private readonly pageSize = 10;
     public currentPage = 0;
     public hasMore = true;
@@ -45,8 +53,7 @@ export class InvestListComponent implements OnInit {
         this.currentPage = 0;
         this.hasMore = true;
         this.getInvests().pipe(
-            finalize(() => this.isLoading$.next(false)),
-            untilDestroyed(this)
+            finalize(() => this.isLoading$.next(false))
         ).subscribe({
             next: response => {
                 this.invests$.next(response.items);
@@ -63,8 +70,7 @@ export class InvestListComponent implements OnInit {
 
         this.isLoadingMore = true;
         this.getInvests(this.currentPage).pipe(
-            finalize(() => this.isLoadingMore = false),
-            untilDestroyed(this)
+            finalize(() => this.isLoadingMore = false)
         ).subscribe({
             next: response => {
                 const currentInvests = this.invests$.value;
@@ -79,8 +85,7 @@ export class InvestListComponent implements OnInit {
         this.isLoading$.next(true);
         this.deleteInvest(investId).pipe(
             switchMap(() => this.getInvests()),
-            finalize(() => this.isLoading$.next(false)),
-            untilDestroyed(this)
+            finalize(() => this.isLoading$.next(false))
         ).subscribe({
             next: response => {
                 this.invests$.next(response.items);

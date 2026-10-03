@@ -4,29 +4,41 @@ import {
     inject,
     OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Store } from '@ngrx/store';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatDatepicker, MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, map, switchMap } from 'rxjs';
 import { DepositService } from '../../../services/api/deposit.service';
 import { ReferenceService } from '../../../services/api/reference.service';
-import e from 'express';
 
-/**
- * Компонент создания инвести-продукта
- */
 @UntilDestroy()
 @Component({
     selector: 'banking-deposit',
-    standalone: false,
+    standalone: true,
+    imports: [
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatButtonToggleModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        AsyncPipe
+    ],
     templateUrl: './deposit-create.component.html',
     styleUrl: './deposit-create.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DepositCreateComponent implements OnInit {
-    private readonly store = inject(Store);
     private readonly formBuilder = inject(FormBuilder);
     private readonly activatedRoute = inject(ActivatedRoute);
     private readonly router = inject(Router);
@@ -37,7 +49,6 @@ export class DepositCreateComponent implements OnInit {
     public banks$ = this.referenceService.banks$;
     public depositTypes$ = this.referenceService.depositTypes$;
 
-    // Сегментные кнопки для быстрого выбора периода
     public readonly periodOptions = [
         { label: '3 месяца', value: 3 },
         { label: '4 месяца', value: 4 },
@@ -62,7 +73,6 @@ export class DepositCreateComponent implements OnInit {
             capitalization: this.formBuilder.control(false),
         });
 
-        // Инициализация формы
         this.activatedRoute.params.pipe(
             map((params) => +params['depositId']),
             filter((depositId): depositId is number => typeof depositId === 'number' && !Number.isNaN(depositId)),
@@ -84,15 +94,9 @@ export class DepositCreateComponent implements OnInit {
                     term: null,
                     capitalization: deposit.capitalization
                 });
-                // После загрузки данных обновляем активную кнопку сегмента
                 this.updatePeriodFromDates();
             },
         });
-    }
-
-    private loadReferenceData(): void {
-        // Удаляем ручную загрузку данных, так как они уже загружаются в сервисе
-        // и доступны через Observable
     }
 
     public save(): void {
@@ -124,12 +128,10 @@ export class DepositCreateComponent implements OnInit {
         return a?.id === b?.id;
     };
 
-    // Обработчик изменения даты окончания
     public onEndDateChange(event: MatDatepickerInputEvent<Date>): void {
         this.updatePeriodFromDates();
     }
 
-    // Проверка валидации даты окончания не раньше даты начала
     public isEndDateValid(): boolean {
         const startDate = this.formGroup.get('startDate')?.value;
         const endDate = this.formGroup.get('endDate')?.value;
@@ -141,7 +143,6 @@ export class DepositCreateComponent implements OnInit {
         return new Date(endDate) >= new Date(startDate);
     }
 
-    // Обновление активной кнопки сегмента на основе выбранных дат
     private updatePeriodFromDates(): void {
         const startDate = this.formGroup.get('startDate')?.value;
         const endDate = this.formGroup.get('endDate')?.value;
@@ -155,10 +156,8 @@ export class DepositCreateComponent implements OnInit {
         const start = new Date(startDate);
         const end = new Date(endDate);
 
-        // Вычисляем разницу в месяцах
         const months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
 
-        // Проверяем, совпадает ли с одним из предустановлен��ых периодов
         const matchingPeriod = this.periodOptions.find(
             option => option.value !== 'custom' && option.value === months
         );
@@ -167,7 +166,6 @@ export class DepositCreateComponent implements OnInit {
         this.formGroup.patchValue({ term: months });
     }
 
-    // Обработка выбора периода через сегментный переключатель
     public onPeriodChange(period: number | 'custom'): void {
         this.selectedPeriod = period;
 

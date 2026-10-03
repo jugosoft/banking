@@ -27,6 +27,12 @@ export class ReferenceComponent {
       route: '/reference/banks',
       icon: 'monetization_on',
       description: 'Управление банками'
+    },
+    {
+      title: 'История',
+      route: '/reference/deposit-history',
+      icon: 'history',
+      description: 'Архивные и закрытые вклады'
     }
   ];
 

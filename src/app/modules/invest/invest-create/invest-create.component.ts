@@ -1,15 +1,29 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InvestService } from 'src/app/services/api/invest.service';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ReferenceService } from 'src/app/services/api/reference.service';
 import { filter, map, switchMap } from 'rxjs';
+import { IInvestForm } from './model/invest-form.model';
+import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 
-@UntilDestroy()
 @Component({
   selector: 'app-invest-create',
-  standalone: false,
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    MatButtonModule,
+    AsyncPipe,
+  ],
   templateUrl: './invest-create.component.html',
   styleUrl: './invest-create.component.scss',
 })
@@ -25,32 +39,29 @@ export class InvestCreateComponent implements OnInit {
     map(depositTypes => depositTypes.filter(type => type.name === 'Инвестиции'))
   );
   private investId?: number;
-
-  public formGroup = this.formBuilder.group({
-    bank: [null, [Validators.required]],
-    depositType: [null, [Validators.required]],
-    amount: [null, [Validators.required, Validators.min(0)]],
-    startDate: [new Date(), [Validators.required]],
-  });
+  public formGroup!: FormGroup<any>;
 
   public ngOnInit(): void {
+    this.formGroup = this.formBuilder.group({
+      bank: [null],
+      depositType: [null],
+      amount: [null, [Validators.required, Validators.min(0)]],
+      startDate: [new Date(), [Validators.required]],
+    });
+
     this.activatedRoute.params.pipe(
       map((params) => +params['investId']),
       filter((investId): investId is number => typeof investId === 'number' && !Number.isNaN(investId)),
       switchMap(investId => {
         return this.investService.getInvest$(investId);
       }),
-      map(response => response.data!),
-      untilDestroyed(this)
+      map(response => response.data!)
     ).subscribe({
       next: invest => {
         this.investId = invest.id;
         this.formGroup.setValue({
-          // @ts-ignore
           bank: invest.bank,
-          // @ts-ignore
           depositType: invest.depositType,
-          // @ts-ignore
           amount: invest.amount,
           startDate: invest.startDate
         });
@@ -67,20 +78,16 @@ export class InvestCreateComponent implements OnInit {
       return;
     }
 
+    const value = this.formGroup.value;
     const investData = {
       id: this.investId,
-      amount: this.formGroup.value.amount,
-      startDate: this.formGroup.value.startDate,
-      // @ts-ignore
-      bankId: this.formGroup.value.bank.id,
-      // @ts-ignore
-      depositTypeId: this.formGroup.value.depositType.id,
+      amount: value.amount,
+      startDate: value.startDate,
+      bankId: value.bank?.id,
+      depositTypeId: value.depositType?.id,
     };
 
-    // @ts-ignore
-    this.investService.saveInvest$(investData).pipe(
-      untilDestroyed(this)
-    ).subscribe({
+    this.investService.saveInvest$(investData).subscribe({
       next: () => {
         void this.router.navigate(['/invest']);
       }

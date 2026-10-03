@@ -6,38 +6,41 @@ import {
 import { DepositService } from 'src/app/services/api/deposit.service';
 import { ReferenceService } from 'src/app/services/api/reference.service';
 import { IDeposit } from 'src/app/api/deposit';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
-import { BehaviorSubject, finalize, map, Observable, switchMap } from 'rxjs';
+import { AsyncPipe, NgFor } from '@angular/common';
+import { finalize, map, Observable, switchMap } from 'rxjs';
 import { IDepositListFilter } from '../store/model/deposit-list-filter.interfaces';
+import { BaseListComponent } from 'src/app/common/components/base-list.component';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ScrollTriggerDirective } from 'src/app/common/directives/scroll.directive';
+import { DepositCardComponent } from '../../shared/deposit-card/deposit-card.component';
+import { EmptyState } from '../../home/empty-state/empty-state';
+import { CreateButtonComponent } from '../../banking-ui/create-button/create-button.component';
 
-/**
- * Компонент домашней страницы
- */
-@UntilDestroy()
 @Component({
     selector: 'app-deposit-list',
-    standalone: false,
+    standalone: true,
+    imports: [
+        AsyncPipe,
+        MatChipsModule,
+        MatProgressSpinnerModule,
+        ScrollTriggerDirective,
+        EmptyState,
+        DepositCardComponent,
+        CreateButtonComponent
+    ],
     templateUrl: './deposit-list.component.html',
     styleUrl: './deposit-list.component.scss',
 })
-export class DepositListComponent implements OnInit {
+export class DepositListComponent extends BaseListComponent<IDeposit, IDepositListFilter> implements OnInit {
     private readonly depositService = inject(DepositService);
     private readonly referenceService = inject(ReferenceService);
     private readonly router = inject(Router);
 
-    public isLoading$ = new BehaviorSubject<boolean>(false);
-    public deposits$ = new BehaviorSubject<IDeposit[]>([]);
     public banks$ = this.referenceService.banks$;
 
-    // Пагинация
-    private readonly pageSize = 10;
-    public currentPage = 0;
-    public hasMore = true;
-    public isLoadingMore = false;
-
-    // Фильтр
-    public filter: IDepositListFilter = {
+    public override filter: IDepositListFilter = {
         actual: true
     };
 
@@ -46,28 +49,12 @@ export class DepositListComponent implements OnInit {
         return !!restFilters;
     }
 
-    public ngOnInit(): void {
-        this.loadDeposits();
+    public override ngOnInit(): void {
+        super.ngOnInit();
     }
 
     public onCreateDeposit(): void {
         void this.router.navigate(['/deposit', 'create']);
-    }
-
-    public loadDeposits(): void {
-        this.isLoading$.next(true);
-        this.currentPage = 0;
-        this.hasMore = true;
-        this.getDeposits().pipe(
-            finalize(() => this.isLoading$.next(false)),
-            untilDestroyed(this)
-        ).subscribe({
-            next: response => {
-                this.deposits$.next(response.items);
-                this.hasMore = response.hasMore;
-                this.currentPage = response.page + 1;
-            }
-        });
     }
 
     public selectBank(bankId: number | null): void {
@@ -76,44 +63,10 @@ export class DepositListComponent implements OnInit {
             bankId: typeof bankId === 'number' ? [bankId] : [],
         };
 
-        this.loadDeposits();
+        this.loadItems();
     }
 
-    public loadMoreDeposits(): void {
-        if (this.isLoadingMore || !this.hasMore) {
-            return;
-        }
-
-        this.isLoadingMore = true;
-        this.getDeposits(this.currentPage).pipe(
-            finalize(() => this.isLoadingMore = false),
-            untilDestroyed(this)
-        ).subscribe({
-            next: response => {
-                const currentDeposits = this.deposits$.value;
-                this.deposits$.next([...currentDeposits, ...response.items]);
-                this.hasMore = response.hasMore;
-                this.currentPage = response.page + 1;
-            }
-        });
-    }
-
-    public onDelete(depositId: number): void {
-        this.isLoading$.next(true);
-        this.deleteDeposit(depositId).pipe(
-            switchMap(() => this.getDeposits()),
-            finalize(() => this.isLoading$.next(false)),
-            untilDestroyed(this)
-        ).subscribe({
-            next: response => {
-                this.deposits$.next(response.items);
-                this.hasMore = response.hasMore;
-                this.currentPage = response.page + 1;
-            }
-        });
-    }
-
-    private getDeposits(page: number = 0): Observable<{ items: IDeposit[]; hasMore: boolean; page: number }> {
+    protected override getItems(page: number = 0): Observable<{ items: IDeposit[]; hasMore: boolean; page: number }> {
         return this.depositService.getDepositList$(page, this.pageSize, this.filter).pipe(
             map(response => ({
                 items: response.data?.items ?? [],
@@ -123,7 +76,7 @@ export class DepositListComponent implements OnInit {
         );
     }
 
-    private deleteDeposit(id: number): Observable<boolean> {
+    protected override deleteItem(id: number): Observable<boolean> {
         return this.depositService.deleteDeposit$(id);
     }
 }

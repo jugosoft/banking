@@ -29,6 +29,14 @@ const routes: Routes = [
         (module) => module.BanksModule
       ),
   },
+  {
+    path: 'deposit-history',
+    loadComponent: () =>
+      import('../deposit/deposit-history/deposit-history.component').then(
+        (m) => m.DepositHistoryComponent
+      ),
+    data: { title: 'История вкладов' },
+  },
 ];
 
 @NgModule({

@@ -25,16 +25,16 @@ export const appRoutes: Routes = [
                 path: 'deposit',
                 data: { title: 'Вклады' },
                 loadChildren: () =>
-                    import('./modules/deposit/deposit.module').then(
-                        (module) => module.DepositModule
+                    import('./modules/deposit/deposit.routes').then(
+                        (routes) => routes.depositRoutes
                     ),
             },
             {
                 path: 'invest',
                 data: { title: 'Инвестиции' },
                 loadChildren: () =>
-                    import('./modules/invest/invest.module').then(
-                        (module) => module.InvestModule
+                    import('./modules/invest/invest.routes').then(
+                        (routes) => routes.investRoutes
                     ),
             },
             {

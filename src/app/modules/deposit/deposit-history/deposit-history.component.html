@@ -1,0 +1,31 @@
+@if (isLoading$ | async) {
+<div class="deposit-list__loading">
+  <mat-spinner></mat-spinner>
+</div>
+} @else {
+<div class="deposit-list__container">
+  @let deposits = deposits$ | async;
+  @if (deposits?.length === 0) {
+  <banking-empty-state>
+    <ng-container empty-title>У вас пока нет истории вкладов</ng-container>
+    <ng-container empty-message>
+      Здесь будут отображаться архивные и закрытые вклады
+    </ng-container>
+  </banking-empty-state>
+  }
+
+  <section class="deposit-list__deposit-list">
+    @for (deposit of deposits; track deposit.id) {
+    <banking-deposit-card class="deposit-list__deposit-item" [deposit]="deposit" (delete)="onDelete(deposit.id)"
+      appScrollTrigger (scrollEnd)="loadMoreItems()">
+    </banking-deposit-card>
+    }
+  </section>
+
+  @if (isLoadingMore) {
+  <div class="deposit-list__loader">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+  }
+</div>
+}

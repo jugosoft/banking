@@ -18,11 +18,7 @@
 
     <section class="invest-list__list">
         @for (invest of invests; track invest.id) {
-        <banking-invest-card 
-            class="invest-list__item" 
-            [invest]="invest" 
-            (delete)="onDelete($event)"
-            appScrollTrigger
+        <banking-invest-card class="invest-list__item" [invest]="invest" (delete)="onDelete($event)" appScrollTrigger
             (scrollEnd)="loadMoreInvests()">
         </banking-invest-card>
         }
