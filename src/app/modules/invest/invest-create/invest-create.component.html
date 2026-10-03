@@ -36,6 +36,22 @@
       } -->
     </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Дата снимка</mat-label>
+      <input matInput [matDatepicker]="snapshotDatePicker" formControlName="snapshotDate">
+      <mat-hint>ММ.ДД.ГГГГ</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="snapshotDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #snapshotDatePicker></mat-datepicker>
+    </mat-form-field>
+
     <button mat-raised-button type="submit">Создать</button>
   </form>
+
+  @if (showChart) {
+  <div class="invest-create__chart">
+    <h3>История изменения суммы</h3>
+    <apx-chart [series]="investmentHistorySeries" [chart]="chartConfig?.chart" [xaxis]="chartXAxisConfig"
+      [title]="chartConfig?.title" [markers]="chartConfig?.markers" [stroke]="chartConfig?.stroke"></apx-chart>
+  </div>
+  }
 </div>

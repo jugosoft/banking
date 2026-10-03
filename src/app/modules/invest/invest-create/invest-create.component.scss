@@ -38,4 +38,16 @@
     font-weight: $font-weight-medium;
     // color: $font-color-primary;
   }
+
+  &__chart {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+
+    h3 {
+      margin-bottom: 1rem;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+    }
+  }
 }

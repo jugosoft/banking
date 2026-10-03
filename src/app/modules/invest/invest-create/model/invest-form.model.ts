@@ -4,4 +4,5 @@ export interface IInvestForm {
     depositGroup: { id: number; name: string; code: string };
     amount: number | null;
     startDate: Date | null;
+    snapshotDate: Date | null;
 }

@@ -10,7 +10,9 @@ import { InvestService } from 'src/app/services/api/invest.service';
 import { ReferenceService } from 'src/app/services/api/reference.service';
 import { filter, map, switchMap } from 'rxjs';
 import { IInvestForm } from './model/invest-form.model';
-import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { ApexOptions, ApexAxisChartSeries } from 'apexcharts';
 
 @Component({
   selector: 'app-invest-create',
@@ -23,6 +25,7 @@ import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker
     MatSelectModule,
     MatButtonModule,
     AsyncPipe,
+    NgApexchartsModule,
   ],
   templateUrl: './invest-create.component.html',
   styleUrl: './invest-create.component.scss',
@@ -40,6 +43,10 @@ export class InvestCreateComponent implements OnInit {
   );
   private investId?: number;
   public formGroup!: FormGroup<any>;
+  public chartConfig: Partial<ApexOptions> = {};
+  public chartXAxisConfig: ApexOptions['xaxis'] = {};
+  public investmentHistorySeries: ApexAxisChartSeries = [];
+  public showChart = false;
 
   public ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
@@ -47,6 +54,7 @@ export class InvestCreateComponent implements OnInit {
       depositType: [null],
       amount: [null, [Validators.required, Validators.min(0)]],
       startDate: [new Date(), [Validators.required]],
+      snapshotDate: [new Date(), [Validators.required]],
     });
 
     this.activatedRoute.params.pipe(
@@ -60,11 +68,17 @@ export class InvestCreateComponent implements OnInit {
       next: invest => {
         this.investId = invest.id;
         this.formGroup.setValue({
+          ...this.formGroup.value,
           bank: invest.bank,
           depositType: invest.depositType,
           amount: invest.amount,
-          startDate: invest.startDate
+          startDate: invest.startDate,
         });
+
+        if (invest.history && invest.history.length > 0) {
+          this.showChart = true;
+          this.buildChart(invest.history);
+        }
       },
     });
   }
@@ -72,6 +86,52 @@ export class InvestCreateComponent implements OnInit {
   public readonly compareFn = <T extends { id: number }>(a?: T, b?: T) => {
     return a?.id === b?.id;
   };
+
+  private buildChart(history: { amount: number; date: Date | string }[]): void {
+    const sortedHistory = [...history].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+    const categories = sortedHistory.map(item => {
+      const date = new Date(item.date);
+      return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
+    });
+
+    const data = sortedHistory.map(item => item.amount);
+
+    this.investmentHistorySeries = [
+      {
+        name: 'Сумма',
+        data: data,
+      },
+    ];
+
+    this.chartXAxisConfig = {
+      categories: categories,
+    };
+
+    this.chartConfig = {
+      chart: {
+        type: 'line',
+        toolbar: {
+          show: true,
+        },
+        height: 350,
+      },
+      title: {
+        text: 'История изменения суммы инвестиции',
+        align: 'left',
+        style: {
+          fontSize: '14px',
+        },
+      },
+      markers: {
+        size: 4,
+      },
+      stroke: {
+        curve: 'smooth',
+        width: 2,
+      },
+    };
+  }
 
   public onSubmit(): void {
     if (this.formGroup.invalid) {
@@ -85,6 +145,7 @@ export class InvestCreateComponent implements OnInit {
       startDate: value.startDate,
       bankId: value.bank?.id,
       depositTypeId: value.depositType?.id,
+      snapshotDate: value.snapshotDate,
     };
 
     this.investService.saveInvest$(investData).subscribe({

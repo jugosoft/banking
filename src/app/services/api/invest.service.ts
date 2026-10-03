@@ -20,7 +20,7 @@ export class InvestService extends BaseApiService {
     }
 
     public saveInvest$(
-        invest: { amount: number; startDate: Date }
+        invest: { amount: number; startDate: Date; bankId: number; depositTypeId: number; snapshotDate?: Date }
     ): Observable<boolean> {
         return this.post<boolean>('/save', { invest });
     }
