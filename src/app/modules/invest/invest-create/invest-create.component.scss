@@ -11,11 +11,13 @@
     @include respond-to('medium') {
       justify-content: center;
       width: 640px;
+      margin: 0 auto;
     }
 
     @include respond-to('large') {
       justify-content: center;
       width: 840px;
+      margin: 0 auto;
     }
   }
 
@@ -23,8 +25,7 @@
     display: flex;
     flex-direction: column;
     gap: $gutter-medium;
-    max-width: 500px;
-    margin: 0 auto;
+    width: 100%;
   }
 
   &__field {
@@ -36,18 +37,10 @@
   &__label {
     font-size: $font-size-md;
     font-weight: $font-weight-medium;
-    // color: $font-color-primary;
   }
 
   &__chart {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-
-    h3 {
-      margin-bottom: 1rem;
-      font-size: $font-size-lg;
-      font-weight: $font-weight-medium;
-    }
+    width: 100%;
+    padding: 1.5rem 0;
   }
 }

@@ -1,18 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { AsyncPipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { filter, map, switchMap } from 'rxjs';
 import { InvestService } from 'src/app/services/api/invest.service';
 import { ReferenceService } from 'src/app/services/api/reference.service';
-import { filter, map, switchMap } from 'rxjs';
 import { IInvestForm } from './model/invest-form.model';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { NgApexchartsModule } from 'ng-apexcharts';
-import { ApexOptions, ApexAxisChartSeries } from 'apexcharts';
+import { MatDatepickerModule } from '@angular/material/date-picker';
+import { InvestmentChartComponent } from './investment-chart/investment-chart.component';
+import { IInvestmentChartData } from './model/investment-chart-data.model';
 
 @Component({
   selector: 'app-invest-create',
@@ -21,11 +26,11 @@ import { ApexOptions, ApexAxisChartSeries } from 'apexcharts';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule,
     MatSelectModule,
     MatButtonModule,
     AsyncPipe,
-    NgApexchartsModule,
+    MatDatepickerModule,
+    InvestmentChartComponent,
   ],
   templateUrl: './invest-create.component.html',
   styleUrl: './invest-create.component.scss',
@@ -39,17 +44,18 @@ export class InvestCreateComponent implements OnInit {
 
   public banks$ = this.referenceService.banks$;
   public depositTypes$ = this.referenceService.depositTypes$.pipe(
-    map(depositTypes => depositTypes.filter(type => type.name === 'Инвестиции'))
+    map((depositTypes) =>
+      depositTypes.filter((type) => type.name === 'Инвестиции')
+    )
   );
+
   private investId?: number;
-  public formGroup!: FormGroup<any>;
-  public chartConfig: Partial<ApexOptions> = {};
-  public chartXAxisConfig: ApexOptions['xaxis'] = {};
-  public investmentHistorySeries: ApexAxisChartSeries = [];
+  public formGroup!: FormGroup<IInvestForm>;
+  public chartData: IInvestmentChartData[] = [];
   public showChart = false;
 
   public ngOnInit(): void {
-    this.formGroup = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group<IInvestForm>({
       bank: [null],
       depositType: [null],
       amount: [null, [Validators.required, Validators.min(0)]],
@@ -59,16 +65,16 @@ export class InvestCreateComponent implements OnInit {
 
     this.activatedRoute.params.pipe(
       map((params) => +params['investId']),
-      filter((investId): investId is number => typeof investId === 'number' && !Number.isNaN(investId)),
-      switchMap(investId => {
-        return this.investService.getInvest$(investId);
-      }),
-      map(response => response.data!)
+      filter(
+        (investId): investId is number =>
+          typeof investId === 'number' && !Number.isNaN(investId)
+      ),
+      switchMap((investId) => this.investService.getInvest$(investId)),
+      map((response) => response.data!)
     ).subscribe({
-      next: invest => {
+      next: (invest) => {
         this.investId = invest.id;
-        this.formGroup.setValue({
-          ...this.formGroup.value,
+        this.formGroup.patchValue({
           bank: invest.bank,
           depositType: invest.depositType,
           amount: invest.amount,
@@ -77,7 +83,7 @@ export class InvestCreateComponent implements OnInit {
 
         if (invest.history && invest.history.length > 0) {
           this.showChart = true;
-          this.buildChart(invest.history);
+          this.chartData = this.mapToChartData(invest.history);
         }
       },
     });
@@ -87,50 +93,22 @@ export class InvestCreateComponent implements OnInit {
     return a?.id === b?.id;
   };
 
-  private buildChart(history: { amount: number; date: Date | string }[]): void {
-    const sortedHistory = [...history].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
-    const categories = sortedHistory.map(item => {
-      const date = new Date(item.date);
-      return `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`;
+  private mapToChartData(
+    history: { amount: number; date: Date | string }[]
+  ): IInvestmentChartData[] {
+    const sorted = [...history].sort((a, b) => {
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+      return dateA - dateB;
     });
 
-    const data = sortedHistory.map(item => item.amount);
-
-    this.investmentHistorySeries = [
-      {
-        name: 'Сумма',
-        data: data,
-      },
-    ];
-
-    this.chartXAxisConfig = {
-      categories: categories,
-    };
-
-    this.chartConfig = {
-      chart: {
-        type: 'line',
-        toolbar: {
-          show: true,
-        },
-        height: 350,
-      },
-      title: {
-        text: 'История изменения суммы инвестиции',
-        align: 'left',
-        style: {
-          fontSize: '14px',
-        },
-      },
-      markers: {
-        size: 4,
-      },
-      stroke: {
-        curve: 'smooth',
-        width: 2,
-      },
-    };
+    return sorted.map((item) => {
+      const date = new Date(item.date);
+      return {
+        formattedDate: `${date.getDate().toString().padStart(2, '0')}.${(date.getMonth() + 1).toString().padStart(2, '0')}.${date.getFullYear()}`,
+        amount: item.amount,
+      };
+    });
   }
 
   public onSubmit(): void {
@@ -151,7 +129,7 @@ export class InvestCreateComponent implements OnInit {
     this.investService.saveInvest$(investData).subscribe({
       next: () => {
         void this.router.navigate(['/invest']);
-      }
+      },
     });
   }
 }
