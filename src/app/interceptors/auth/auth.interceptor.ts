@@ -3,13 +3,12 @@ import {
     HttpHandler,
     HttpInterceptor,
     HttpRequest,
-    HttpErrorResponse
+    HttpErrorResponse,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Injectable, inject } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { inject } from '@angular/core';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -22,14 +21,13 @@ export class AuthInterceptor implements HttpInterceptor {
         req = req.clone({ withCredentials: true });
 
         return next.handle(req).pipe(
-            // tap({
-            //     error: (error: HttpErrorResponse) => {
-            //         if (error.status === 401) {
-            //             // Перенаправляем на страницу входа
-            //             this.router.navigate(['/auth']);
-            //         }
-            //     }
-            // })
+            catchError((error: HttpErrorResponse) => {
+                if (error.status === 401) {
+                    // Сбрасываем состояние авторизации и перенаправляем на вход
+                    this.router.navigate(['/auth']);
+                }
+                return throwError(() => error);
+            })
         );
     }
 }

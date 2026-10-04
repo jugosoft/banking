@@ -1,5 +1,5 @@
 <div class="deposit-create__wrapper">
-  <form class="deposit-create__form" [formGroup]="formGroup">
+  <form class="deposit-create__form" [formGroup]="formGroup" (ngSubmit)="save()">
     <mat-form-field>
       <mat-label>Банк</mat-label>
       <mat-select [compareWith]="compareFn" formControlName="bank">
@@ -60,6 +60,6 @@
       }
     </mat-button-toggle-group>
 
-    <button mat-raised-button type="submit" (click)="save()">Создать</button>
+    <button mat-raised-button type="submit">Создать</button>
   </form>
 </div>

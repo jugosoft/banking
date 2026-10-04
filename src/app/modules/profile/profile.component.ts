@@ -1,11 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { filter } from 'rxjs';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUserInfo } from '@api/user/user.interface';
 import { selectCurrentUser } from '../auth/store/auth.selectors';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-@UntilDestroy()
 @Component({
     selector: 'banking-profile',
     standalone: false,
@@ -13,6 +12,7 @@ import { selectCurrentUser } from '../auth/store/auth.selectors';
     styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+    private readonly destroyRef = inject(DestroyRef);
     private readonly store = inject(Store);
 
     public readonly currentUser$ = this.store.pipe(select(selectCurrentUser));
@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
     public ngOnInit(): void {
         this.currentUser$.pipe(
             filter(currentUser => !!currentUser),
-            untilDestroyed(this)
+            takeUntilDestroyed(this.destroyRef)
         ).subscribe(user => {
             this.user = user;
         });

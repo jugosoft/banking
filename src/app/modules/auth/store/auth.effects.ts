@@ -39,8 +39,8 @@ export class AuthEffects {
                 return this.authService.register$(request).pipe(
                     map((result) => registerSuccess({ result })),
                     tap(({ result }) => {
-                        this.toastService.error(
-                            'Успешная регистрация. Счастилвого пользвоания!'
+                        this.toastService.success(
+                            'Успешная регистрация. Добро пожаловать!'
                         );
                         // this.localStorageService.set('jwtToken', result.data!.accessToken);
                     }),

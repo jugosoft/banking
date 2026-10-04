@@ -9,7 +9,8 @@
             </div>
 
             <!-- Desktop Navigation -->
-            <nav class="wrapper__nav" *ngIf="!(isMobile | async)">
+            @if (!(isMobile | async)) {
+            <nav class="wrapper__nav">
                 <ul class="wrapper__nav-list">
                     @if (isLoggedIn$ | async) {
                     <li class="wrapper__nav-item">
@@ -51,12 +52,15 @@
                     }
                 </ul>
             </nav>
+            }
 
             <!-- Mobile Navigation Trigger -->
+            @if (isMobile | async) {
             <button class="wrapper__mobile-menu" (click)="toggleSidenav()"
-                [attr.aria-label]="isSidenavOpen() ? 'Закрыть меню' : 'Открыть меню'" *ngIf="isMobile | async">
+                [attr.aria-label]="isSidenavOpen() ? 'Закрыть меню' : 'Открыть меню'">
                 <mat-icon>{{ isSidenavOpen() ? 'close' : 'menu' }}</mat-icon>
             </button>
+            }
         </div>
     </div>
 </header>

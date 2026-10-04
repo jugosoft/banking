@@ -1,12 +1,13 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    DestroyRef,
     inject,
     OnInit,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { register } from '../store/auth.actions';
 import {
     selectIsSubmiting,
@@ -17,7 +18,6 @@ import { IRegisterForm } from './model/register-form.interface';
 /**
  * Компонент регистрации нового пользователя
  */
-@UntilDestroy()
 @Component({
     selector: 'banking-register',
     standalone: false,
@@ -27,6 +27,7 @@ import { IRegisterForm } from './model/register-form.interface';
 })
 export class RegisterComponent implements OnInit {
     public formGroup!: FormGroup<IRegisterForm>;
+    private readonly destroyRef = inject(DestroyRef);
     private readonly formBuilder = inject(FormBuilder);
     private readonly store = inject(Store);
     public readonly isSubmiting$ = this.store.pipe(select(selectIsSubmiting));
@@ -73,7 +74,9 @@ export class RegisterComponent implements OnInit {
      * Блокируем контролы формы на время регистрации
      */
     private bindFormState(): void {
-        this.isSubmiting$.pipe(untilDestroyed(this)).subscribe({
+        this.isSubmiting$.pipe(
+            takeUntilDestroyed(this.destroyRef)
+        ).subscribe({
             next: (isSubmiting) => {
                 if (isSubmiting) {
                     this.formGroup.disable();

@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'mixins';
+@use 'variables' as variables;
+@use 'mixins' as mixins;
 
 :host {
   display: block;
@@ -9,16 +9,16 @@
   &__container {
     display: flex;
     flex-direction: column;
-    padding: $gutter-small;
-    gap: $gutter-medium;
+    padding: variables.$gutter-small;
+    gap: variables.$gutter-medium;
 
-    @include respond-to('tablet') {
+    @include mixins.respond-to('tablet') {
       // flex-direction: row;
       // flex-wrap: wrap;
     }
 
-    @include respond-to('desktop') {
-      gap: $gutter-large;
+    @include mixins.respond-to('desktop') {
+      gap: variables.$gutter-large;
     }
   }
 
@@ -26,5 +26,36 @@
     display: flex;
     width: 100%;
     justify-content: center;
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+  }
+
+  &__deposit-list {
+    margin-top: variables.$gutter-medium;
+  }
+
+  &__list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: variables.$gutter-medium;
+  }
+
+  &__list-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  &__cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$gutter-small;
   }
 }

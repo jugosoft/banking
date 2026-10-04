@@ -1,10 +1,9 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { IDepositGroup } from '@api/deposit-group';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ReferenceService } from 'src/app/services/api/reference.service';
 
-@UntilDestroy()
 @Component({
   selector: 'banking-edit-deposit-groups',
   standalone: false,
@@ -12,6 +11,7 @@ import { ReferenceService } from 'src/app/services/api/reference.service';
   styleUrls: ['./edit-deposit-groups.component.scss'],
 })
 export class EditDepositGroupsComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly referenceService = inject(ReferenceService);
   private readonly router = inject(Router);
   private readonly cdRef = inject(ChangeDetectorRef);
@@ -24,7 +24,7 @@ export class EditDepositGroupsComponent implements OnInit {
 
   public loadDepositGroups(): void {
     this.referenceService.depositGroups$
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (groups) => {
           this.depositGroups = groups;
@@ -40,7 +40,7 @@ export class EditDepositGroupsComponent implements OnInit {
 
   public onDelete(id: number): void {
     this.referenceService.deleteDepositGroup$(id)
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
 

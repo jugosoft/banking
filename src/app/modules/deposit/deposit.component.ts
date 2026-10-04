@@ -1,14 +1,13 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    DestroyRef,
     inject,
     OnInit,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Store } from '@ngrx/store';
 
-@UntilDestroy()
 @Component({
     selector: 'banking-deposit',
     standalone: true,
@@ -19,7 +18,7 @@ import { Store } from '@ngrx/store';
 })
 export class DepositComponent implements OnInit {
     public id: number | null = null;
-    private readonly store = inject(Store);
+    private readonly destroyRef = inject(DestroyRef);
     private readonly activatedRoute = inject(ActivatedRoute);
 
     public ngOnInit(): void {
@@ -27,7 +26,9 @@ export class DepositComponent implements OnInit {
     }
 
     private bindRoute(): void {
-        this.activatedRoute.params.pipe(untilDestroyed(this)).subscribe({
+        this.activatedRoute.params.pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe({
             next: (params) => {
                 this.id = params['id'];
             },

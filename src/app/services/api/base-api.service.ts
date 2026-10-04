@@ -9,11 +9,12 @@ import { ApiEntity } from './api-entities.type';
 
 @Injectable()
 export abstract class BaseApiService {
-    protected readonly toastService = inject(ToastService);
     private readonly httpClient = inject(HttpClient);
-    private readonly apiUrl = environment.apiUrl;
-    private readonly entity: ApiEntity;
-    private readonly isBrowser: boolean;
+    private readonly toastService = inject(ToastService);
+    private readonly platformId = inject(PLATFORM_ID);
+
+    protected readonly apiUrl = environment.apiUrl;
+    protected readonly entity: ApiEntity;
 
     constructor(entity: ApiEntity) {
         if (!entity) {
@@ -21,11 +22,14 @@ export abstract class BaseApiService {
         }
 
         this.entity = entity;
-        this.isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+    }
+
+    protected isBrowser(): boolean {
+        return isPlatformBrowser(this.platformId);
     }
 
     protected get<T>(url: string, params?: any): Observable<T> {
-        if (!this.isBrowser) {
+        if (!this.isBrowser()) {
             return new Observable<T>(subscriber => {
                 subscriber.complete();
             });
@@ -36,7 +40,7 @@ export abstract class BaseApiService {
     }
 
     protected post<T>(url: string, body?: any): Observable<T> {
-        if (!this.isBrowser) {
+        if (!this.isBrowser()) {
             return new Observable<T>(subscriber => {
                 subscriber.complete();
             });
@@ -47,7 +51,7 @@ export abstract class BaseApiService {
     }
 
     protected put<T>(url: string, body?: any): Observable<T> {
-        if (!this.isBrowser) {
+        if (!this.isBrowser()) {
             return new Observable<T>(subscriber => {
                 subscriber.complete();
             });
@@ -58,7 +62,7 @@ export abstract class BaseApiService {
     }
 
     protected delete<T>(url: string): Observable<T> {
-        if (!this.isBrowser) {
+        if (!this.isBrowser()) {
             return new Observable<T>(subscriber => {
                 subscriber.complete();
             });
@@ -75,7 +79,6 @@ export abstract class BaseApiService {
             errorMessage = `Ошибка: ${error.error.message}`;
         } else {
             // Серверная ошибка
-            // Убираем status code из сообщения, как требуется
             errorMessage = `Сообщение: ${error.message}`;
         }
         this.toastService.error(errorMessage);

@@ -1,12 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDepositGroup } from '@api/deposit-group';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, map, switchMap } from 'rxjs';
 import { ReferenceService } from 'src/app/services/api/reference.service';
 
-@UntilDestroy()
 @Component({
   selector: 'app-create-deposit-group',
   standalone: false,
@@ -14,6 +13,7 @@ import { ReferenceService } from 'src/app/services/api/reference.service';
   styleUrls: ['./create-deposit-group.component.scss'],
 })
 export class CreateDepositGroupComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly referenceService = inject(ReferenceService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly formBuilder = inject(FormBuilder);
@@ -44,7 +44,7 @@ export class CreateDepositGroupComponent implements OnInit {
         return this.referenceService.getDepositGroup$(depositGroupId);
       }),
       map(response => response.data!),
-      untilDestroyed(this)
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: depositGroup => {
         this.depositGroupId = depositGroup.id;
@@ -69,7 +69,7 @@ export class CreateDepositGroupComponent implements OnInit {
 
     // @ts-ignore
     this.referenceService.saveDepositGroup$(depositGroupData).pipe(
-      untilDestroyed(this)
+      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         void this.router.navigate(['/reference/deposit-groups']);

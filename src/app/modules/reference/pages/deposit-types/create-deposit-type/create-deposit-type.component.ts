@@ -1,13 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IDepositType } from '@api/deposit-type';
-import { IDepositGroup } from '@api/deposit-group';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, map, switchMap } from 'rxjs';
 import { ReferenceService } from 'src/app/services/api/reference.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-@UntilDestroy()
 @Component({
   selector: 'app-create-deposit-type',
   standalone: false,
@@ -15,6 +13,7 @@ import { ReferenceService } from 'src/app/services/api/reference.service';
   styleUrls: ['./create-deposit-type.component.scss'],
 })
 export class CreateDepositTypeComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly referenceService = inject(ReferenceService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly formBuilder = inject(FormBuilder);
@@ -50,7 +49,7 @@ export class CreateDepositTypeComponent implements OnInit {
         return this.referenceService.getDepositType$(depositTypeId);
       }),
       map(response => response.data!),
-      untilDestroyed(this)
+      takeUntilDestroyed(this.destroyRef)
     ).subscribe({
       next: depositType => {
         this.depositTypeId = depositType.id;
@@ -77,7 +76,7 @@ export class CreateDepositTypeComponent implements OnInit {
 
     // @ts-ignore
     this.referenceService.saveDepositType$(depositTypeData).pipe(
-      untilDestroyed(this)
+      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         void this.router.navigate(['/reference/deposit-types']);

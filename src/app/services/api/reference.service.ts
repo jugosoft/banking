@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { map, Observable, shareReplay, throwError } from 'rxjs';
 import { BaseApiService } from './base-api.service';
 import { IGetDepositGroupsResponse } from '@api/reference/get-deposit-groups.response';
 import { IDepositGroup } from '@api/deposit-group';
@@ -18,9 +18,9 @@ export class ReferenceService extends BaseApiService {
 
   constructor() {
     super('/reference');
-    this.banks$ = this.loadBanks();
-    this.depositTypes$ = this.loadDepositTypes();
-    this.depositGroups$ = this.loadDepositGroups();
+    this.banks$ = this.loadBanks().pipe(shareReplay(1));
+    this.depositTypes$ = this.loadDepositTypes().pipe(shareReplay(1));
+    this.depositGroups$ = this.loadDepositGroups().pipe(shareReplay(1));
   }
 
   private loadBanks(): Observable<IBank[]> {

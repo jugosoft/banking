@@ -14,8 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs';
 import { InvestService } from 'src/app/services/api/invest.service';
 import { ReferenceService } from 'src/app/services/api/reference.service';
-import { IInvestForm } from './model/invest-form.model';
-import { MatDatepickerModule } from '@angular/material/date-picker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { InvestmentChartComponent } from './investment-chart/investment-chart.component';
 import { IInvestmentChartData } from './model/investment-chart-data.model';
 
@@ -50,17 +49,17 @@ export class InvestCreateComponent implements OnInit {
   );
 
   private investId?: number;
-  public formGroup!: FormGroup<IInvestForm>;
+  public formGroup!: FormGroup;
   public chartData: IInvestmentChartData[] = [];
   public showChart = false;
 
   public ngOnInit(): void {
-    this.formGroup = this.formBuilder.group<IInvestForm>({
-      bank: [null],
-      depositType: [null],
-      amount: [null, [Validators.required, Validators.min(0)]],
-      startDate: [new Date(), [Validators.required]],
-      snapshotDate: [new Date(), [Validators.required]],
+    this.formGroup = this.formBuilder.group({
+      bank: [null as { id: number; name: string; shortName: string } | null],
+      depositType: [null as { id: number; name: string; } | null],
+      amount: [null as number | null, [Validators.required, Validators.min(0)]],
+      startDate: [new Date() as Date | null, [Validators.required]],
+      snapshotDate: [new Date() as Date | null, [Validators.required]],
     });
 
     this.activatedRoute.params.pipe(
@@ -75,10 +74,11 @@ export class InvestCreateComponent implements OnInit {
       next: (invest) => {
         this.investId = invest.id;
         this.formGroup.patchValue({
-          bank: invest.bank,
-          depositType: invest.depositType,
-          amount: invest.amount,
-          startDate: invest.startDate,
+          bank: invest.bank ?? null,
+          depositType: invest.depositType ?? null,
+          amount: invest.amount ?? null,
+          startDate: invest.startDate ? new Date(invest.startDate) : null,
+          snapshotDate: invest.snapshotDate ? new Date(invest.snapshotDate) : null,
         });
 
         if (invest.history && invest.history.length > 0) {

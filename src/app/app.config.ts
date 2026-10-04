@@ -9,6 +9,8 @@ import { appRoutes } from './app.routes';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth/auth.interceptor';
+import { RetryInterceptor } from './interceptors/retry/retry.interceptor';
+import { ForbiddenInterceptor } from './interceptors/forbidden/forbidden.interceptor';
 import { authReducer } from './modules/auth/store/auth.reducer';
 import { AuthService } from './modules/auth/services/auth.service';
 import { AuthEffects } from './modules/auth/store/auth.effects';
@@ -34,6 +36,8 @@ export const appConfig: ApplicationConfig = {
 
         provideHttpClient(withInterceptorsFromDi()),
         { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: RetryInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ForbiddenInterceptor, multi: true },
 
         AuthService,
 

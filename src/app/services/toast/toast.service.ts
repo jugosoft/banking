@@ -15,15 +15,19 @@ export class ToastService {
         message: string,
         action?: string
     ): MatSnackBarRef<TextOnlySnackBar> | null {
-        // return this.snackBar.open(message, action);
-        return null;
+        return this.snackBar.open(message, action, {
+            duration: 4000,
+            panelClass: ['toast-error'],
+        });
     }
 
     public success(
         message: string,
         action?: string
     ): MatSnackBarRef<TextOnlySnackBar> | null {
-        // return this.snackBar.open(message, action);
-        return null;
+        return this.snackBar.open(message, action, {
+            duration: 3000,
+            panelClass: ['toast-success'],
+        });
     }
 }

@@ -1,12 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IBank } from '@api/bank';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, map, switchMap } from 'rxjs';
 import { ReferenceService } from 'src/app/services/api/reference.service';
 
-@UntilDestroy()
 @Component({
   selector: 'app-create-bank',
   standalone: false,
@@ -14,6 +13,7 @@ import { ReferenceService } from 'src/app/services/api/reference.service';
   styleUrls: ['./create-bank.component.scss'],
 })
 export class CreateBankComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly referenceService = inject(ReferenceService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly formBuilder = inject(FormBuilder);
@@ -39,7 +39,7 @@ export class CreateBankComponent implements OnInit {
 
   public loadBanks(): void {
     this.referenceService.banks$
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (banks) => {
           this.banks = banks;
@@ -59,7 +59,7 @@ export class CreateBankComponent implements OnInit {
         return this.referenceService.getBank$(bankId);
       }),
       map(response => response.data!),
-      untilDestroyed(this)
+      takeUntilDestroyed()
     ).subscribe({
       next: bank => {
         this.bankId = bank.id;
@@ -84,7 +84,7 @@ export class CreateBankComponent implements OnInit {
 
     // @ts-ignore
     this.referenceService.saveBank$(bankData).pipe(
-      untilDestroyed(this)
+      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         void this.router.navigate(['/reference/banks']);

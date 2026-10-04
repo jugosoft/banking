@@ -1,9 +1,18 @@
-@if (isLoading$ | async) {
-<mat-spinner></mat-spinner>
+<!-- Загружаем состояние пользователя -->
+@if (isLoadingUser$ | async) {
+<div class="home__loading">
+    <mat-spinner></mat-spinner>
+</div>
 } @else {
+<!-- Неавторизованный пользователь — показываем баннер с кнопками входа/регистрации -->
+@let user = currentUser$ | async;
+@if (!user) {
+<banking-guest-banner></banking-guest-banner>
+} @else {
+<!-- Авторизованный пользователь — показываем контент -->
 <div class="home__container">
     <app-deposit-banner></app-deposit-banner>
-
     <app-invest-banner></app-invest-banner>
 </div>
+}
 }

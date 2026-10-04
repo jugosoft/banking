@@ -1,16 +1,16 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    DestroyRef,
     inject,
     OnInit,
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 /**
  * Компонент детализации инвестиционного продукта
  */
-@UntilDestroy()
 @Component({
     selector: 'banking-invest',
     standalone: false,
@@ -21,13 +21,16 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class InvestComponent implements OnInit {
     public id: number | null = null;
     private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly destroyRef = inject(DestroyRef);
 
     public ngOnInit(): void {
         this.bindRoute();
     }
 
     private bindRoute(): void {
-        this.activatedRoute.params.pipe(untilDestroyed(this)).subscribe({
+        this.activatedRoute.params.pipe(
+            takeUntilDestroyed(this.destroyRef),
+        ).subscribe({
             next: (params) => {
                 this.id = params['id'];
             },

@@ -1,10 +1,9 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { IBank } from '@api/bank';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ReferenceService } from 'src/app/services/api/reference.service';
 
-@UntilDestroy()
 @Component({
   selector: 'banking-edit-banks',
   standalone: false,
@@ -12,6 +11,7 @@ import { ReferenceService } from 'src/app/services/api/reference.service';
   styleUrls: ['./edit-banks.component.scss'],
 })
 export class EditBanksComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly referenceService = inject(ReferenceService);
   private readonly router = inject(Router);
   private readonly cdRef = inject(ChangeDetectorRef);
@@ -24,7 +24,7 @@ export class EditBanksComponent implements OnInit {
 
   public loadBanks(): void {
     this.referenceService.banks$
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (banks) => {
           this.banks = banks;
@@ -40,7 +40,7 @@ export class EditBanksComponent implements OnInit {
 
   public onDelete(bankId: number): void {
     this.referenceService.deleteBank$(bankId)
-      .pipe(untilDestroyed(this))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => this.loadBanks()
       });

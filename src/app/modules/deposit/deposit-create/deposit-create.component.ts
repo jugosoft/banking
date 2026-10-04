@@ -1,6 +1,7 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    DestroyRef,
     inject,
     OnInit,
 } from '@angular/core';
@@ -12,14 +13,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AsyncPipe, NgFor } from '@angular/common';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AsyncPipe } from '@angular/common';
 import { filter, map, switchMap } from 'rxjs';
 import { DepositService } from '../../../services/api/deposit.service';
 import { ReferenceService } from '../../../services/api/reference.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-@UntilDestroy()
 @Component({
     selector: 'banking-deposit',
     standalone: true,
@@ -40,6 +40,7 @@ import { ReferenceService } from '../../../services/api/reference.service';
 })
 export class DepositCreateComponent implements OnInit {
     private readonly formBuilder = inject(FormBuilder);
+    private readonly destroyRef = inject(DestroyRef);
     private readonly activatedRoute = inject(ActivatedRoute);
     private readonly router = inject(Router);
     private readonly depositService = inject(DepositService);
@@ -80,7 +81,7 @@ export class DepositCreateComponent implements OnInit {
                 return this.depositService.getDeposit$(depositId);
             }),
             map(response => response.data!),
-            untilDestroyed(this)
+            takeUntilDestroyed(this.destroyRef)
         ).subscribe({
             next: deposit => {
                 this.depositId = deposit.id;
@@ -116,7 +117,7 @@ export class DepositCreateComponent implements OnInit {
             term: value.term,
             capitalization: value.capitalization,
         }).pipe(
-            untilDestroyed(this)
+            takeUntilDestroyed()
         ).subscribe({
             next: () => {
                 this.router.navigate(['/home']);
